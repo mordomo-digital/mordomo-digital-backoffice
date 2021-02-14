@@ -1,13 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
+import env from './env.json';
+
+// Components
+import Login from './Components/Login/LoginContainer';
+import Home from './Components/Home/HomeContainer';
+
+window.auth = (Component, props) => {
+  let token = sessionStorage.getItem('access_token') || localStorage.getItem('access_token') || '';
+  try {
+    jwt.verify(token, env.jwt_secret);
+    return <Component {...props} />
+  } catch(err){
+    return <Login {...props} />
+  }
+}
 
 ReactDOM.render(
+  
   <React.StrictMode>
-    <App />
+    
+    <BrowserRouter>
+    
+      <Switch>
+
+        <Route path='/' exact render={(props) => window.auth(Home, props)} />
+        <Route path='/home' render={(props) => window.auth(Home, props)} />
+
+
+      </Switch>
+    
+    </BrowserRouter>  
+
   </React.StrictMode>,
+
   document.getElementById('root')
 );
 
