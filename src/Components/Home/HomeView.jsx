@@ -8,8 +8,14 @@ import { Link } from 'react-router-dom';
 import './HomeStyle.css';
 
 // Components
-// import TasksList from '../TasksList/TasksListContainer';
-// import TasksForm from '../TaskForm/TaskFormContainer';
+import RoomTypesList from '../RoomTypes/List/ListContainer';
+import RoomTypesForm from '../RoomTypes/Form/FormContainer';
+
+import RoomTasksList from '../RoomTasks/List/ListContainer';
+import RoomTasksForm from '../RoomTasks/Form/FormContainer';
+
+import RoomMarketItensList from '../RoomMarketItens/List/ListContainer';
+import RoomMarketItensForm from '../RoomMarketItens/Form/FormContainer';
 
 const { Header, Content, Sider } = Layout;
 
@@ -21,9 +27,9 @@ const HomeView = (props) => {
     };
 
     let menuItens = [
-        { name: 'Tipos de cômodos', route: 'room-types'},
         { name: 'Tarefas', route: 'room-tasks'},
         { name: 'Itens de mercado', route: 'room-market-itens'},
+        { name: 'Tipos de cômodos', route: 'room-types'},
     ]
 
     return(
@@ -113,9 +119,14 @@ const HomeView = (props) => {
                         }}
                     >
                         
-                        {/* {props.location.pathname === '/home/task' && !props.location.search ? <TasksList parent_props={props} /> : null }
-                        {props.location.pathname === '/home/task' && props.location.search ? <TasksForm parent_props={props} /> : null }
-                        {props.location.pathname === '/home/task/new' ? <TasksForm parent_props={props} /> : null } */}
+                        {props.location.pathname === '/home/room-types' && !props.location.search ? <RoomTypesList parent_props={props} /> : null }
+                        {props.location.pathname === '/home/room-types/new' ? <RoomTypesForm parent_props={props} /> : null }
+                        
+                        {props.location.pathname === '/home/room-tasks' && !props.location.search ? <RoomTasksList parent_props={props} /> : null }
+                        {props.location.pathname === '/home/room-tasks/new' ? <RoomTasksForm parent_props={props} /> : null }
+                        
+                        {props.location.pathname === '/home/room-market-itens' && !props.location.search ? <RoomMarketItensList parent_props={props} /> : null }
+                        {props.location.pathname === '/home/room-market-itens/new' ? <RoomMarketItensForm parent_props={props} /> : null }
 
                     </Content>
 
