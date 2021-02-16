@@ -41,7 +41,7 @@ const FormView = (props) => {
                         </Breadcrumb.Item>
                         
                         <Breadcrumb.Item>
-                            Novo
+                            {props.idToUpdate ? 'Editar' : 'Novo'}
                         </Breadcrumb.Item>
 
                     </Breadcrumb>
@@ -81,7 +81,7 @@ const FormView = (props) => {
                         onClick={() => props.save()}
                         loading={props.loadingSaveButton}
                     >
-                        Salvar
+                        {props.idToUpdate ? 'Atualizar' : 'Salvar'}
                     </Button>
 
                 </Card>

@@ -42,7 +42,7 @@ const FormView = (props) => {
                         </Breadcrumb.Item>
                         
                         <Breadcrumb.Item>
-                            Novo
+                            {props.idToUpdate ? 'Editar' : 'Novo'}
                         </Breadcrumb.Item>
 
                     </Breadcrumb>
@@ -79,8 +79,8 @@ const FormView = (props) => {
                                                 height: 50,
                                                 marginRight: 10
                                             }}
+                                            src={props.form.iconThumb}
                                         />
-                                        {props.form.icon.name}
                                         
                                         <div
                                             style={{
@@ -108,15 +108,11 @@ const FormView = (props) => {
                                 onChange={e => {
                                     let filesArray = e.target.files;
                                     let file = filesArray[filesArray.length - 1];
-
-                                    // Set image in form
-                                    props.setForm({ ...props.form, icon: file });
-
                                     // Set thumbnail
                                     var fileReader = new FileReader();
                                     fileReader.readAsDataURL(file);
                                     fileReader.onload = function (oFREvent) {
-                                        document.getElementById("room-tasks-img-file-thumb").src = oFREvent.target.result;
+                                        props.setForm({ ...props.form, icon: file, iconThumb: oFREvent.target.result });
                                     };
                                 }} 
                             />
@@ -146,7 +142,7 @@ const FormView = (props) => {
                         onClick={() => props.save()}
                         loading={props.loadingSaveButton}
                     >
-                        Salvar
+                        {props.idToUpdate ? 'Atualizar' : 'Salvar'}
                     </Button>
 
                 </Card>

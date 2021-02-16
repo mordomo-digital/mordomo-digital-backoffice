@@ -33,6 +33,15 @@ const ListView = (props) => {
             render: (text, record) => (
                 
                 <Space size="middle">
+
+                    <Link
+                        to={{
+                            pathname: `/home/room-tasks/update`,
+                            state: {
+                                id: record.key
+                            }
+                        }}
+                    >Editar</Link>
                     
                     <span 
                         style={{ 

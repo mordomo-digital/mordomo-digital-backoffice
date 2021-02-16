@@ -121,12 +121,15 @@ const HomeView = (props) => {
                         
                         {props.location.pathname === '/home/room-types' && !props.location.search ? <RoomTypesList parent_props={props} /> : null }
                         {props.location.pathname === '/home/room-types/new' ? <RoomTypesForm parent_props={props} /> : null }
+                        {props.location.pathname === '/home/room-types/update' ? <RoomTypesForm parent_props={props} /> : null }
                         
                         {props.location.pathname === '/home/room-tasks' && !props.location.search ? <RoomTasksList parent_props={props} /> : null }
                         {props.location.pathname === '/home/room-tasks/new' ? <RoomTasksForm parent_props={props} /> : null }
+                        {props.location.pathname === '/home/room-tasks/update' ? <RoomTasksForm parent_props={props} /> : null }
                         
                         {props.location.pathname === '/home/room-market-itens' && !props.location.search ? <RoomMarketItensList parent_props={props} /> : null }
                         {props.location.pathname === '/home/room-market-itens/new' ? <RoomMarketItensForm parent_props={props} /> : null }
+                        {props.location.pathname === '/home/room-market-itens/update' ? <RoomMarketItensForm parent_props={props} /> : null }
 
                     </Content>
 

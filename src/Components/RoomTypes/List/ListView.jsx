@@ -80,6 +80,15 @@ const ListView = (props) => {
                 
                 <Space size="middle">
                     
+                    <Link
+                        to={{
+                            pathname: `/home/room-types/update`,
+                            state: {
+                                id: record.key
+                            }
+                        }}
+                    >Editar</Link>
+                    
                     <span 
                         style={{ 
                             color: 'red',
