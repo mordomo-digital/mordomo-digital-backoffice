@@ -18,7 +18,7 @@ const ListView = (props) => {
             key: 'name',
         },
         {
-            title: 'Tipo',
+            title: 'Sessão',
             dataIndex: 'type',
             key: 'type',
         },
