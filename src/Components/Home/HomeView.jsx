@@ -17,6 +17,12 @@ import RoomTasksForm from '../RoomTasks/Form/FormContainer';
 import RoomMarketItensList from '../RoomMarketItens/List/ListContainer';
 import RoomMarketItensForm from '../RoomMarketItens/Form/FormContainer';
 
+import MenuOptionsList from '../MenuOptions/List/ListContainer';
+import MenuOptionsForm from '../MenuOptions/Form/FormContainer';
+
+import MenuGroupsList from '../MenuGroups/List/ListContainer';
+import MenuGroupsForm from '../MenuGroups/Form/FormContainer';
+
 const { Header, Content, Sider } = Layout;
 
 const HomeView = (props) => {
@@ -27,10 +33,26 @@ const HomeView = (props) => {
     };
 
     let menuItens = [
-        { name: 'Tarefas', route: 'room-tasks'},
+        [
+            { title: 'Cômodos' },
+            { name: 'Tipos', route: 'room-types'},
+            { name: 'Tarefas', route: 'room-tasks'},
+        ],
         { name: 'Itens de mercado', route: 'room-market-itens'},
-        { name: 'Tipos de cômodos', route: 'room-types'},
-    ]
+        [
+            { title: 'Cardápio' },
+            { name: 'Opções', route: 'menu-options'},
+            { name: 'Grupos', route: 'menu-groups'},
+        ],
+    ];
+
+    /**
+     * Check if variable is an array
+     * @param {*} a variable
+     */
+    let isArray = function(a) {
+        return (!!a) && (a.constructor === Array);
+    };
 
     return(
         
@@ -83,18 +105,39 @@ const HomeView = (props) => {
 
                         {
                             menuItens.map((element, index) => {
-                                return(
-                                    <Menu.Item key={index + 2}>
-                                        <Link to={`/home/${element.route}`}>
-                                            {element.name}
-                                        </Link>
-                                    </Menu.Item>
-                                )
+                                if(!isArray(element)){
+                                    return(
+                                        <Menu.Item key={index + 2}>
+                                            <Link to={`/home/${element.route}`}>
+                                                {element.name}
+                                            </Link>
+                                        </Menu.Item>
+                                    )
+                                } else {
+                                    return(
+                                        <Menu.SubMenu key={`sub${index + 2}`} title={element[0].title}>
+                                            {
+                                                element.map((subElemv, subIndex) => {
+                                                    if(subIndex > 0){
+                                                        return (
+                                                            <Menu.Item key={`${index + 2}_${subIndex}`}>
+                                                                <Link to={`/home/${subElemv.route}`}>
+                                                                    {subElemv.name}
+                                                                </Link>
+                                                            </Menu.Item>
+                                                        )
+                                                    } else return null
+                                                })
+                                            }
+                                        </Menu.SubMenu>
+                                    )
+                                }
                             })
                         }
+
                         
                         <Menu.Item 
-                            key="5"
+                            key={menuItens.length + 3}
                             onClick={() => props.logout()}
                         >
                             Sair
@@ -130,6 +173,14 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/room-market-itens' && !props.location.search ? <RoomMarketItensList parent_props={props} /> : null }
                         {props.location.pathname === '/home/room-market-itens/new' ? <RoomMarketItensForm parent_props={props} /> : null }
                         {props.location.pathname === '/home/room-market-itens/update' ? <RoomMarketItensForm parent_props={props} /> : null }
+                        
+                        {props.location.pathname === '/home/menu-options' && !props.location.search ? <MenuOptionsList parent_props={props} /> : null }
+                        {props.location.pathname === '/home/menu-options/new' ? <MenuOptionsForm parent_props={props} /> : null }
+                        {props.location.pathname === '/home/menu-options/update' ? <MenuOptionsForm parent_props={props} /> : null }
+                        
+                        {props.location.pathname === '/home/menu-groups' && !props.location.search ? <MenuGroupsList parent_props={props} /> : null }
+                        {props.location.pathname === '/home/menu-groups/new' ? <MenuGroupsForm parent_props={props} /> : null }
+                        {props.location.pathname === '/home/menu-groups/update' ? <MenuGroupsForm parent_props={props} /> : null }
 
                     </Content>
 
