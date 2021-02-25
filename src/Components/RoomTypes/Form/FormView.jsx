@@ -151,27 +151,6 @@ const FormView = (props) => {
                                 }
                             </Select>
                         </Form.Item>
-                        
-                        <Form.Item
-                            label="Itens de mercado"
-                        >
-                            <Select
-                                mode="multiple"
-                                placeholder="Escolha..."
-                                value={props.form.marketItens}
-                                onChange={e => props.setForm({ ...props.form, marketItens: e })}
-                            >
-                                {
-                                    props.marketItens.map((el, i) => {
-                                        return(
-                                            <Select.Option key={i} value={el._id}>
-                                                {el.name}
-                                            </Select.Option>
-                                        )
-                                    })
-                                }
-                            </Select>
-                        </Form.Item>
                     </Form>
                     
                     <Divider />

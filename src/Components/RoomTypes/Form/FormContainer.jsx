@@ -14,7 +14,7 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [ form, setForm ] = useState({ name: '', icon: '', marketItens: [], tasks: [], iconThumb: '' });
+    const [ form, setForm ] = useState({ name: '', icon: '', tasks: [], iconThumb: '' });
 
     const [ idToUpdate, setIdToUpdate ] = useState(null);
     useEffect(() => {
@@ -37,13 +37,11 @@ const FormContainer = (props) => {
             if(apiResponse.code === 200){
 
                 await getTasks();
-                await getMarketItens();
                 
                 setForm({
                     name: apiResponse.data['name'],
                     icon: apiResponse.data['icon'],
                     tasks: apiResponse.data['tasks'].map(el => el._id),
-                    marketItens: apiResponse.data['marketItens'].map(el => el._id),
                     iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`
                 })
                 
@@ -62,7 +60,6 @@ const FormContainer = (props) => {
             getDataToUpdate(props.location.state.id);
         } else {
             getTasks();
-            getMarketItens();
         }
     }, [props.location.state])
     
@@ -96,37 +93,6 @@ const FormContainer = (props) => {
         }
         
     };
-    
-    /**
-     * Get market itens.
-     */
-    const [ marketItens, setMarketItens ] = useState([]);
-    const getMarketItens = async () => {
-        
-        // Call API
-        let apiResponse = await fetch(`${env.api_url}/room-market-itens`, 
-        { 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
-            },
-            method: 'GET',
-        });
-        apiResponse = await apiResponse.json();
-
-        // Check if response was successfuly
-        if(apiResponse.code === 200){
-            
-            setMarketItens([...apiResponse.data]);
-            
-        } else {
-            
-            message.error(apiResponse.message);
-            
-        }
-        
-    };
 
     /**
      * Save.
@@ -152,7 +118,6 @@ const FormContainer = (props) => {
         let Form = new FormData();
         Form.append('name', form.name);
         Form.append('image', imageWithNewName);
-        Form.append('marketItens', JSON.stringify(form.marketItens));
         Form.append('tasks', JSON.stringify(form.tasks));
         
         // Call API.
@@ -202,7 +167,6 @@ const FormContainer = (props) => {
             idToUpdate={idToUpdate}
 
             tasks={tasks}
-            marketItens={marketItens}
             
             form={form}
             setForm={form => setForm({ ...form })}

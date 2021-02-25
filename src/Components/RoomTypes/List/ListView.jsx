@@ -50,29 +50,6 @@ const ListView = (props) => {
             }
         },
         {
-            title: 'Itens de mercado',
-            dataIndex: 'marketItens',
-            key: 'marketItens',
-            render: (marketItens) => {
-                return(
-                    <span>
-
-                        {marketItens.map(el => {
-                            return(
-                                <Tag 
-                                    color='green' 
-                                    key={el._id}
-                                >
-                                    {el.name}
-                                </Tag>
-                            )
-                        })}
-
-                    </span>
-                )
-            }
-        },
-        {
             title: 'Ações',
             key: 'actions',
             width: 100,
