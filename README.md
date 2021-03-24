@@ -79,7 +79,7 @@ mordomo-digital-backoffice/
     Components/
       Home/
       Login/
-      RoomMarketItens/
+      MarketItens/
       RoomTasks/
       RoomTypes/
     env.json

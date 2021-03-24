@@ -8,10 +8,10 @@ import env from '../../../env.json';
 import FormView from './FormView';
 
 const FormContainer = (props) => {
-    
+
     props = props.parent_props;
 
-    const [ idToUpdate, setIdToUpdate ] = useState(null);
+    const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
 
         /**
@@ -19,34 +19,34 @@ const FormContainer = (props) => {
          */
         async function getDataToUpdate(id) {
             // Call API.
-            let apiResponse = await fetch(`${env.api_url}/room-market-itens/${id}`, 
-            { 
-                headers: {
-                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
-                },
-                method: 'GET',
-            });
+            let apiResponse = await fetch(`${env.api_url}/market-itens/${id}`,
+                {
+                    headers: {
+                        'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
+                    },
+                    method: 'GET',
+                });
             apiResponse = await apiResponse.json();
-    
+
             // Check if response was successfuly
-            if(apiResponse.code === 200){
-                
+            if (apiResponse.code === 200) {
+
                 setForm({
                     name: apiResponse.data['name'],
                     type: apiResponse.data['type'],
                 })
-                
+
             } else {
-                
+
                 message.error(apiResponse.message);
-                
+
             }
         }
 
         /**
          * Check if update or create form
          */
-        if(props.location.state){
+        if (props.location.state) {
             setIdToUpdate(props.location.state.id)
             getDataToUpdate(props.location.state.id);
         }
@@ -55,35 +55,35 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [ form, setForm ] = useState({ name: '', type: '' });
+    const [form, setForm] = useState({ name: '', type: '' });
 
     /**
      * Save.
      */
-    const [ loadingSaveButton, setLoadingSaveButton ] = useState(false);
+    const [loadingSaveButton, setLoadingSaveButton] = useState(false);
     const save = async () => {
 
         setLoadingSaveButton(true);
 
         // Method
         let method = idToUpdate ? 'PUT' : 'POST';
-        let endpoint = idToUpdate ? `${env.api_url}/room-market-itens/${idToUpdate}` : `${env.api_url}/room-market-itens`;
-        
+        let endpoint = idToUpdate ? `${env.api_url}/market-itens/${idToUpdate}` : `${env.api_url}/market-itens`;
+
         // Call API.
-        let apiResponse = await fetch(endpoint, 
-        { 
-            headers: {
-                'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: method,
-            body: JSON.stringify(form)
-        });
+        let apiResponse = await fetch(endpoint,
+            {
+                headers: {
+                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: method,
+                body: JSON.stringify(form)
+            });
         apiResponse = await apiResponse.json();
 
         // Check if response was successfuly
-        if(apiResponse.code === 200){
+        if (apiResponse.code === 200) {
 
             message.success(
                 idToUpdate ?
@@ -91,17 +91,17 @@ const FormContainer = (props) => {
                     'Registro criado com sucesso'
             );
             setLoadingSaveButton(false);
-            props.history.push('/home/room-market-itens');
-            
+            props.history.push('/home/market-itens');
+
         } else {
-            
+
             setLoadingSaveButton(false);
             message.error(apiResponse.message);
-            
+
         }
     }
 
-    return(
+    return (
 
         <FormView
             idToUpdate={idToUpdate}

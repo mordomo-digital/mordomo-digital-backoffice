@@ -35,11 +35,11 @@ const FormView = (props) => {
                         <Breadcrumb.Item>
                             <Link to='/home'>Início</Link>
                         </Breadcrumb.Item>
-                        
+
                         <Breadcrumb.Item>
-                            <Link to='/home/room-market-itens'>Itens de mercado</Link>
+                            <Link to='/home/market-itens'>Itens de mercado</Link>
                         </Breadcrumb.Item>
-                        
+
                         <Breadcrumb.Item>
                             {props.idToUpdate ? 'Editar' : 'Novo'}
                         </Breadcrumb.Item>
@@ -50,7 +50,7 @@ const FormView = (props) => {
                         style={{ marginTop: 40 }}
                         layout='vertical'
                     >
-                    
+
                         <Form.Item
                             label="Nome"
                             style={{ width: 500 }}
@@ -70,9 +70,9 @@ const FormView = (props) => {
                                 onChange={e => props.setForm({ ...props.form, type: e.target.value })}
                             />
                         </Form.Item>
-                        
+
                     </Form>
-                    
+
                     <Divider />
 
                     <Button
