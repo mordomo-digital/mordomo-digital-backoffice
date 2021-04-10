@@ -23,6 +23,9 @@ import MenuOptionsForm from '../MenuOptions/Form/FormContainer';
 import MenuGroupsList from '../MenuGroups/List/ListContainer';
 import MenuGroupsForm from '../MenuGroups/Form/FormContainer';
 
+import BabysitterTasksList from '../BabysitterTasks/List/ListContainer';
+import BabysitterTasksForm from '../BabysitterTasks/Form/FormContainer';
+
 const { Header, Content, Sider } = Layout;
 
 const HomeView = (props) => {
@@ -44,6 +47,7 @@ const HomeView = (props) => {
             { name: 'Opções', route: 'menu-options' },
             { name: 'Grupos', route: 'menu-groups' },
         ],
+        { name: 'Babá', route: 'babysitter-tasks' },
     ];
 
     /**
@@ -181,6 +185,10 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/menu-groups' && !props.location.search ? <MenuGroupsList parent_props={props} /> : null}
                         {props.location.pathname === '/home/menu-groups/new' ? <MenuGroupsForm parent_props={props} /> : null}
                         {props.location.pathname === '/home/menu-groups/update' ? <MenuGroupsForm parent_props={props} /> : null}
+
+                        {props.location.pathname === '/home/babysitter-tasks' && !props.location.search ? <BabysitterTasksList parent_props={props} /> : null}
+                        {props.location.pathname === '/home/babysitter-tasks/new' ? <BabysitterTasksForm parent_props={props} /> : null}
+                        {props.location.pathname === '/home/babysitter-tasks/update' ? <BabysitterTasksForm parent_props={props} /> : null}
 
                     </Content>
 
