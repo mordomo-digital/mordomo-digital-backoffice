@@ -136,6 +136,7 @@ const ListView = (props) => {
                     <Table
                         dataSource={dataSource}
                         columns={columns}
+                        loading={props.loading}
                         locale={{
                             emptyText: 'Sem registros'
                         }}

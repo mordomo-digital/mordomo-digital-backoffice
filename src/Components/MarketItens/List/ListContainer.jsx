@@ -12,8 +12,10 @@ const ListContainer = (props) => {
     /**
      * Get data.
      */
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const getData = async () => {
+        setLoading(true);
 
         // Call API
         let apiResponse = await fetch(`${env.api_url}/market-itens`,
@@ -31,10 +33,12 @@ const ListContainer = (props) => {
         if (apiResponse.code === 200) {
 
             setData([...apiResponse.data]);
+            setLoading(false);
 
         } else {
 
             message.error(apiResponse.message);
+            setLoading(false);
 
         }
 
@@ -81,6 +85,7 @@ const ListContainer = (props) => {
 
         <ListView
 
+            loading={loading}
             data={data}
             removeData={id => removeData(id)}
 
