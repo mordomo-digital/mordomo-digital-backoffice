@@ -25,13 +25,16 @@ const ListView = (props) => {
             title: 'Nome',
             dataIndex: 'name',
             key: 'name',
+            sorter: (a, b) =>
+                (a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "") > b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) -
+                (a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "") < b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")),
         },
         {
             title: 'Ações',
             key: 'actions',
             width: 100,
             render: (text, record) => (
-                
+
                 <Space size="middle">
 
                     <Link
@@ -42,14 +45,14 @@ const ListView = (props) => {
                             }
                         }}
                     >Editar</Link>
-                    
-                    <span 
-                        style={{ 
+
+                    <span
+                        style={{
                             color: 'red',
                             cursor: 'pointer'
                         }}
                         onClick={() => {
-                            
+
                             Modal.confirm({
                                 title: 'Tem certeza que deseja excluir esse registro?',
                                 icon: <ExclamationCircleOutlined />,
@@ -65,9 +68,9 @@ const ListView = (props) => {
                         }}
                     >Deletar</span>
                 </Space>
-            
+
             ),
-          },
+        },
     ];
 
     const dataSource = props.data.map(el => {
@@ -84,7 +87,7 @@ const ListView = (props) => {
         }
     });
 
-    return(
+    return (
 
         <div
             style={{
@@ -129,10 +132,10 @@ const ListView = (props) => {
                             Adicionar
                         </Button>
                     </Link>
-                    
-                    <Table 
-                        dataSource={dataSource} 
-                        columns={columns} 
+
+                    <Table
+                        dataSource={dataSource}
+                        columns={columns}
                         locale={{
                             emptyText: 'Sem registros'
                         }}

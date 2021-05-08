@@ -16,11 +16,17 @@ const ListView = (props) => {
             title: 'Nome',
             dataIndex: 'name',
             key: 'name',
+            sorter: (a, b) =>
+                (a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "") > b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) -
+                (a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "") < b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")),
         },
         {
             title: 'Sessão',
             dataIndex: 'type',
             key: 'type',
+            sorter: (a, b) =>
+                (a.type.normalize('NFD').replace(/[\u0300-\u036f]/g, "") > b.type.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) -
+                (a.type.normalize('NFD').replace(/[\u0300-\u036f]/g, "") < b.type.normalize('NFD').replace(/[\u0300-\u036f]/g, "")),
         },
         {
             title: 'Ações',
