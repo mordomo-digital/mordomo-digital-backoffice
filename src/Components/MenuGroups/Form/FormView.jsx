@@ -35,11 +35,11 @@ const FormView = (props) => {
                         <Breadcrumb.Item>
                             <Link to='/home'>Início</Link>
                         </Breadcrumb.Item>
-                        
+
                         <Breadcrumb.Item>
                             <Link to='/home/menu-groups'>Cardápio - Grupos</Link>
                         </Breadcrumb.Item>
-                        
+
                         <Breadcrumb.Item>
                             {props.idToUpdate ? 'Editar' : 'Novo'}
                         </Breadcrumb.Item>
@@ -50,7 +50,7 @@ const FormView = (props) => {
                         style={{ marginTop: 40 }}
                         layout='vertical'
                     >
-                    
+
                         <Form.Item
                             label="Nome"
                             style={{ width: 500 }}
@@ -60,7 +60,7 @@ const FormView = (props) => {
                                 onChange={e => props.setForm({ ...props.form, name: e.target.value })}
                             />
                         </Form.Item>
-                        
+
                         <Form.Item
                             label="Opções"
                         >
@@ -72,7 +72,7 @@ const FormView = (props) => {
                             >
                                 {
                                     props.options.map((el, i) => {
-                                        return(
+                                        return (
                                             <Select.Option key={i} value={el._id}>
                                                 {el.name}
                                             </Select.Option>
@@ -81,8 +81,29 @@ const FormView = (props) => {
                                 }
                             </Select>
                         </Form.Item>
+
+                        <Form.Item
+                            label="Refeições"
+                        >
+                            <Select
+                                mode="multiple"
+                                placeholder="Escolha..."
+                                value={props.form.meals}
+                                onChange={e => props.setForm({ ...props.form, meals: e })}
+                            >
+                                {
+                                    props.meals.map((el, i) => {
+                                        return (
+                                            <Select.Option key={i} value={el.value}>
+                                                {el.label}
+                                            </Select.Option>
+                                        )
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
                     </Form>
-                    
+
                     <Divider />
 
                     <Button
