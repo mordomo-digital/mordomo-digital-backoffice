@@ -18,7 +18,7 @@ const ListContainer = (props) => {
         setLoading(true);
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/market-itens`,
+        let apiResponse = await fetch(`${env.api_url}/market-itens/${env.ownerId}`,
             {
                 headers: {
                     'Accept': 'application/json',
