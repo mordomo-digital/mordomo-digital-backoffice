@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Modules
-import { Card, Table, Tag, Space, Button, Breadcrumb, Modal } from 'antd';
+import { Card, Table, Space, Button, Breadcrumb, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 

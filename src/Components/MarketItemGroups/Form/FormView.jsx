@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Modules
-import { Card, Breadcrumb, Form, Input, Button, Divider, Select } from 'antd';
+import { Card, Breadcrumb, Form, Input, Button, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 

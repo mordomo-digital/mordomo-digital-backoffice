@@ -21,12 +21,18 @@ const ListView = (props) => {
                 (a.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "") < b.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")),
         },
         {
-            title: 'Sessão',
+            title: 'Sessão - Antigo',
             dataIndex: 'type',
             key: 'type',
             sorter: (a, b) =>
                 (a.type.normalize('NFD').replace(/[\u0300-\u036f]/g, "") > b.type.normalize('NFD').replace(/[\u0300-\u036f]/g, "")) -
                 (a.type.normalize('NFD').replace(/[\u0300-\u036f]/g, "") < b.type.normalize('NFD').replace(/[\u0300-\u036f]/g, "")),
+        },
+        {
+            title: 'Sessão - Novo',
+            dataIndex: 'group',
+            key: 'group',
+            render: (groupObj) => groupObj && groupObj.name
         },
         {
             title: 'Ações',
@@ -77,6 +83,7 @@ const ListView = (props) => {
             ...el,
             name: el.name,
             type: el.type,
+            group: el.group,
             _createdAt: new Date(el._createdAt).toLocaleString('pt-BR'),
             key: el._id
         }

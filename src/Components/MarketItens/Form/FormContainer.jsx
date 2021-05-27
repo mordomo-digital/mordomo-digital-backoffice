@@ -30,10 +30,12 @@ const FormContainer = (props) => {
 
             // Check if response was successfuly
             if (apiResponse.code === 200) {
+                await getGroups();
 
                 setForm({
                     name: apiResponse.data['name'],
                     type: apiResponse.data['type'],
+                    group: apiResponse.data['group'] && apiResponse.data['group']._id,
                 })
 
             } else {
@@ -49,13 +51,46 @@ const FormContainer = (props) => {
         if (props.location.state) {
             setIdToUpdate(props.location.state.id)
             getDataToUpdate(props.location.state.id);
+        } else {
+            getGroups();
         }
     }, [props.location.state])
 
     /**
+     * Get groups.
+     */
+    const [groups, setGroups] = useState([]);
+    const getGroups = async () => {
+
+        // Call API
+        let apiResponse = await fetch(`${env.api_url}/market-item-groups`,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
+                },
+                method: 'GET',
+            });
+        apiResponse = await apiResponse.json();
+
+        // Check if response was successfuly
+        if (apiResponse.code === 200) {
+
+            setGroups([...apiResponse.data]);
+
+        } else {
+
+            message.error(apiResponse.message);
+
+        }
+
+    };
+
+    /**
      * Set form.
      */
-    const [form, setForm] = useState({ name: '', type: '' });
+    const [form, setForm] = useState({ name: '', type: '', group: '' });
 
     /**
      * Save.
@@ -105,6 +140,8 @@ const FormContainer = (props) => {
 
         <FormView
             idToUpdate={idToUpdate}
+
+            groups={groups}
 
             form={form}
             setForm={form => setForm({ ...form })}

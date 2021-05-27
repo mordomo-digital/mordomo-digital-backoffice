@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Modules
-import { Card, Breadcrumb, Form, Input, Button, Divider } from 'antd';
+import { Card, Breadcrumb, Form, Input, Button, Divider, Select } from 'antd';
 import { Link } from 'react-router-dom';
 
 // Style
@@ -62,13 +62,35 @@ const FormView = (props) => {
                         </Form.Item>
 
                         <Form.Item
-                            label="Tipo"
+                            label="Grupo (Sessão) - Antigo"
                             style={{ width: 500 }}
                         >
                             <Input
                                 value={props.form.type}
+                                disabled
                                 onChange={e => props.setForm({ ...props.form, type: e.target.value })}
                             />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Grupo (Sessão) - Novo"
+                            style={{ width: 500 }}
+                        >
+                            <Select
+                                placeholder="Escolha..."
+                                value={props.form.group}
+                                onChange={e => props.setForm({ ...props.form, group: e })}
+                            >
+                                {
+                                    props.groups.map((el, i) => {
+                                        return (
+                                            <Select.Option key={i} value={el._id}>
+                                                {el.name}
+                                            </Select.Option>
+                                        )
+                                    })
+                                }
+                            </Select>
                         </Form.Item>
 
                     </Form>
