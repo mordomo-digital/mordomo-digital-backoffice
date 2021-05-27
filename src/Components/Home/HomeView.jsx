@@ -17,6 +17,9 @@ import RoomTasksForm from '../RoomTasks/Form/FormContainer';
 import MarketItensList from '../MarketItens/List/ListContainer';
 import MarketItensForm from '../MarketItens/Form/FormContainer';
 
+import MarketItemGroupsList from '../MarketItemGroups/List/ListContainer';
+import MarketItemGroupsForm from '../MarketItemGroups/Form/FormContainer';
+
 import MenuOptionsList from '../MenuOptions/List/ListContainer';
 import MenuOptionsForm from '../MenuOptions/Form/FormContainer';
 
@@ -41,7 +44,11 @@ const HomeView = (props) => {
             { name: 'Tipos', route: 'room-types' },
             { name: 'Tarefas', route: 'room-tasks' },
         ],
-        { name: 'Itens de mercado', route: 'market-itens' },
+        [
+            { title: 'Mercado' },
+            { name: 'Itens de mercado', route: 'market-itens' },
+            { name: 'Grupo de itens', route: 'market-item-groups' },
+        ],
         [
             { title: 'Cardápio' },
             { name: 'Opções', route: 'menu-options' },
@@ -177,6 +184,10 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/market-itens' && !props.location.search ? <MarketItensList parent_props={props} /> : null}
                         {props.location.pathname === '/home/market-itens/new' ? <MarketItensForm parent_props={props} /> : null}
                         {props.location.pathname === '/home/market-itens/update' ? <MarketItensForm parent_props={props} /> : null}
+
+                        {props.location.pathname === '/home/market-item-groups' && !props.location.search ? <MarketItemGroupsList parent_props={props} /> : null}
+                        {props.location.pathname === '/home/market-item-groups/new' ? <MarketItemGroupsForm parent_props={props} /> : null}
+                        {props.location.pathname === '/home/market-item-groups/update' ? <MarketItemGroupsForm parent_props={props} /> : null}
 
                         {props.location.pathname === '/home/menu-options' && !props.location.search ? <MenuOptionsList parent_props={props} /> : null}
                         {props.location.pathname === '/home/menu-options/new' ? <MenuOptionsForm parent_props={props} /> : null}
