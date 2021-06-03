@@ -23,7 +23,7 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ name: '', options: [], meals: [] });
+    const [form, setForm] = useState({ name: '', icon: '', options: [], meals: [] });
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -51,6 +51,8 @@ const FormContainer = (props) => {
                     name: apiResponse.data['name'],
                     options: apiResponse.data['options'].map(el => el._id),
                     meals: apiResponse.data['meals'],
+                    icon: apiResponse.data['icon'],
+                    iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`
                 })
 
             } else {
@@ -114,16 +116,30 @@ const FormContainer = (props) => {
         let method = idToUpdate ? 'PUT' : 'POST';
         let endpoint = idToUpdate ? `${env.api_url}/menu-groups/${idToUpdate}` : `${env.api_url}/menu-groups`;
 
+        // Changing the name of the image
+        let imageWithNewName = null;
+        let icon = form.icon;
+        if (!icon['data']) {
+            let blob = icon.slice(0, icon.size, icon.type);
+            imageWithNewName = new File([blob], `${form.name}`, { type: icon.type });
+        }
+
+        // Create form to save.
+        let Form = new FormData();
+        Form.append('name', form.name);
+        Form.append('image', imageWithNewName);
+        Form.append('options', JSON.stringify(form.options));
+        Form.append('meals', JSON.stringify(form.meals));
+        console.log(Form);
+
         // Call API.
         let apiResponse = await fetch(endpoint,
             {
                 headers: {
                     'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
                 },
                 method: method,
-                body: JSON.stringify(form)
+                body: Form
             });
         apiResponse = await apiResponse.json();
 
@@ -144,6 +160,17 @@ const FormContainer = (props) => {
             message.error(apiResponse.message);
 
         }
+    }
+
+    /**
+     * Transform buffer to base64 to render a image from mongodb
+     * @param {*} buffer 
+     */
+    const arrayBufferToBase64 = (buffer) => {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
     }
 
     return (
