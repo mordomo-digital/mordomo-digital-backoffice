@@ -51,9 +51,9 @@ const FormContainer = (props) => {
                     name: apiResponse.data['name'],
                     options: apiResponse.data['options'].map(el => el._id),
                     meals: apiResponse.data['meals'],
-                    icon: apiResponse.data['icon'],
-                    iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`
-                })
+                    icon: apiResponse.data['icon'].data ? apiResponse.data['icon'] : null,
+                    iconThumb: apiResponse.data['icon'].data ? `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}` : null,
+                });
 
             } else {
 
