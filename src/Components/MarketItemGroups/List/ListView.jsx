@@ -36,7 +36,7 @@ const ListView = (props) => {
 
                     <Link
                         to={{
-                            pathname: `/home/room-types/update`,
+                            pathname: `/home/market-item-groups/update`,
                             state: {
                                 id: record.key
                             }
