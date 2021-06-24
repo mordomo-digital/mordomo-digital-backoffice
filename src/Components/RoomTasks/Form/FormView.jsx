@@ -1,9 +1,10 @@
 import React from 'react';
 
 // Modules
-import { Card, Breadcrumb, Form, Input, Button, Divider } from 'antd';
+import { Card, Breadcrumb, Form, Input, Button, Divider, Select, DatePicker } from 'antd';
 import { Link } from 'react-router-dom';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 // Style
 import './FormStyle.css';
@@ -36,11 +37,11 @@ const FormView = (props) => {
                         <Breadcrumb.Item>
                             <Link to='/home'>Início</Link>
                         </Breadcrumb.Item>
-                        
+
                         <Breadcrumb.Item>
                             <Link to='/home/room-tasks'>Tarefas</Link>
                         </Breadcrumb.Item>
-                        
+
                         <Breadcrumb.Item>
                             {props.idToUpdate ? 'Editar' : 'Novo'}
                         </Breadcrumb.Item>
@@ -55,8 +56,8 @@ const FormView = (props) => {
                         <Form.Item
                             label="Ícone"
                         >
-                            
-                            <Button 
+
+                            <Button
                                 icon={<UploadOutlined />}
                                 onClick={() => document.getElementById('room-tasks-img-file').click()}
                                 style={{ marginBottom: '10px' }}
@@ -66,13 +67,13 @@ const FormView = (props) => {
 
                             {
                                 props.form.icon ?
-                                    <Card 
-                                        style={{ 
-                                            color: '#6495ED', 
-                                            fontSize: 12 
+                                    <Card
+                                        style={{
+                                            color: '#6495ED',
+                                            fontSize: 12
                                         }}
                                     >
-                                        <img 
+                                        <img
                                             alt='thumb'
                                             id='room-tasks-img-file-thumb'
                                             style={{
@@ -81,15 +82,15 @@ const FormView = (props) => {
                                             }}
                                             src={props.form.iconThumb}
                                         />
-                                        
+
                                         <div
                                             style={{
                                                 float: 'right',
                                                 lineHeight: 5
                                             }}
                                         >
-                                            <DeleteOutlined 
-                                                style={{ 
+                                            <DeleteOutlined
+                                                style={{
                                                     color: 'red',
                                                     cursor: 'pointer',
                                                     fontSize: 14,
@@ -99,10 +100,10 @@ const FormView = (props) => {
                                         </div>
                                     </Card> : null
                             }
-                            
-                            <input 
-                                type='file' 
-                                id='room-tasks-img-file' 
+
+                            <input
+                                type='file'
+                                id='room-tasks-img-file'
                                 style={{ display: 'none' }}
                                 accept='image/x-png'
                                 onChange={e => {
@@ -114,12 +115,12 @@ const FormView = (props) => {
                                     fileReader.onload = function (oFREvent) {
                                         props.setForm({ ...props.form, icon: file, iconThumb: oFREvent.target.result });
                                     };
-                                }} 
+                                }}
                             />
 
                         </Form.Item>
 
-                    
+
                         <Form.Item
                             label="Nome"
                             style={{ width: 500 }}
@@ -129,9 +130,82 @@ const FormView = (props) => {
                                 onChange={e => props.setForm({ ...props.form, name: e.target.value })}
                             />
                         </Form.Item>
-                        
+
+                        <Form.Item
+                            label="Frequência"
+                            style={{ width: 500 }}
+                        >
+                            <Select
+                                value={props.form.frequency}
+                                style={{ width: 500 }}
+                                onChange={e => props.setForm({ ...props.form, frequency: e })}
+                            >
+                                <Select.Option value="Daily">Diária</Select.Option>
+                                <Select.Option value="Weekly">Semanal</Select.Option>
+                                <Select.Option value="Monthly">Mensal</Select.Option>
+                                <Select.Option value="Yearly">Anual</Select.Option>
+                            </Select>
+                        </Form.Item>
+
+                        {
+                            props.form.frequency === 'Weekly' ?
+                                <Form.Item
+                                    label="Dias da semana"
+                                    style={{ width: 500 }}
+                                >
+                                    <Select
+                                        style={{ width: 500 }}
+                                        onChange={e => props.setForm({ ...props.form, weekdays: e })}
+                                        mode="multiple"
+                                        value={props.form.weekdays}
+                                    >
+                                        <Select.Option value="1">Segunda-feira</Select.Option>
+                                        <Select.Option value="2">Terça-feira</Select.Option>
+                                        <Select.Option value="3">Quarta-feira</Select.Option>
+                                        <Select.Option value="4">Quinta-feira</Select.Option>
+                                        <Select.Option value="5">Sexta-feira</Select.Option>
+                                        <Select.Option value="6">Sábado</Select.Option>
+                                        <Select.Option value="7">Domingo</Select.Option>
+                                    </Select>
+                                </Form.Item> : null
+                        }
+
+                        {
+                            props.form.frequency === 'Monthly' ?
+                                <Form.Item
+                                    label="Dia do mês"
+                                    style={{ width: 100 }}
+                                >
+                                    <Select
+                                        style={{ width: 100 }}
+                                        onChange={e => props.setForm({ ...props.form, day: e })}
+                                        value={props.form.day}
+                                    >
+                                        {new Array(30).fill('day').map((el, i) => {
+                                            return (
+                                                <Select.Option value={(i + 1).toString()}>{(i + 1).toString()}</Select.Option>
+                                            )
+                                        })}
+                                    </Select>
+                                </Form.Item> : null
+                        }
+
+                        {
+                            props.form.frequency === 'Yearly' ?
+                                <Form.Item
+                                    label="Dia do mês"
+                                    style={{ width: 500 }}
+                                >
+                                    <DatePicker
+                                        value={moment(props.form.date)}
+                                        style={{ width: 500 }}
+                                        onChange={(e, d) => props.setForm({ ...props.form, date: moment(e).format('MMMM DD, YYYY h:mm:ss a') })}
+                                    />
+                                </Form.Item> : null
+                        }
+
                     </Form>
-                    
+
                     <Divider />
 
                     <Button

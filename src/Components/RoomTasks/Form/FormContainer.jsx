@@ -8,15 +8,15 @@ import env from '../../../env.json';
 import FormView from './FormView';
 
 const FormContainer = (props) => {
-    
+
     props = props.parent_props;
 
     /**
      * Set form.
      */
-    const [ form, setForm ] = useState({ name: '', icon: '', iconThumb: '' });
+    const [form, setForm] = useState({ name: '', icon: '', iconThumb: '', frequency: '', weekdays: '', day: '', date: '' });
 
-    const [ idToUpdate, setIdToUpdate ] = useState(null);
+    const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
 
         /**
@@ -24,35 +24,39 @@ const FormContainer = (props) => {
          */
         async function getDataToUpdate(id) {
             // Call API.
-            let apiResponse = await fetch(`${env.api_url}/room-tasks/${id}`, 
-            { 
-                headers: {
-                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
-                },
-                method: 'GET',
-            });
+            let apiResponse = await fetch(`${env.api_url}/room-tasks/${id}`,
+                {
+                    headers: {
+                        'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
+                    },
+                    method: 'GET',
+                });
             apiResponse = await apiResponse.json();
-    
+
             // Check if response was successfuly
-            if(apiResponse.code === 200){
-                
+            if (apiResponse.code === 200) {
+
                 setForm({
                     name: apiResponse.data['name'],
                     icon: apiResponse.data['icon'],
-                    iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`
+                    iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`,
+                    frequency: apiResponse.data['frequency'],
+                    weekdays: apiResponse.data['weekdays'],
+                    day: apiResponse.data['day'],
+                    date: apiResponse.data['date'],
                 })
-                
+
             } else {
-                
+
                 message.error(apiResponse.message);
-                
+
             }
         }
 
         /**
          * Check if update or create form
          */
-        if(props.location.state){
+        if (props.location.state) {
             setIdToUpdate(props.location.state.id)
             getDataToUpdate(props.location.state.id);
         }
@@ -61,41 +65,44 @@ const FormContainer = (props) => {
     /**
      * Save.
      */
-    const [ loadingSaveButton, setLoadingSaveButton ] = useState(false);
+    const [loadingSaveButton, setLoadingSaveButton] = useState(false);
     const save = async () => {
-
         setLoadingSaveButton(true);
 
         // Method
         let method = idToUpdate ? 'PUT' : 'POST';
         let endpoint = idToUpdate ? `${env.api_url}/room-tasks/${idToUpdate}` : `${env.api_url}/room-tasks`;
-        
+
         // Changing the name of the image
         let imageWithNewName = null;
         let icon = form.icon;
-        if(!icon['data']){
-            let blob = icon.slice(0, icon.size, icon.type); 
+        if (!icon['data']) {
+            let blob = icon.slice(0, icon.size, icon.type);
             imageWithNewName = new File([blob], `${form.name}`, { type: icon.type });
         }
-        
+
         // Create form to save.
         let Form = new FormData();
         Form.append('name', form.name);
         Form.append('image', imageWithNewName);
-        
+        Form.append('frequency', form.frequency);
+        Form.append('weekdays', form.weekdays);
+        Form.append('day', form.day);
+        Form.append('date', form.date);
+
         // Call API.
-        let apiResponse = await fetch(endpoint, 
-        { 
-            headers: {
-                'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
-            },
-            method: method,
-            body: Form
-        });
+        let apiResponse = await fetch(endpoint,
+            {
+                headers: {
+                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
+                },
+                method: method,
+                body: Form
+            });
         apiResponse = await apiResponse.json();
 
         // Check if response was successfuly
-        if(apiResponse.code === 200){
+        if (apiResponse.code === 200) {
 
             message.success(
                 idToUpdate ?
@@ -104,12 +111,12 @@ const FormContainer = (props) => {
             );
             setLoadingSaveButton(false);
             props.history.push('/home/room-tasks');
-            
+
         } else {
-            
+
             setLoadingSaveButton(false);
             message.error(apiResponse.message);
-            
+
         }
     }
 
@@ -124,7 +131,7 @@ const FormContainer = (props) => {
         return window.btoa(binary);
     }
 
-    return(
+    return (
 
         <FormView
             idToUpdate={idToUpdate}
