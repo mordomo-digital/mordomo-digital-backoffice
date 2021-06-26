@@ -14,6 +14,7 @@ const ListContainer = (props) => {
      */
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
+    const [roomTypes, setRoomTypes] = useState([]);
     const getData = async () => {
         setLoading(true);
 
@@ -31,6 +32,26 @@ const ListContainer = (props) => {
 
         // Check if response was successfuly
         if (apiResponse.code === 200) {
+
+            // Call API to get all room types
+            let apiRoomTypesResponse = await fetch(`${env.api_url}/room-types`,
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
+                    },
+                    method: 'GET',
+                });
+            apiRoomTypesResponse = await apiRoomTypesResponse.json();
+            let roomTypes = apiRoomTypesResponse.data.map(el => {
+                return {
+                    '_id': el['_id'],
+                    'name': el['name'],
+                    'tasks': el['tasks'].map(task => task['_id'])
+                }
+            });
+            setRoomTypes([...roomTypes]);
 
             setData([...apiResponse.data]);
             setLoading(false);
@@ -101,6 +122,8 @@ const ListContainer = (props) => {
             removeData={id => removeData(id)}
 
             arrayBufferToBase64={buffer => arrayBufferToBase64(buffer)}
+
+            roomTypes={roomTypes}
 
         />
 

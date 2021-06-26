@@ -41,7 +41,8 @@ const ListView = (props) => {
                         to={{
                             pathname: `/home/room-tasks/update`,
                             state: {
-                                id: record.key
+                                id: record.key,
+                                roomTypes: props.roomTypes,
                             }
                         }}
                     >Editar</Link>

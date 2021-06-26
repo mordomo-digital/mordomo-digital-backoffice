@@ -14,7 +14,9 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ name: '', icon: '', iconThumb: '', frequency: '', weekdays: '', day: '', date: '' });
+    const [form, setForm] = useState({ name: '', icon: '', iconThumb: '', defaultFrequency: [] });
+
+    const [roomTypes, setRoomTypes] = useState([]);
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -22,7 +24,8 @@ const FormContainer = (props) => {
         /**
          * Get data to update.
          */
-        async function getDataToUpdate(id) {
+        async function getDataToUpdate(id, localRoomTypes) {
+
             // Call API.
             let apiResponse = await fetch(`${env.api_url}/room-tasks/${id}`,
                 {
@@ -39,12 +42,41 @@ const FormContainer = (props) => {
                 setForm({
                     name: apiResponse.data['name'],
                     icon: apiResponse.data['icon'],
+                    defaultFrequency: apiResponse.data['defaultFrequency'],
                     iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`,
-                    frequency: apiResponse.data['frequency'],
-                    weekdays: apiResponse.data['weekdays'],
-                    day: apiResponse.data['day'],
-                    date: apiResponse.data['date'],
                 })
+
+                let arrayOfRoomTypes = [];
+                let arrayOfDefaultFrequency = [];
+                for (let index = 0; index < localRoomTypes.length; index++) {
+                    if (localRoomTypes[index]['tasks'].includes(id)) {
+                        let roomTypeToAdd = {
+                            roomId: localRoomTypes[index]['_id'],
+                            roomName: localRoomTypes[index]['name'],
+                        };
+                        arrayOfRoomTypes.push(roomTypeToAdd);
+
+                        if (apiResponse.data['defaultFrequency'].length === 0) {
+                            arrayOfDefaultFrequency.push({
+                                roomType: localRoomTypes[index]['_id'],
+                                frequency: '',
+                                weekdays: [],
+                                day: '',
+                                date: Date.now(),
+                                weekOfTheMonth: '',
+                            });
+                        }
+                    }
+                }
+                setRoomTypes([...arrayOfRoomTypes]);
+                if (apiResponse.data['defaultFrequency'].length === 0) {
+                    setForm({
+                        name: apiResponse.data['name'],
+                        icon: apiResponse.data['icon'],
+                        iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`,
+                        defaultFrequency: arrayOfDefaultFrequency
+                    });
+                }
 
             } else {
 
@@ -58,7 +90,7 @@ const FormContainer = (props) => {
          */
         if (props.location.state) {
             setIdToUpdate(props.location.state.id)
-            getDataToUpdate(props.location.state.id);
+            getDataToUpdate(props.location.state.id, props.location.state.roomTypes);
         }
     }, [props.location.state])
 
@@ -85,10 +117,7 @@ const FormContainer = (props) => {
         let Form = new FormData();
         Form.append('name', form.name);
         Form.append('image', imageWithNewName);
-        Form.append('frequency', form.frequency);
-        Form.append('weekdays', form.weekdays);
-        Form.append('day', form.day);
-        Form.append('date', form.date);
+        Form.append('defaultFrequency', form.defaultFrequency);
 
         // Call API.
         let apiResponse = await fetch(endpoint,
@@ -135,6 +164,7 @@ const FormContainer = (props) => {
 
         <FormView
             idToUpdate={idToUpdate}
+            roomTypes={roomTypes}
 
             form={form}
             setForm={form => setForm({ ...form })}
