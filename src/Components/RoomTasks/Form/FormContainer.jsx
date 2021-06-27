@@ -117,7 +117,7 @@ const FormContainer = (props) => {
         let Form = new FormData();
         Form.append('name', form.name);
         Form.append('image', imageWithNewName);
-        Form.append('defaultFrequency', form.defaultFrequency);
+        Form.append('defaultFrequency', JSON.stringify(form.defaultFrequency));
 
         // Call API.
         let apiResponse = await fetch(endpoint,
