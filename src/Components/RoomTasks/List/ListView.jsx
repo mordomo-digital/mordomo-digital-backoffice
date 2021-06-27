@@ -12,15 +12,15 @@ const ListView = (props) => {
 
     // Columns of the table list
     const columns = [
-        {
-            title: 'Ícone',
-            dataIndex: 'icon',
-            key: 'icon',
-            align: 'center',
-            render: image => {
-                return <img src={image} width={40} height={40} alt={image} style={{ objectFit: 'contain' }} />
-            }
-        },
+        // {
+        //     title: 'Ícone',
+        //     dataIndex: 'icon',
+        //     key: 'icon',
+        //     align: 'center',
+        //     render: image => {
+        //         return <img src={image} width={40} height={40} alt={image} style={{ objectFit: 'contain' }} />
+        //     }
+        // },
         {
             title: 'Nome',
             dataIndex: 'name',
@@ -75,16 +75,16 @@ const ListView = (props) => {
     ];
 
     const dataSource = props.data.map(el => {
-        // Get image
-        let base64Flag = `data:image/png;base64,`;
-        let imageStr = props.arrayBufferToBase64(el.icon.data.data);
+        // // Get image
+        // let base64Flag = `data:image/png;base64,`;
+        // let imageStr = props.arrayBufferToBase64(el.icon.data.data);
 
         return {
             ...el,
             name: el.name,
             _createdAt: new Date(el._createdAt).toLocaleString('pt-BR'),
             key: el._id,
-            icon: base64Flag + imageStr,
+            // icon: base64Flag + imageStr,
         }
     });
 
