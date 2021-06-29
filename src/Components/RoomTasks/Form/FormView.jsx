@@ -163,7 +163,8 @@ const FormView = (props) => {
                                                             <Select.Option value="Weekly">Semanal</Select.Option>
                                                             <Select.Option value="Monthly">Mensal - Data</Select.Option>
                                                             <Select.Option value="WeekInMonth">Mensal - Dia e Semana</Select.Option>
-                                                            <Select.Option value="Yearly">Anual</Select.Option>
+                                                            <Select.Option value="Quarterly">Trimestral</Select.Option>
+                                                            <Select.Option value="Yearly">Semestral</Select.Option>
                                                         </Select>
                                                     </Form.Item>
 
@@ -305,6 +306,36 @@ const FormView = (props) => {
 
                                                     {
                                                         (props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
+                                                            props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).frequency) === 'Quarterly' ?
+                                                            <Form.Item
+                                                                label="Dia do mês"
+                                                                style={{ width: 500 }}
+                                                            >
+                                                                <DatePicker
+                                                                    format='DD/MM/YYYY'
+                                                                    value={
+                                                                        props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) ?
+                                                                            moment(props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).date).isValid() ?
+                                                                                moment(props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).date) : undefined
+                                                                            : undefined
+                                                                    }
+                                                                    style={{ width: 500 }}
+                                                                    onChange={(e, d) => {
+                                                                        let defaultFrequency = props.form.defaultFrequency;
+                                                                        defaultFrequency = defaultFrequency.map((el) => {
+                                                                            if (el.roomType === roomType.roomId) {
+                                                                                return { ...el, date: moment(e).format('MMMM DD, YYYY h:mm:ss a') };
+                                                                            }
+                                                                            return el;
+                                                                        })
+                                                                        props.setForm({ ...props.form, defaultFrequency: defaultFrequency });
+                                                                    }}
+                                                                />
+                                                            </Form.Item> : null
+                                                    }
+
+                                                    {
+                                                        (props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
                                                             props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).frequency) === 'Yearly' ?
                                                             <Form.Item
                                                                 label="Dia do mês"
@@ -313,8 +344,10 @@ const FormView = (props) => {
                                                                 <DatePicker
                                                                     format='DD/MM/YYYY'
                                                                     value={
-                                                                        props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
-                                                                        moment(props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).date)
+                                                                        props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) ?
+                                                                            moment(props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).date).isValid() ?
+                                                                                moment(props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).date) : undefined
+                                                                            : undefined
                                                                     }
                                                                     style={{ width: 500 }}
                                                                     onChange={(e, d) => {

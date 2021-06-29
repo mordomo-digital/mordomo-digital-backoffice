@@ -62,7 +62,7 @@ const FormContainer = (props) => {
                                 frequency: '',
                                 weekdays: [],
                                 day: '',
-                                date: Date.now(),
+                                date: undefined,
                                 weekOfTheMonth: '',
                             });
                         }
