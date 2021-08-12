@@ -54,7 +54,7 @@ const HomeView = (props) => {
             { name: 'Opções', route: 'menu-options' },
             { name: 'Grupos', route: 'menu-groups' },
         ],
-        { name: 'Babá', route: 'babysitter-tasks' },
+        // { name: 'Babá', route: 'babysitter-tasks' },
     ];
 
     /**

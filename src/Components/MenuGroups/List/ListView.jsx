@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Modules
-import { Card, Table, Tag, Space, Button, Breadcrumb, Modal } from 'antd';
+import { Card, Table, Space, Button, Breadcrumb, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
@@ -25,29 +25,6 @@ const ListView = (props) => {
             title: 'Nome',
             dataIndex: 'name',
             key: 'name',
-        },
-        {
-            title: 'Opções',
-            dataIndex: 'options',
-            key: 'options',
-            render: (options) => {
-                return (
-                    <span>
-
-                        {options.map(el => {
-                            return (
-                                <Tag
-                                    color='blue'
-                                    key={el._id}
-                                >
-                                    {el.name}
-                                </Tag>
-                            )
-                        })}
-
-                    </span>
-                )
-            }
         },
         {
             title: 'Ações',

@@ -3,7 +3,6 @@ import React from 'react';
 // Modules
 import { Card, Breadcrumb, Form, Input, Button, Divider, Select, DatePicker, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
-import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 // Style
@@ -53,73 +52,6 @@ const FormView = (props) => {
                         layout='vertical'
                     >
 
-                        <Form.Item
-                            label="Ícone"
-                        >
-
-                            <Button
-                                icon={<UploadOutlined />}
-                                onClick={() => document.getElementById('room-tasks-img-file').click()}
-                                style={{ marginBottom: '10px' }}
-                            >
-                                Enviar icone
-                            </Button><br />
-
-                            {
-                                props.form.icon ?
-                                    <Card
-                                        style={{
-                                            color: '#6495ED',
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        <img
-                                            alt='thumb'
-                                            id='room-tasks-img-file-thumb'
-                                            style={{
-                                                height: 50,
-                                                marginRight: 10
-                                            }}
-                                            src={props.form.iconThumb}
-                                        />
-
-                                        <div
-                                            style={{
-                                                float: 'right',
-                                                lineHeight: 5
-                                            }}
-                                        >
-                                            <DeleteOutlined
-                                                style={{
-                                                    color: 'red',
-                                                    cursor: 'pointer',
-                                                    fontSize: 14,
-                                                }}
-                                                onClick={() => props.setForm({ ...props.form, icon: '' })}
-                                            />
-                                        </div>
-                                    </Card> : null
-                            }
-
-                            <input
-                                type='file'
-                                id='room-tasks-img-file'
-                                style={{ display: 'none' }}
-                                accept='image/x-png'
-                                onChange={e => {
-                                    let filesArray = e.target.files;
-                                    let file = filesArray[filesArray.length - 1];
-                                    // Set thumbnail
-                                    var fileReader = new FileReader();
-                                    fileReader.readAsDataURL(file);
-                                    fileReader.onload = function (oFREvent) {
-                                        props.setForm({ ...props.form, icon: file, iconThumb: oFREvent.target.result });
-                                    };
-                                }}
-                            />
-
-                        </Form.Item>
-
 
                         <Form.Item
                             label="Nome"
@@ -161,7 +93,6 @@ const FormView = (props) => {
                                                         >
                                                             <Select.Option value="Daily">Diária</Select.Option>
                                                             <Select.Option value="Weekly">Semanal</Select.Option>
-                                                            <Select.Option value="Monthly">Mensal - Data</Select.Option>
                                                             <Select.Option value="WeekInMonth">Mensal - Dia e Semana</Select.Option>
                                                             <Select.Option value="Quarterly">Trimestral</Select.Option>
                                                             <Select.Option value="Yearly">Semestral</Select.Option>
@@ -376,9 +307,7 @@ const FormView = (props) => {
 
                     <Button
                         type='primary'
-                        disabled={
-                            !props.form.name || !props.form.icon
-                        }
+                        disabled={!props.form.name}
                         onClick={() => props.save()}
                         loading={props.loadingSaveButton}
                     >
