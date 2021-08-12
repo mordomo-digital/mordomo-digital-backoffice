@@ -38,14 +38,12 @@ const FormContainer = (props) => {
 
             // Check if response was successfuly
             if (apiResponse.code === 200) {
-
                 setForm({
                     name: apiResponse.data['name'],
-                    defaultFrequency: apiResponse.data['defaultFrequency'],
-                })
+                });
 
                 let arrayOfRoomTypes = [];
-                let arrayOfDefaultFrequency = [];
+                let arrayOfDefaultFrequency = apiResponse.data['defaultFrequency'] || [];
                 for (let index = 0; index < localRoomTypes.length; index++) {
                     if (localRoomTypes[index]['tasks'].includes(id)) {
                         let roomTypeToAdd = {
@@ -54,25 +52,28 @@ const FormContainer = (props) => {
                         };
                         arrayOfRoomTypes.push(roomTypeToAdd);
 
-                        if (apiResponse.data['defaultFrequency'].length === 0) {
-                            arrayOfDefaultFrequency.push({
+                        if (arrayOfDefaultFrequency.length === 0 ||
+                            (arrayOfDefaultFrequency[index] && arrayOfDefaultFrequency[index]['roomType']) !== roomTypeToAdd['roomId']
+                        ) {
+                            let defaultFrequencyToAdd = {
                                 roomType: localRoomTypes[index]['_id'],
                                 frequency: '',
                                 weekdays: [],
                                 day: '',
                                 date: undefined,
                                 weekOfTheMonth: '',
-                            });
+                            };
+
+                            if (arrayOfDefaultFrequency.length === 0) arrayOfDefaultFrequency.push(defaultFrequencyToAdd);
+                            else arrayOfDefaultFrequency.splice(index, 0, defaultFrequencyToAdd);
                         }
                     }
                 }
+                setForm({
+                    name: apiResponse.data['name'],
+                    defaultFrequency: arrayOfDefaultFrequency
+                });
                 setRoomTypes([...arrayOfRoomTypes]);
-                if (apiResponse.data['defaultFrequency'].length === 0) {
-                    setForm({
-                        name: apiResponse.data['name'],
-                        defaultFrequency: arrayOfDefaultFrequency
-                    });
-                }
 
             } else {
 
