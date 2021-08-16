@@ -9,32 +9,33 @@ import env from './env.json';
 // Components
 import Login from './Components/Login/LoginContainer';
 import Home from './Components/Home/HomeContainer';
+import VerifyUser from './Components/VerifyUser/VerifyUserContainer';
 
 window.auth = (Component, props) => {
   let token = sessionStorage.getItem('access_token') || localStorage.getItem('access_token') || '';
   try {
     jwt.verify(token, env.jwt_secret);
     return <Component {...props} />
-  } catch(err){
+  } catch (err) {
     return <Login {...props} />
   }
 }
 
 ReactDOM.render(
-  
+
   <React.StrictMode>
-    
+
     <BrowserRouter>
-    
+
       <Switch>
 
         <Route path='/' exact render={(props) => window.auth(Home, props)} />
         <Route path='/home' render={(props) => window.auth(Home, props)} />
-
+        <Route path='/authorize-user' component={VerifyUser} />
 
       </Switch>
-    
-    </BrowserRouter>  
+
+    </BrowserRouter>
 
   </React.StrictMode>,
 
