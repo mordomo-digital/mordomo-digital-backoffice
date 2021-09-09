@@ -30,7 +30,12 @@ const ListView = (props) => {
                 if (e === 'free') return 'Gratuito';
                 if (e === 'premium') return 'Premium';
                 return '-';
-            }
+            },
+            filters: [
+                { text: 'Gratuito', value: 'free' },
+                { text: 'Premium', value: 'premium' },
+            ],
+            onFilter: (value, record) => record.userType.indexOf(value) === 0,
         },
         {
             title: 'Verificado?',
@@ -39,7 +44,12 @@ const ListView = (props) => {
             render: (e) => {
                 if (e === true) return 'Sim';
                 return 'Não';
-            }
+            },
+            filters: [
+                { text: 'Sim', value: true },
+                { text: 'Não', value: false },
+            ],
+            onFilter: (value, record) => record.verified === value,
         },
         {
             title: 'Ações',
