@@ -32,6 +32,9 @@ import BabysitterTasksForm from '../BabysitterTasks/Form/FormContainer';
 import UsersList from '../Users/List/ListContainer';
 import UsersForm from '../Users/Form/FormContainer';
 
+import BonusList from '../Bonus/List/ListContainer';
+import BonusForm from '../Bonus/Form/FormContainer';
+
 const { Header, Content, Sider } = Layout;
 
 const HomeView = (props) => {
@@ -58,6 +61,7 @@ const HomeView = (props) => {
             { name: 'Grupos', route: 'menu-groups' },
         ],
         { name: 'Usuários', route: 'users' },
+        { name: 'Bônus', route: 'bonus' },
         // { name: 'Babá', route: 'babysitter-tasks' },
     ];
 
@@ -207,6 +211,10 @@ const HomeView = (props) => {
 
                         {props.location.pathname === '/home/users' && !props.location.search ? <UsersList parent_props={props} /> : null}
                         {props.location.pathname === '/home/users/update' ? <UsersForm parent_props={props} /> : null}
+
+                        {props.location.pathname === '/home/bonus' && !props.location.search ? <BonusList parent_props={props} /> : null}
+                        {props.location.pathname === '/home/bonus/new' ? <BonusForm parent_props={props} /> : null}
+                        {props.location.pathname === '/home/bonus/update' ? <BonusForm parent_props={props} /> : null}
 
                     </Content>
 
