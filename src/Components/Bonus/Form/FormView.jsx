@@ -30,7 +30,7 @@ const FormView = (props) => {
             >
 
                 <Card
-                    title='Usuário'
+                    title='Bônus'
                 >
 
                     <Breadcrumb>
