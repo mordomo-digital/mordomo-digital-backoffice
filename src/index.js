@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import env from './env.json';
+import { initializeApp } from 'firebase/app';
 
 // Components
 import Login from './Components/Login/LoginContainer';
@@ -21,6 +22,8 @@ window.auth = (Component, props) => {
     return <Login {...props} />
   }
 }
+
+initializeApp(env.firebase_config);
 
 ReactDOM.render(
 
