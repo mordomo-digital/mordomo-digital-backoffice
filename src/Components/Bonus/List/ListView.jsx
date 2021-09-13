@@ -18,6 +18,11 @@ const ListView = (props) => {
             key: 'title',
         },
         {
+            title: 'Resumo',
+            dataIndex: 'abstract',
+            key: 'abstract',
+        },
+        {
             title: 'Ações',
             key: 'actions',
             width: 100,

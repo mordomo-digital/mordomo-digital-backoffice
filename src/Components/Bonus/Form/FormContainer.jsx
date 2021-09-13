@@ -15,7 +15,7 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ title: '', img: '', imgThumb: '', body: '' });
+    const [form, setForm] = useState({ title: '', abstract: '', img: '', imgThumb: '', body: '' });
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -39,6 +39,7 @@ const FormContainer = (props) => {
 
                 setForm({
                     title: apiResponse.data['title'],
+                    abstract: apiResponse.data['abstract'],
                     img: apiResponse.data['img'],
                     body: apiResponse.data['body'],
                 })
@@ -88,6 +89,7 @@ const FormContainer = (props) => {
 
         let formToAdd = {
             title: form.title,
+            abstract: form.abstract,
             img: imgUrl,
             body: form.body,
         }

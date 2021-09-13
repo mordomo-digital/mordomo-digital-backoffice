@@ -55,16 +55,6 @@ const FormView = (props) => {
                     >
 
                         <Form.Item
-                            label="Título"
-                        >
-                            <Input
-                                value={props.form.title}
-                                disabled={props.idToUpdate ? true : false}
-                                onChange={e => props.setForm({ ...props.form, title: e.target.value })}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
                             label="Imagem"
                         >
 
@@ -131,6 +121,25 @@ const FormView = (props) => {
                                 }}
                             />
 
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Título"
+                        >
+                            <Input
+                                value={props.form.title}
+                                disabled={props.idToUpdate ? true : false}
+                                onChange={e => props.setForm({ ...props.form, title: e.target.value })}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Resumo"
+                        >
+                            <Input
+                                value={props.form.abstract}
+                                onChange={e => props.setForm({ ...props.form, abstract: e.target.value })}
+                            />
                         </Form.Item>
 
                         <Form.Item

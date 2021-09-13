@@ -89,7 +89,7 @@ const ListContainer = (props) => {
      */
     const searchRegister = (searchTerm) => {
         searchTerm = searchTerm.toLowerCase();
-        let localData = allData.filter(el => el.title.toLowerCase().includes(searchTerm));
+        let localData = allData.filter(el => (el.title.toLowerCase().includes(searchTerm) || el.abstract.toLowerCase().includes(searchTerm)));
         setData(localData);
     }
 
