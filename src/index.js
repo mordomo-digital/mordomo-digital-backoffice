@@ -12,6 +12,7 @@ import Login from './Components/Login/LoginContainer';
 import Home from './Components/Home/HomeContainer';
 import VerifyUser from './Components/VerifyUser/VerifyUserContainer';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicyContainer';
+import RecoverPass from './Components/RecoverPass/RecoverPassContainer';
 
 window.auth = (Component, props) => {
   let token = sessionStorage.getItem('access_token') || localStorage.getItem('access_token') || '';
@@ -37,6 +38,7 @@ ReactDOM.render(
         <Route path='/home' render={(props) => window.auth(Home, props)} />
         <Route path='/authorize-user' component={VerifyUser} />
         <Route path='/privacy-policy' component={PrivacyPolicy} />
+        <Route path='/recover-pass' component={RecoverPass} />
 
       </Switch>
 
