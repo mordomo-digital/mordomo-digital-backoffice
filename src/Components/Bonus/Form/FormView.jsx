@@ -147,8 +147,8 @@ const FormView = (props) => {
                         >
                             <ReactQuill
                                 theme="snow"
-                                value={props.form.body}
-                                onChange={e => props.setForm({ ...props.form, body: e })}
+                                value={props.body}
+                                onChange={e => props.setBody(e)}
                                 modules={{
                                     toolbar: [
                                         [{ 'size': ['small', false, 'large', 'huge'] }],

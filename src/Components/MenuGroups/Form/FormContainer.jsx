@@ -130,7 +130,6 @@ const FormContainer = (props) => {
         Form.append('image', imageWithNewName);
         Form.append('options', JSON.stringify(form.options));
         Form.append('meals', JSON.stringify(form.meals));
-        console.log(Form);
 
         // Call API.
         let apiResponse = await fetch(endpoint,

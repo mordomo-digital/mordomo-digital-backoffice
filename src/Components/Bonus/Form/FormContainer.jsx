@@ -16,6 +16,7 @@ const FormContainer = (props) => {
      * Set form.
      */
     const [form, setForm] = useState({ title: '', abstract: '', img: '', imgThumb: '', body: '' });
+    const [body, setBody] = useState(null);
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -41,8 +42,9 @@ const FormContainer = (props) => {
                     title: apiResponse.data['title'],
                     abstract: apiResponse.data['abstract'],
                     img: apiResponse.data['img'],
-                    body: apiResponse.data['body'],
-                })
+                    // body: apiResponse.data['body'],
+                });
+                setBody(apiResponse.data['body']);
 
                 // Put img in thumb
                 const storage = getStorage();
@@ -91,7 +93,7 @@ const FormContainer = (props) => {
             title: form.title,
             abstract: form.abstract,
             img: imgUrl,
-            body: form.body,
+            body: body,
         }
 
         // Call API.
@@ -132,6 +134,9 @@ const FormContainer = (props) => {
 
             form={form}
             setForm={form => setForm({ ...form })}
+
+            body={body}
+            setBody={body => setBody(body)}
 
             save={() => save()}
             loadingSaveButton={loadingSaveButton}
