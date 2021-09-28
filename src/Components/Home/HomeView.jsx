@@ -14,6 +14,9 @@ import RoomTypesForm from '../RoomTypes/Form/FormContainer';
 import RoomTasksList from '../RoomTasks/List/ListContainer';
 import RoomTasksForm from '../RoomTasks/Form/FormContainer';
 
+import ExpressScheduleDayList from '../ExpressScheduleDay/List/ListContainer';
+import ExpressScheduleDayForm from '../ExpressScheduleDay/Form/FormContainer';
+
 import MarketItensList from '../MarketItens/List/ListContainer';
 import MarketItensForm from '../MarketItens/Form/FormContainer';
 
@@ -49,6 +52,11 @@ const HomeView = (props) => {
             { title: 'Cômodos' },
             { name: 'Tipos', route: 'room-types' },
             { name: 'Tarefas', route: 'room-tasks' },
+        ],
+        [
+            { title: 'Cronograma Express' },
+            { name: 'Tarefas diárias', route: 'express-schedule-day' },
+            { name: 'Faxina semanal', route: 'express-schedule-week' },
         ],
         [
             { title: 'Mercado' },
@@ -188,6 +196,10 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/room-tasks' && !props.location.search ? <RoomTasksList parent_props={props} /> : null}
                         {props.location.pathname === '/home/room-tasks/new' ? <RoomTasksForm parent_props={props} /> : null}
                         {props.location.pathname === '/home/room-tasks/update' ? <RoomTasksForm parent_props={props} /> : null}
+
+                        {props.location.pathname === '/home/express-schedule-day' && !props.location.search ? <ExpressScheduleDayList parent_props={props} /> : null}
+                        {props.location.pathname === '/home/express-schedule-day/new' ? <ExpressScheduleDayForm parent_props={props} /> : null}
+                        {props.location.pathname === '/home/express-schedule-day/update' ? <ExpressScheduleDayForm parent_props={props} /> : null}
 
                         {props.location.pathname === '/home/market-itens' && !props.location.search ? <MarketItensList parent_props={props} /> : null}
                         {props.location.pathname === '/home/market-itens/new' ? <MarketItensForm parent_props={props} /> : null}
