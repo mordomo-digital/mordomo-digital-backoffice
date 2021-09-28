@@ -34,7 +34,9 @@ const FormContainer = (props) => {
                 setForm({
                     dayWeekNumber: apiResponse.data['dayWeekNumber'],
                     tasks: apiResponse.data['tasks'],
-                })
+                });
+
+                setTasks([...apiResponse.data['tasks'][0]['tasks']]);
 
             } else {
 
@@ -55,7 +57,10 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ dayWeekNumber: '', tasks: '' });
+    const [form, setForm] = useState({ dayWeekNumber: '' });
+
+    const [taskToAdd, setTaskToAdd] = useState(null);
+    const [tasks, setTasks] = useState([]);
 
     /**
      * Save.
@@ -68,6 +73,16 @@ const FormContainer = (props) => {
         // Method
         let method = idToUpdate ? 'PUT' : 'POST';
         let endpoint = idToUpdate ? `${env.api_url}/express-schedule/${idToUpdate}` : `${env.api_url}/express-schedule`;
+        let formToSave = {
+            type: 'day',
+            dayWeekNumber: form.dayWeekNumber,
+            tasks: [
+                {
+                    room: '60db71b6f7fd0600045f7edf',
+                    tasks: tasks
+                }
+            ]
+        }
 
         // Call API.
         let apiResponse = await fetch(endpoint,
@@ -78,7 +93,7 @@ const FormContainer = (props) => {
                     'Content-Type': 'application/json'
                 },
                 method: method,
-                body: JSON.stringify(form)
+                body: JSON.stringify(formToSave)
             });
         apiResponse = await apiResponse.json();
 
@@ -108,6 +123,12 @@ const FormContainer = (props) => {
 
             form={form}
             setForm={form => setForm({ ...form })}
+
+            taskToAdd={taskToAdd}
+            setTaskToAdd={task => setTaskToAdd(task)}
+
+            tasks={tasks}
+            setTasks={tasksUpdated => setTasks(tasksUpdated)}
 
             save={() => save()}
             loadingSaveButton={loadingSaveButton}
