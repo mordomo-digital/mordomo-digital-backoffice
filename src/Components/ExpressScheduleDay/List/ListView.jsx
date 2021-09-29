@@ -23,7 +23,7 @@ const ListView = (props) => {
     // Columns of the table list
     const columns = [
         {
-            title: 'Dia',
+            title: 'Dia sugerido',
             dataIndex: 'dayWeekNumber',
             key: 'dayWeekNumber',
             render: (v) => weekdays[v],

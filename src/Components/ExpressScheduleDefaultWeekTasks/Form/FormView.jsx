@@ -28,7 +28,7 @@ const FormView = (props) => {
             >
 
                 <Card
-                    title='Cronograma Express - Serviços diários'
+                    title='Cronograma Express - Serviços comuns na faxina'
                 >
 
                     <Breadcrumb>
@@ -38,11 +38,7 @@ const FormView = (props) => {
                         </Breadcrumb.Item>
 
                         <Breadcrumb.Item>
-                            <Link to='/home/express-schedule-day'>Cronograma Express - Serviços diários</Link>
-                        </Breadcrumb.Item>
-
-                        <Breadcrumb.Item>
-                            {props.idToUpdate ? 'Editar' : 'Novo'}
+                            Cronograma Express - Serviços comuns na faxina
                         </Breadcrumb.Item>
 
                     </Breadcrumb>
@@ -51,24 +47,6 @@ const FormView = (props) => {
                         style={{ marginTop: 40 }}
                         layout='vertical'
                     >
-                        <Form.Item
-                            label="Dia da semana sugerido"
-                            style={{ width: 250 }}
-                        >
-                            <Select
-                                style={{ width: 250 }}
-                                onChange={e => props.setForm({ ...props.form, dayWeekNumber: e })}
-                                value={props.form.dayWeekNumber}
-                            >
-                                <Select.Option value={0}>Segunda-feira</Select.Option>
-                                <Select.Option value={1}>Terça-feira</Select.Option>
-                                <Select.Option value={2}>Quarta-feira</Select.Option>
-                                <Select.Option value={3}>Quinta-feira</Select.Option>
-                                <Select.Option value={4}>Sexta-feira</Select.Option>
-                                <Select.Option value={5}>Sábado</Select.Option>
-                                <Select.Option value={6}>Domingo</Select.Option>
-                            </Select>
-                        </Form.Item>
 
                         <Form.Item
                             label="Tarefa"
