@@ -17,6 +17,9 @@ import RoomTasksForm from '../RoomTasks/Form/FormContainer';
 import ExpressScheduleDayList from '../ExpressScheduleDay/List/ListContainer';
 import ExpressScheduleDayForm from '../ExpressScheduleDay/Form/FormContainer';
 
+import ExpressScheduleWeekList from '../ExpressScheduleWeek/List/ListContainer';
+import ExpressScheduleWeekForm from '../ExpressScheduleWeek/Form/FormContainer';
+
 import ExpressScheduleDefaultTasksWeekForm from '../ExpressScheduleDefaultWeekTasks/Form/FormContainer';
 
 import MarketItensList from '../MarketItens/List/ListContainer';
@@ -203,6 +206,10 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/express-schedule-day' && !props.location.search ? <ExpressScheduleDayList parent_props={props} /> : null}
                         {props.location.pathname === '/home/express-schedule-day/new' ? <ExpressScheduleDayForm parent_props={props} /> : null}
                         {props.location.pathname === '/home/express-schedule-day/update' ? <ExpressScheduleDayForm parent_props={props} /> : null}
+
+                        {props.location.pathname === '/home/express-schedule-week' && !props.location.search ? <ExpressScheduleWeekList parent_props={props} /> : null}
+                        {props.location.pathname === '/home/express-schedule-week/new' ? <ExpressScheduleWeekForm parent_props={props} /> : null}
+                        {props.location.pathname === '/home/express-schedule-week/update' ? <ExpressScheduleWeekForm parent_props={props} /> : null}
 
                         {props.location.pathname === '/home/express-schedule-default-tasks-week/update' ? <ExpressScheduleDefaultTasksWeekForm parent_props={props} /> : null}
 
