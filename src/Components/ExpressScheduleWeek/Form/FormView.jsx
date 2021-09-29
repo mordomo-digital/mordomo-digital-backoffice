@@ -96,7 +96,6 @@ const FormView = (props) => {
                                                                 }
                                                                 return task;
                                                             })
-                                                            console.log({ ...props.form, tasks: [...tasksUpdated] });
                                                             props.setForm({ ...props.form, tasks: [...tasksUpdated] });
                                                             props.setTaskToAdd(null);
                                                         }}
