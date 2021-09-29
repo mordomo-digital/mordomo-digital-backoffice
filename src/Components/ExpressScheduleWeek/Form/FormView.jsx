@@ -150,7 +150,6 @@ const FormView = (props) => {
 
                     <Button
                         type='primary'
-                        disabled={!props.form.dayWeekNumber}
                         onClick={() => props.save()}
                         loading={props.loadingSaveButton}
                     >
