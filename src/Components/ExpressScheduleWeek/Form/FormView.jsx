@@ -123,9 +123,12 @@ const FormView = (props) => {
                                                                                     okType: 'danger',
                                                                                     cancelText: 'Não',
                                                                                     onOk() {
-                                                                                        let tasksUpdated = [...props.tasks];
-                                                                                        tasksUpdated.splice(i, 1);
-                                                                                        props.setTasks([...tasksUpdated]);
+                                                                                        let tasksUpdated = [...props.form.tasks];
+                                                                                        tasksUpdated.map(el => {
+                                                                                            if (el.room === roomType._id) el.tasks.splice(i, 1);
+                                                                                            return el;
+                                                                                        })
+                                                                                        props.setForm({ ...props.form, tasks: [...tasksUpdated] });
                                                                                     },
                                                                                 });
 

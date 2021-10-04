@@ -32,7 +32,6 @@ const FormContainer = (props) => {
 
             // Check if response was successfuly
             if (apiResponse.code === 200) {
-                console.log(apiResponse.data);
                 setForm({
                     ...form,
                     dayWeekNumber: apiResponse.data['dayWeekNumber'],
