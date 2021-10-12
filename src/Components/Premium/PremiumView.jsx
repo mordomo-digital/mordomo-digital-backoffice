@@ -2,6 +2,7 @@ import React from 'react';
 import Cards from 'react-credit-cards';
 import './PremiumStyle.css';
 import icon from '../../assets/img/icon.png';
+import InputMask from "react-input-mask";
 import TextField from '@mui/material/TextField';
 import { Divider } from 'antd';
 
@@ -32,27 +33,37 @@ const PremiumView = (props) => {
                             name: 'NOME'
                         }}
                     />
+                    <div style={{ height: '20px' }} />
 
                     <div className='premiumCardInfo'>
-                        <TextField
-                            id="outlined-basic"
-                            label="Número do cartão"
-                            variant="outlined"
-                            fullWidth
-                            InputProps={{
-                                style: {
-                                    fontFamily: "Poiret One"
-                                }
-                            }}
-                            InputLabelProps={{
-                                style: {
-                                    fontFamily: "Poiret One"
-                                },
-                            }}
+                        <InputMask
+                            mask="9999 9999 9999 9999"
+                            disabled={false}
+                            maskChar=" "
                             value={props.card.number}
                             onChange={e => props.setCard({ ...props.card, number: e.target.value })}
-                            onFocus={e => props.setCard({ ...props.card, focus: e.target.name })}
-                        />
+                            onFocus={e => props.setCard({ ...props.card, focus: 'number' })}
+                        >
+                            {(inputProps) =>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Número do cartão"
+                                    variant="outlined"
+                                    fullWidth
+                                    InputProps={{
+                                        style: {
+                                            fontFamily: "Poiret One"
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            fontFamily: "Poiret One"
+                                        },
+                                    }}
+                                    {...inputProps}
+                                />
+                            }
+                        </InputMask>
                         <div style={{ height: '20px' }} />
 
                         <form>
@@ -74,48 +85,67 @@ const PremiumView = (props) => {
                                 }}
                                 value={props.card.name}
                                 onChange={e => props.setCard({ ...props.card, name: e.target.value })}
-                                onFocus={e => props.setCard({ ...props.card, focus: e.target.name })}
+                                onFocus={e => props.setCard({ ...props.card, focus: 'name' })}
                             />
                             <div style={{ height: '20px' }} />
 
-                            <TextField
-                                id="outlined-basic"
-                                label="Validade"
-                                variant="outlined"
-                                InputProps={{
-                                    style: {
-                                        fontFamily: "Poiret One"
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        fontFamily: "Poiret One"
-                                    },
-                                }}
-                                style={{ width: '49%' }}
+                            <InputMask
+                                mask="99/99"
+                                disabled={false}
+                                maskChar=" "
                                 value={props.card.expiry}
                                 onChange={e => props.setCard({ ...props.card, expiry: e.target.value })}
-                                onFocus={e => props.setCard({ ...props.card, focus: e.target.name })}
-                            />
-                            <TextField
-                                id="outlined-basic"
-                                label="CVC"
-                                variant="outlined"
-                                InputProps={{
-                                    style: {
-                                        fontFamily: "Poiret One"
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        fontFamily: "Poiret One"
-                                    },
-                                }}
-                                style={{ width: '49%', float: 'right' }}
+                                onFocus={e => props.setCard({ ...props.card, focus: 'expiry' })}
+                            >
+                                {(inputProps) =>
+                                    <TextField
+                                        id="outlined-basic"
+                                        label="Validade"
+                                        variant="outlined"
+                                        InputProps={{
+                                            style: {
+                                                fontFamily: "Poiret One"
+                                            }
+                                        }}
+                                        InputLabelProps={{
+                                            style: {
+                                                fontFamily: "Poiret One"
+                                            },
+                                        }}
+                                        style={{ width: '49%' }}
+                                        {...inputProps}
+                                    />
+                                }
+                            </InputMask>
+
+                            <InputMask
+                                mask="9999"
+                                disabled={false}
+                                maskChar=" "
                                 value={props.card.cvc}
                                 onChange={e => props.setCard({ ...props.card, cvc: e.target.value })}
-                                onFocus={e => props.setCard({ ...props.card, focus: e.target.name })}
-                            />
+                                onFocus={e => props.setCard({ ...props.card, focus: 'cvc' })}
+                            >
+                                {(inputProps) =>
+                                    <TextField
+                                        id="outlined-basic"
+                                        label="CVC"
+                                        variant="outlined"
+                                        InputProps={{
+                                            style: {
+                                                fontFamily: "Poiret One"
+                                            }
+                                        }}
+                                        InputLabelProps={{
+                                            style: {
+                                                fontFamily: "Poiret One"
+                                            },
+                                        }}
+                                        style={{ width: '49%', float: 'right' }}
+                                        {...inputProps}
+                                    />
+                                }
+                            </InputMask>
                             <div style={{ height: '20px' }} />
                         </form>
                     </div>
