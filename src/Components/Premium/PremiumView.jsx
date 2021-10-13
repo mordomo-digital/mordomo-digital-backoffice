@@ -4,6 +4,7 @@ import './PremiumStyle.css';
 import icon from '../../assets/img/icon.png';
 import InputMask from "react-input-mask";
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import { Divider } from 'antd';
 
 const PremiumView = (props) => {
@@ -146,7 +147,43 @@ const PremiumView = (props) => {
                                     />
                                 }
                             </InputMask>
+
+                            <Divider />
+
+                            <TextField
+                                id="outlined-basic"
+                                label="Cupom de desconto"
+                                variant="outlined"
+                                fullWidth
+                                InputProps={{
+                                    style: {
+                                        fontFamily: "Poiret One"
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        fontFamily: "Poiret One"
+                                    },
+                                }}
+                                value={props.card.name}
+                                onChange={e => props.setCard({ ...props.card, name: e.target.value })}
+                            />
+
+                            <Divider />
+
+                            <div style={{ textAlign: 'center' }}>
+                                <div className='premiumSubTitle'>Total: R$ 10,58 <span style={{ fontSize: 'x-small' }}>/ mês</span></div>
+                            </div>
+
+                            <Divider />
+
+                            <Button
+                                variant="contained"
+                                size="large"
+                                fullWidth
+                            >Assinar</Button>
                             <div style={{ height: '20px' }} />
+
                         </form>
                     </div>
                 </div>
