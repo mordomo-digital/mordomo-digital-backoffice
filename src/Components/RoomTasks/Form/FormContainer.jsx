@@ -96,25 +96,28 @@ const FormContainer = (props) => {
      */
     const [loadingSaveButton, setLoadingSaveButton] = useState(false);
     const save = async () => {
+
         setLoadingSaveButton(true);
 
         // Method
         let method = idToUpdate ? 'PUT' : 'POST';
         let endpoint = idToUpdate ? `${env.api_url}/room-tasks/${idToUpdate}` : `${env.api_url}/room-tasks`;
 
-        // Create form to save.
-        let Form = new FormData();
-        Form.append('name', form.name);
-        Form.append('defaultFrequency', JSON.stringify(form.defaultFrequency));
+        let Form = {
+            'name': form.name,
+            'defaultFrequency': JSON.stringify(form.defaultFrequency),
+        }
 
         // Call API.
         let apiResponse = await fetch(endpoint,
             {
                 headers: {
-                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
+                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 method: method,
-                body: Form
+                body: JSON.stringify(Form)
             });
         apiResponse = await apiResponse.json();
 
