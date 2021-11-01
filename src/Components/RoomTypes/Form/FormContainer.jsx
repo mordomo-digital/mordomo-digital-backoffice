@@ -11,10 +11,13 @@ const FormContainer = (props) => {
 
     props = props.parent_props;
 
+    // Loading screen
+    const [loadingScreen, setLoadingScreen] = useState(false);
+
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ name: '', tasks: [] });
+    const [form, setForm] = useState({ name: '', tasks: [], isAPremiumRoomType: false, });
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -37,10 +40,10 @@ const FormContainer = (props) => {
             if (apiResponse.code === 200) {
 
                 await getTasks();
-
                 setForm({
                     name: apiResponse.data['name'],
                     tasks: apiResponse.data['tasks'].map(el => el._id),
+                    isAPremiumRoomType: apiResponse.data['isAPremiumRoomType'],
                 })
 
             } else {
@@ -48,12 +51,15 @@ const FormContainer = (props) => {
                 message.error(apiResponse.message);
 
             }
+
+            setLoadingScreen(false);
         }
 
         /**
          * Check if update or create form
          */
         if (props.location.state) {
+            setLoadingScreen(true);
             setIdToUpdate(props.location.state.id)
             getDataToUpdate(props.location.state.id);
         } else {
@@ -108,6 +114,7 @@ const FormContainer = (props) => {
         let Form = {};
         Form['name'] = form.name;
         Form['tasks'] = JSON.stringify(form.tasks);
+        Form['isAPremiumRoomType'] = form.isAPremiumRoomType;
 
         // Call API.
         let apiResponse = await fetch(endpoint,
@@ -152,6 +159,8 @@ const FormContainer = (props) => {
 
             save={() => save()}
             loadingSaveButton={loadingSaveButton}
+
+            loadingScreen={loadingScreen}
         />
 
     )
