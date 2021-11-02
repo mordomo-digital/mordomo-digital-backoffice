@@ -2,7 +2,7 @@ import React from 'react';
 
 // Modules
 import { Card, Table, Space, Button, Breadcrumb, Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 // Styles
@@ -25,6 +25,17 @@ const ListView = (props) => {
             title: 'Nome',
             dataIndex: 'name',
             key: 'name',
+        },
+        {
+            title: 'Exclusivo Premium',
+            dataIndex: 'isAPremiumMarketItemGroup',
+            key: 'isAPremiumMarketItemGroup',
+            width: 100,
+            align: 'center',
+            render: e => {
+                if (e) return <CheckCircleOutlined style={{ color: 'green' }} />
+                return ''
+            }
         },
         {
             title: 'Ações',
@@ -78,6 +89,7 @@ const ListView = (props) => {
         return {
             ...el,
             name: el.name,
+            isAPremiumMarketItemGroup: el.isAPremiumMarketItemGroup,
             _createdAt: new Date(el._createdAt).toLocaleString('pt-BR'),
             key: el._id,
             icon: base64Flag + imageStr,

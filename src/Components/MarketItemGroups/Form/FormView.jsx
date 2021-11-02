@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Modules
-import { Card, Breadcrumb, Form, Input, Button, Divider } from 'antd';
+import { Card, Breadcrumb, Form, Input, Button, Divider, Spin, Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -20,135 +20,148 @@ const FormView = (props) => {
             }}
         >
 
-            <div
-                style={{
-                    maxHeight: '100%',
-                    overflow: 'auto'
-                }}
-            >
+            <Spin spinning={props.loadingScreen}>
 
-                <Card
-                    title='Tipo de cômodo'
+                <div
+                    style={{
+                        maxHeight: '100%',
+                        overflow: 'auto'
+                    }}
                 >
 
-                    <Breadcrumb>
-
-                        <Breadcrumb.Item>
-                            <Link to='/home'>Início</Link>
-                        </Breadcrumb.Item>
-
-                        <Breadcrumb.Item>
-                            <Link to='/home/market-item-groups'>Grupos de itens</Link>
-                        </Breadcrumb.Item>
-
-                        <Breadcrumb.Item>
-                            {props.idToUpdate ? 'Editar' : 'Novo'}
-                        </Breadcrumb.Item>
-
-                    </Breadcrumb>
-
-                    <Form
-                        style={{ marginTop: 40 }}
-                        layout='vertical'
+                    <Card
+                        title='Grupos de itens'
                     >
 
-                        <Form.Item
-                            label="Ícone"
+                        <Breadcrumb>
+
+                            <Breadcrumb.Item>
+                                <Link to='/home'>Início</Link>
+                            </Breadcrumb.Item>
+
+                            <Breadcrumb.Item>
+                                <Link to='/home/market-item-groups'>Grupos de itens</Link>
+                            </Breadcrumb.Item>
+
+                            <Breadcrumb.Item>
+                                {props.idToUpdate ? 'Editar' : 'Novo'}
+                            </Breadcrumb.Item>
+
+                        </Breadcrumb>
+
+                        <Form
+                            style={{ marginTop: 40 }}
+                            layout='vertical'
                         >
 
-                            <Button
-                                icon={<UploadOutlined />}
-                                onClick={() => document.getElementById('market-item-groups-img-file').click()}
-                                style={{ marginBottom: '10px' }}
+                            <Form.Item
+                                label="Ícone"
                             >
-                                Enviar icone
-                            </Button><br />
 
-                            {
-                                props.form.icon ?
-                                    <Card
-                                        style={{
-                                            color: '#6495ED',
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        <img
-                                            alt='thumb'
-                                            id='market-item-groups-img-file-thumb'
-                                            style={{
-                                                height: 50,
-                                                marginRight: 10
-                                            }}
-                                            src={props.form.iconThumb}
-                                        />
+                                <Button
+                                    icon={<UploadOutlined />}
+                                    onClick={() => document.getElementById('market-item-groups-img-file').click()}
+                                    style={{ marginBottom: '10px' }}
+                                >
+                                    Enviar icone
+                                </Button><br />
 
-                                        <div
+                                {
+                                    props.form.icon ?
+                                        <Card
                                             style={{
-                                                float: 'right',
-                                                lineHeight: 5
+                                                color: '#6495ED',
+                                                fontSize: 12
                                             }}
                                         >
-                                            <DeleteOutlined
+                                            <img
+                                                alt='thumb'
+                                                id='market-item-groups-img-file-thumb'
                                                 style={{
-                                                    color: 'red',
-                                                    cursor: 'pointer',
-                                                    fontSize: 14,
+                                                    height: 50,
+                                                    marginRight: 10
                                                 }}
-                                                onClick={() => props.setForm({ ...props.form, icon: '' })}
+                                                src={props.form.iconThumb}
                                             />
-                                        </div>
-                                    </Card> : null
+
+                                            <div
+                                                style={{
+                                                    float: 'right',
+                                                    lineHeight: 5
+                                                }}
+                                            >
+                                                <DeleteOutlined
+                                                    style={{
+                                                        color: 'red',
+                                                        cursor: 'pointer',
+                                                        fontSize: 14,
+                                                    }}
+                                                    onClick={() => props.setForm({ ...props.form, icon: '' })}
+                                                />
+                                            </div>
+                                        </Card> : null
+                                }
+
+                                <input
+                                    type='file'
+                                    id='market-item-groups-img-file'
+                                    style={{ display: 'none' }}
+                                    accept='image/x-png'
+                                    onChange={e => {
+                                        let filesArray = e.target.files;
+                                        let file = filesArray[filesArray.length - 1];
+
+                                        // Set thumbnail
+                                        var fileReader = new FileReader();
+                                        fileReader.readAsDataURL(file);
+                                        fileReader.onload = function (oFREvent) {
+                                            props.setForm({ ...props.form, icon: file, iconThumb: oFREvent.target.result });
+                                        };
+                                    }}
+                                />
+
+                            </Form.Item>
+
+
+                            <Form.Item
+                                label="Nome"
+                                style={{ width: 500 }}
+                            >
+                                <Input
+                                    value={props.form.name}
+                                    onChange={e => props.setForm({ ...props.form, name: e.target.value })}
+                                />
+                            </Form.Item>
+
+                            <Form.Item
+                                label='Exclusivo para usuários premium?'
+                            >
+                                <Switch
+                                    checked={props.form.isAPremiumMarketItemGroup}
+                                    onChange={e => props.setForm({ ...props.form, isAPremiumMarketItemGroup: e })}
+                                />
+                            </Form.Item>
+
+                        </Form>
+
+                        <Divider />
+
+                        <Button
+                            type='primary'
+                            disabled={
+                                !props.form.name || !props.form.icon
                             }
-
-                            <input
-                                type='file'
-                                id='market-item-groups-img-file'
-                                style={{ display: 'none' }}
-                                accept='image/x-png'
-                                onChange={e => {
-                                    let filesArray = e.target.files;
-                                    let file = filesArray[filesArray.length - 1];
-
-                                    // Set thumbnail
-                                    var fileReader = new FileReader();
-                                    fileReader.readAsDataURL(file);
-                                    fileReader.onload = function (oFREvent) {
-                                        props.setForm({ ...props.form, icon: file, iconThumb: oFREvent.target.result });
-                                    };
-                                }}
-                            />
-
-                        </Form.Item>
-
-
-                        <Form.Item
-                            label="Nome"
-                            style={{ width: 500 }}
+                            onClick={() => props.save()}
+                            loading={props.loadingSaveButton}
                         >
-                            <Input
-                                value={props.form.name}
-                                onChange={e => props.setForm({ ...props.form, name: e.target.value })}
-                            />
-                        </Form.Item>
+                            {props.idToUpdate ? 'Atualizar' : 'Salvar'}
+                        </Button>
 
-                    </Form>
+                    </Card>
 
-                    <Divider />
+                </div>
 
-                    <Button
-                        type='primary'
-                        disabled={
-                            !props.form.name || !props.form.icon
-                        }
-                        onClick={() => props.save()}
-                        loading={props.loadingSaveButton}
-                    >
-                        {props.idToUpdate ? 'Atualizar' : 'Salvar'}
-                    </Button>
-
-                </Card>
-
-            </div>
+            </Spin>
 
         </div>
 

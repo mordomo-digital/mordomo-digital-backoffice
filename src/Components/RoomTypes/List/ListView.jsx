@@ -44,6 +44,8 @@ const ListView = (props) => {
             title: 'Exclusivo Premium',
             dataIndex: 'isAPremiumRoomType',
             key: 'isAPremiumRoomType',
+            align: 'center',
+            width: 100,
             render: (e) => {
                 if (e)
                     return <CheckCircleOutlined style={{ color: 'green' }} />

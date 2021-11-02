@@ -1,4 +1,6 @@
 {
     "api_url": "localhost:4200",
-    "jwt_secret": ""
+    "jwt_secret": "",
+    "firebase_config": {},
+    "ownerId": ""
 }

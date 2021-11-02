@@ -11,10 +11,12 @@ const FormContainer = (props) => {
 
     props = props.parent_props;
 
+    const [loadingScreen, setLoadingScreen] = useState(false);
+
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ name: '', icon: '', iconThumb: '' });
+    const [form, setForm] = useState({ name: '', icon: '', iconThumb: '', isAPremiumMarketItemGroup: false, });
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -39,7 +41,8 @@ const FormContainer = (props) => {
                 setForm({
                     name: apiResponse.data['name'],
                     icon: apiResponse.data['icon'],
-                    iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`
+                    iconThumb: `data:image/png;base64,${arrayBufferToBase64(apiResponse.data['icon'].data.data)}`,
+                    isAPremiumMarketItemGroup: apiResponse.data['isAPremiumMarketItemGroup'],
                 })
 
             } else {
@@ -47,12 +50,15 @@ const FormContainer = (props) => {
                 message.error(apiResponse.message);
 
             }
+
+            setLoadingScreen(false);
         }
 
         /**
          * Check if update or create form
          */
         if (props.location.state) {
+            setLoadingScreen(true);
             setIdToUpdate(props.location.state.id)
             getDataToUpdate(props.location.state.id);
         }
@@ -82,6 +88,7 @@ const FormContainer = (props) => {
         let Form = new FormData();
         Form.append('name', form.name);
         Form.append('image', imageWithNewName);
+        Form.append('isAPremiumMarketItemGroup', form.isAPremiumMarketItemGroup);
 
         // Call API.
         let apiResponse = await fetch(endpoint,
@@ -127,6 +134,8 @@ const FormContainer = (props) => {
     return (
 
         <FormView
+            loadingScreen={loadingScreen}
+
             idToUpdate={idToUpdate}
 
             form={form}
