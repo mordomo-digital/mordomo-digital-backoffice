@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build
-        env: |
+        env:
           REACT_APP_API_URL=https://mordomo-digital-api.herokuapp.com
           REACT_APP_JWT_SECRET=${{secrets.REACT_APP_JWT_SECRET}}
           REACT_APP_FIREBASE_APIKEY=${{secrets.REACT_APP_FIREBASE_APIKEY}}
