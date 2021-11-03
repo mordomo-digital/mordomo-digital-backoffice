@@ -2,7 +2,7 @@ import React from 'react';
 
 // Modules
 import { Card, Table, Space, Breadcrumb, Modal, Input } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 // Styles
@@ -50,6 +50,17 @@ const ListView = (props) => {
                 { text: 'Não', value: false },
             ],
             onFilter: (value, record) => record.verified === value,
+        },
+        {
+            title: 'Usuário teste apple',
+            dataIndex: 'personalData',
+            key: 'personalData',
+            width: 100,
+            align: 'center',
+            render: (e) => {
+                if (e && e.isAnAppleTester) return <CheckCircleOutlined style={{ color: 'green' }} />;
+                else return '';
+            }
         },
         {
             title: 'Ações',
