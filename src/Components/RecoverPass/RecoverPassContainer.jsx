@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 // Modules
-import env from '../../env.json';
 import { message } from 'antd';
 
 // Components
@@ -26,7 +25,7 @@ const RecoverPassContainer = (props) => {
             const recoveryToken = props.location.search.split('=')[1];
 
             // Call API
-            let apiResponse = await fetch(`${env.api_url}/auth/update-pass/${recoveryToken}`,
+            let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/auth/update-pass/${recoveryToken}`,
                 {
                     headers: {
                         'Accept': 'application/json',

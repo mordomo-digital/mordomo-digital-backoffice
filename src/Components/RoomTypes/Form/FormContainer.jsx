@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // Modules
 import { message } from 'antd';
-import env from '../../../env.json';
+
 
 // Components
 import FormView from './FormView';
@@ -27,7 +27,7 @@ const FormContainer = (props) => {
          */
         async function getDataToUpdate(id) {
             // Call API.
-            let apiResponse = await fetch(`${env.api_url}/room-types/${id}`,
+            let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/room-types/${id}`,
                 {
                     headers: {
                         'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
@@ -74,7 +74,7 @@ const FormContainer = (props) => {
     const getTasks = async () => {
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/room-tasks`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/room-tasks`,
             {
                 headers: {
                     'Accept': 'application/json',
@@ -108,7 +108,7 @@ const FormContainer = (props) => {
 
         // Method
         let method = idToUpdate ? 'PUT' : 'POST';
-        let endpoint = idToUpdate ? `${env.api_url}/room-types/${idToUpdate}` : `${env.api_url}/room-types`;
+        let endpoint = idToUpdate ? `${process.env.REACT_APP_API_URL}/room-types/${idToUpdate}` : `${process.env.REACT_APP_API_URL}/room-types`;
 
         // Create form to save.
         let Form = {};

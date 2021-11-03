@@ -4,7 +4,6 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
-import env from './env.json';
 import { initializeApp } from 'firebase/app';
 
 // Components
@@ -18,14 +17,23 @@ import Premium from './Components/Premium/PremiumContainer';
 window.auth = (Component, props) => {
   let token = sessionStorage.getItem('access_token') || localStorage.getItem('access_token') || '';
   try {
-    jwt.verify(token, env.jwt_secret);
+    jwt.verify(token, process.env.REACT_APP_JWT_SECRET);
     return <Component {...props} />
   } catch (err) {
     return <Login {...props} />
   }
 }
 
-initializeApp(env.firebase_config);
+initializeApp({
+  "apiKey": process.env.REACT_APP_FIREBASE_APIKEY,
+  "authDomain": process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+  "databaseURL": process.env.REACT_APP_FIREBASE_DATABASEURL,
+  "projectId": process.env.REACT_APP_FIREBASE_PROJECTID,
+  "storageBucket": process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+  "messagingSenderId": process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
+  "appId": process.env.REACT_APP_FIREBASE_APPID,
+  "measurementId": process.env.REACT_APP_FIREBASE_MEASUREMENTID
+});
 
 ReactDOM.render(
 

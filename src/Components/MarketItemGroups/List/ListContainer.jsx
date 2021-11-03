@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // Modules
 import { message } from 'antd';
-import env from '../../../env.json';
+
 
 // Components
 import ListView from './ListView';
@@ -18,7 +18,7 @@ const ListContainer = (props) => {
         setLoading(true);
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/market-item-groups`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/market-item-groups`,
             {
                 headers: {
                     'Accept': 'application/json',
@@ -57,7 +57,7 @@ const ListContainer = (props) => {
     const removeData = async (id) => {
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/market-item-groups/${id}`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/market-item-groups/${id}`,
             {
                 headers: {
                     'Accept': 'application/json',

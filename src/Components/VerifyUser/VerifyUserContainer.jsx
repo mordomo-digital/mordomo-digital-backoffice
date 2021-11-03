@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 // Modules
-import env from '../../env.json';
 
 // Components
 import VerifyUserView from './VerifyUserView';
@@ -18,7 +17,7 @@ const VerifyUserContainer = (props) => {
         const token = props.location.search.split('=')[1];
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/auth/check-verification-token/${token}`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/auth/check-verification-token/${token}`,
             {
                 headers: {
                     'Accept': 'application/json',

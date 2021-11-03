@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // Modules
 import { message } from 'antd';
-import env from '../../../env.json';
+
 
 // Components
 import ListView from './ListView';
@@ -16,7 +16,7 @@ const ListContainer = (props) => {
     const getData = async () => {
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/express-schedule/day`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/express-schedule/day`,
             {
                 headers: {
                     'Accept': 'application/json',
@@ -53,7 +53,7 @@ const ListContainer = (props) => {
     const removeData = async (id) => {
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/express-schedule/${id}`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/express-schedule/${id}`,
             {
                 headers: {
                     'Accept': 'application/json',

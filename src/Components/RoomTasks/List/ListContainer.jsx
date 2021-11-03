@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // Modules
 import { message } from 'antd';
-import env from '../../../env.json';
+
 
 // Components
 import ListView from './ListView';
@@ -19,7 +19,7 @@ const ListContainer = (props) => {
         setLoading(true);
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/room-tasks`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/room-tasks`,
             {
                 headers: {
                     'Accept': 'application/json',
@@ -34,7 +34,7 @@ const ListContainer = (props) => {
         if (apiResponse.code === 200) {
 
             // Call API to get all room types
-            let apiRoomTypesResponse = await fetch(`${env.api_url}/room-types`,
+            let apiRoomTypesResponse = await fetch(`${process.env.REACT_APP_API_URL}/room-types`,
                 {
                     headers: {
                         'Accept': 'application/json',
@@ -78,7 +78,7 @@ const ListContainer = (props) => {
     const removeData = async (id) => {
 
         // Call API
-        let apiResponse = await fetch(`${env.api_url}/room-tasks/${id}`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/room-tasks/${id}`,
             {
                 headers: {
                     'Accept': 'application/json',
