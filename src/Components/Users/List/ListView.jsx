@@ -52,14 +52,23 @@ const ListView = (props) => {
             onFilter: (value, record) => record.verified === value,
         },
         {
-            title: 'Usuário teste apple',
+            title: 'Telefone',
             dataIndex: 'personalData',
-            key: 'personalData',
-            width: 100,
+            key: 'personalDataPhone',
+            width: 200,
             align: 'center',
+            filters: [
+                { text: 'Sim', value: true },
+            ],
+            onFilter: (value, record) => {
+                if (
+                    value === true &&
+                    (record && record.personalData && record.personalData.phone)
+                ) return true;
+                return false;
+            },
             render: (e) => {
-                if (e && e.isAnAppleTester) return <CheckCircleOutlined style={{ color: 'green' }} />;
-                else return '';
+                if (e && e.phone) return props.stringToPhone(e.phone);
             }
         },
         {
