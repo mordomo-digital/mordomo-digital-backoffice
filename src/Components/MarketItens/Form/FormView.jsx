@@ -99,7 +99,7 @@ const FormView = (props) => {
 
                     <Button
                         type='primary'
-                        disabled={!props.form.name || !props.form.type}
+                        disabled={!props.form.name || !props.form.group}
                         onClick={() => props.save()}
                         loading={props.loadingSaveButton}
                     >
