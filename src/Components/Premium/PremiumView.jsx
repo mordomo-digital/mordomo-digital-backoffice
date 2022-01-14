@@ -1,27 +1,45 @@
 import React from 'react';
-import Cards from 'react-credit-cards';
+// import Cards from 'react-credit-cards';
 import './PremiumStyle.css';
 import icon from '../../assets/img/icon.png';
-import InputMask from "react-input-mask";
-import TextField from '@mui/material/TextField';
+// import InputMask from "react-input-mask";
+// import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Divider } from 'antd';
+import Checkbox from '@mui/material/Checkbox';
+// import { Divider } from 'antd';
 
 const PremiumView = (props) => {
     return (
-        <div>
-            <div className='premiumBody'>
+        <div className='premiumBody'>
+            <div className='premiumTopBar'>
+                <img src={icon} alt='icon' className='premiumIcon' />
+            </div>
+            <div style={{ 'background': '#d5d4df', 'height': '10px' }}>
 
-                <div className='premiumHeader'>
-                    <img src={icon} alt='icon' className='premiumIcon' />
-                    <div className='premiumTitle'>Assinatura Premium</div>
-                    <div className='premiumSubTitle'>R$ 10,58 <span style={{ fontSize: 'x-small' }}>/ mês</span></div>
-                    <div className='premiumSupportText'>
-                        Com a assinatura Premium você tem acesso a funcionalidades extras do Mordomo Digital como editar cômodos e compartilhar tarefas.
-                    </div>
+            </div>
+            <div className='premiumTopBarTextDiv'>Mordomo Digital</div>
 
-                    <Divider />
+            <div className='premiumMiddle'>
+                <div className='premiumMiddleTextDiv'>Assinatura<br />Premium</div>
+                <div className='premiumSupportText'>
+                    Com a assinatura Premium você tem acesso a funcionalidades extras do Mordomo Digital como editar cômodos e compartilhar tarefas.
                 </div>
+
+                <div style={{ height: '30px' }} />
+
+                <div className='premiumPriceText'><Checkbox /> R$12,69  <span style={{ fontSize: 'small', fontWeight: 'normal', color: 'gray' }}> / plano mensal</span></div>
+                <div className='premiumPriceText'><Checkbox />R$126,90 <span style={{ fontSize: 'small', fontWeight: 'normal', color: 'gray' }}> / plano anual</span></div>
+            </div>
+            <div style={{ height: '10vh', background: 'white' }} />
+
+            <Button
+                variant="outlined"
+                size="large"
+                fullWidth
+                style={{ position: 'absolute', width: '90%', margin: '5%', bottom: '0px' }}
+            >Assinar</Button>
+            {/* <div className='premiumBody'>
+
 
                 <div id="PaymentForm">
                     <Cards
@@ -187,7 +205,7 @@ const PremiumView = (props) => {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

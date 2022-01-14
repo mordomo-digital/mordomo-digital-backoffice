@@ -1,26 +1,57 @@
 .premiumBody {
+    position: relative;
+    height: 100vh;
+    background: white;
+}
+.premiumTopBar {
+    background-color: #375266;
+    height: 15vh;
+}
+.premiumTopBarTextDiv {
+    padding-left: 10px;
+    padding-top: 10vh;
+    font-size: large;
+    color: gray;
+}
+.premiumMiddle {
     background-color: white;
-    padding: 10px 0px;
-    min-height: 100vh;
-    width: 100%;
+}
+.premiumMiddleTextDiv {
+    font-size: xx-large;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-left: 10px;
+    line-height: 35px;
+}
+.premiumSubscriptionCard {
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    background-color: white;
+    border-radius: 1vh;
+}
+.premiumSupportText {
+    font-weight: bold;
+    margin: 10px;
+    font-size: x-small;
+    font-family: 'Poiret One', cursive;
+    color: #233a4a;
+}
+.premiumPriceText {
+    font-weight: bold;
+    margin-left: 10px;
     margin-top: 20px;
-    border-radius: 20px 20px 0px 0px;
+    font-size: x-large;
+}
+.premiumIcon {
+    width: 15vh;
+    border-radius: 20%;
+    margin-left: 10px;
+    margin-top: 5vh;
 }
 
 .premiumHeader {
     padding: 15px;
-}
-
-.premiumIcon {
-    float: left;
-    width: 40px;
-    border-radius: 20%;
-    margin-right: 20px;
-}
-
-.premiumTitleBox {
-    float: left;
-    clear: both;
 }
 
 .premiumTitle {
@@ -39,13 +70,20 @@
     font-family: 'Poiret One', cursive;
 }
 
-.premiumSupportText {
-    font-weight: bold;
-    margin-top: 10px;
-    font-size: x-small;
-    font-family: 'Poiret One', cursive;
-    color: #233a4a;
+/* .premiumBody {
+    background-color: white;
+    padding: 10px 0px;
+    min-height: 100vh;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 20px 20px 0px 0px;
 }
+
+.premiumTitleBox {
+    float: left;
+    clear: both;
+}
+
 
 .premiumCardInfo {
     margin: 20px 10px;
@@ -53,4 +91,4 @@
 
 .premiumCardField {
     color: white;
-}
+} */
