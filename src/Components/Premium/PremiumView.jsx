@@ -27,7 +27,7 @@ const PremiumView = (props) => {
                     <Checkbox checked={props.plan === 'month'} onChange={() => props.selectPlan('month')} /> R$12,69  <span style={{ fontSize: 'small', fontWeight: 'normal', color: 'gray' }}> / plano mensal</span>
                 </div>
                 <div className='premiumPriceText' onClick={() => props.selectPlan('year')}>
-                    <Checkbox checked={props.plan === 'year'} onChange={() => props.selectPlan('year')} /> R$126,90 <span style={{ fontSize: 'small', fontWeight: 'normal', color: 'gray' }}> / plano anual</span>
+                    <Checkbox checked={props.plan === 'year'} onChange={() => props.selectPlan('year')} /> R$127,00 <span style={{ fontSize: 'small', fontWeight: 'normal', color: 'gray' }}> / plano anual</span>
                 </div>
             </div>
             <div style={{ height: '10vh', background: 'white' }} />
