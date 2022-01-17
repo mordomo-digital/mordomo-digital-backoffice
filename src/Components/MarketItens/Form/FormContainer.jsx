@@ -35,6 +35,7 @@ const FormContainer = (props) => {
                 setForm({
                     name: apiResponse.data['name'],
                     type: apiResponse.data['type'],
+                    unit: apiResponse.data['unit'],
                     group: apiResponse.data['group'] && apiResponse.data['group']._id,
                 })
 
@@ -90,7 +91,7 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ name: '', type: '', group: '' });
+    const [form, setForm] = useState({ name: '', type: '', group: '', unit: '' });
 
     /**
      * Save.

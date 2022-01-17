@@ -93,6 +93,27 @@ const FormView = (props) => {
                             </Select>
                         </Form.Item>
 
+                        <Form.Item
+                            label="Unidade"
+                            style={{ width: 500 }}
+                        >
+                            <Select
+                                placeholder="Escolha..."
+                                value={props.form.unit}
+                                onChange={e => props.setForm({ ...props.form, unit: e })}
+                            >
+                                {
+                                    ['Und', 'l', 'ml', 'kg', 'mg', 'g'].map((el, i) => {
+                                        return (
+                                            <Select.Option key={i} value={el}>
+                                                {el}
+                                            </Select.Option>
+                                        )
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+
                     </Form>
 
                     <Divider />
