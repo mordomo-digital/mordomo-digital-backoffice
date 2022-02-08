@@ -18,8 +18,11 @@ const ListContainer = (props) => {
     const getData = async () => {
         setLoading(true);
 
+        const queryParams = props.parent_props.location.search
+        const page = new URLSearchParams(queryParams).get('page')
+
         // Call API
-        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/users`,
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/users?limit=10&page=${page ?? 0}`,
             {
                 headers: {
                     'Accept': 'application/json',
