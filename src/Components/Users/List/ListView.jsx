@@ -1,8 +1,8 @@
 import React from 'react';
 
 // Modules
-import { Card, Table, Space, Breadcrumb, Modal, Input } from 'antd';
-import { ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { Card, Table, Space, Breadcrumb, Modal, Input, Pagination, Select, Row, Col } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 // Styles
@@ -30,46 +30,14 @@ const ListView = (props) => {
                 if (e === 'free') return 'Gratuito';
                 if (e === 'premium') return 'Premium';
                 return '-';
-            },
-            filters: [
-                { text: 'Gratuito', value: 'free' },
-                { text: 'Premium', value: 'premium' },
-            ],
-            onFilter: (value, record) => record.userType.indexOf(value) === 0,
+            }
         },
         {
-            title: 'Verificado?',
-            dataIndex: 'verified',
-            key: 'verified',
-            render: (e) => {
-                if (e === true) return 'Sim';
-                return 'Não';
-            },
-            filters: [
-                { text: 'Sim', value: true },
-                { text: 'Não', value: false },
-            ],
-            onFilter: (value, record) => record.verified === value,
-        },
-        {
-            title: 'Telefone',
-            dataIndex: 'personalData',
-            key: 'personalDataPhone',
+            title: 'Identificador',
+            dataIndex: '_id',
+            key: '_id',
             width: 200,
             align: 'center',
-            filters: [
-                { text: 'Sim', value: true },
-            ],
-            onFilter: (value, record) => {
-                if (
-                    value === true &&
-                    (record && record.personalData && record.personalData.phone)
-                ) return true;
-                return false;
-            },
-            render: (e) => {
-                if (e && e.phone) return props.stringToPhone(e.phone);
-            }
         },
         {
             title: 'Ações',
@@ -147,7 +115,27 @@ const ListView = (props) => {
 
                     </Breadcrumb><br /><br />
 
-                    <Input.Search placeholder='Buscar usuário' onSearch={e => props.searchRegister(e)} /><br /><br />
+                    <Row gutter={24}>
+                        <Col span={8}>
+                            <Select
+                                onChange={field => props.setSearchField(field)}
+                                style={{ width: '100%' }} placeholder='Filtrar por'
+                            >
+                                <Select.Option value='email'>E-mail</Select.Option>
+                                <Select.Option value='username'>Nome de usuário</Select.Option>
+                                <Select.Option value='userType'>Tipo de usuário</Select.Option>
+                                <Select.Option value='id'>Identificador</Select.Option>
+                            </Select>
+                        </Col>
+                        <Col span={16}>
+                            <Input.Search
+                                placeholder='Valor da buscar'
+                                onChange={e => props.setSearchTerm(e.target.value)}
+                                onSearch={() => props.search()}
+                                style={{ float: 'left', clear: 'both', marginBottom: '20px' }}
+                            />
+                        </Col>
+                    </Row>
 
                     <Table
                         dataSource={props.data}
@@ -156,6 +144,14 @@ const ListView = (props) => {
                         locale={{
                             emptyText: 'Sem registros'
                         }}
+                        pagination={false}
+                    />
+
+                    <Pagination
+                        style={{ float: 'right', clear: 'both', marginTop: '20px' }}
+                        current={parseInt(props.page)}
+                        total={props.totalPages}
+                        onChange={(page) => props.goToPage(page)}
                     />
                 </Card>
 

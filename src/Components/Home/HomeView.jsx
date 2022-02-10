@@ -74,7 +74,7 @@ const HomeView = (props) => {
             { name: 'Opções', route: 'menu-options' },
             { name: 'Grupos', route: 'menu-groups' },
         ],
-        { name: 'Usuários', route: 'users' },
+        { name: 'Usuários', route: 'users?page=1' },
         { name: 'Bônus', route: 'bonus' },
         // { name: 'Babá', route: 'babysitter-tasks' },
     ];

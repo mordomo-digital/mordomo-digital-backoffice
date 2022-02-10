@@ -9,51 +9,55 @@ import ListView from './ListView';
 
 const ListContainer = (props) => {
 
-    /**
-     * Get data.
-     */
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [allData, setAllData] = useState([]);
+
+    const [page, setPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
+
     const getData = async () => {
         setLoading(true);
 
-        const queryParams = props.parent_props.location.search
-        const page = new URLSearchParams(queryParams).get('page')
+        const queryParams = new URLSearchParams(props.parent_props.location.search)
+        setPage(queryParams.get('page'))
+
+        let params = ''
+        params += queryParams.get('email') ? `&email=${queryParams.get('email')}` : ''
+        params += queryParams.get('username') ? `&username=${queryParams.get('username')}` : ''
+        params += queryParams.get('userType') ? `&userType=${queryParams.get('userType')}` : ''
+        params += queryParams.get('id') ? `&id=${queryParams.get('id')}` : ''
 
         // Call API
-        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/users?limit=10&page=${page ?? 0}`,
-            {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
-                },
-                method: 'GET',
-            });
-        apiResponse = await apiResponse.json();
+        if (page) {
+            let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/users?limit=10&page=${page - 1}${params}`,
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
+                    },
+                    method: 'GET',
+                });
+            apiResponse = await apiResponse.json();
 
-        // Check if response was successfuly
-        if (apiResponse.code === 200) {
-
-            setData([...apiResponse.data]);
-            setAllData([...apiResponse.data]);
-            setLoading(false);
-
-        } else {
-
-            message.error(apiResponse.message);
-            setLoading(false);
-
+            if (apiResponse.code === 200) {
+                setData([...apiResponse.data.users]);
+                setAllData([...apiResponse.data.users]);
+                setTotalPages(apiResponse.data.total)
+                setLoading(false);
+            } else {
+                message.error(apiResponse.message);
+                setLoading(false);
+            }
         }
-
-    };
+    }
 
     useEffect(() => {
 
         getData();
 
-    }, []);
+    }, [page])
 
     /**
      * Method to remove.
@@ -86,28 +90,18 @@ const ListContainer = (props) => {
 
     }
 
-    /**
-     * Method to search by e-mail and username
-     * @param {String} searchTerm
-     */
-    const searchRegister = (searchTerm) => {
-        searchTerm = searchTerm.toLowerCase();
-        let localData = allData.filter(el => el.email.toLowerCase().includes(searchTerm) || (el.username && el.username.toLowerCase().includes(searchTerm)));
-        setData(localData);
+    const [searchField, setSearchField] = useState('email')
+    const [searchTerm, setSearchTerm] = useState()
+    const search = async () => {
+        const params = `&${searchField}=${searchTerm}`
+        setPage(1)
+        props.parent_props.history.push(`/home/users?page=1${params}`)
     }
 
-    /**
-     * Method to convert a string to a phone number
-     * @param {String} phoneNumberString
-     */
-    const stringToPhone = (phoneNumberString) => {
-        var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-        var match = cleaned.match(/^(1|)?(\d{2})(\d{5})(\d{4})$/);
-        if (match) {
-            var intlCode = (match[1] ? '+1 ' : '');
-            return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
-        }
-        return null;
+    const goToPage = (page) => {
+        setPage(page)
+        const params = (searchField && searchTerm) ? `&${searchField}=${searchTerm}` : ''
+        props.parent_props.history.push(`/home/users?page=${page}${params}`)
     }
 
     return (
@@ -117,10 +111,14 @@ const ListContainer = (props) => {
             loading={loading}
             data={data}
             removeData={id => removeData(id)}
-            searchRegister={searchTerm => searchRegister(searchTerm)}
 
-            stringToPhone={phoneString => stringToPhone(phoneString)}
+            setSearchField={field => setSearchField(field)}
+            setSearchTerm={term => setSearchTerm(term)}
+            search={() => search()}
 
+            page={page}
+            totalPages={totalPages}
+            goToPage={(page) => goToPage(page)}
         />
 
     )
