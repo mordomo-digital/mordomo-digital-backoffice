@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Modules
-import { Card, Table, Space, Breadcrumb, Modal, Input, Pagination, Select, Row, Col } from 'antd';
+import { Card, Table, Space, Breadcrumb, Modal, Input, Pagination, Select, Row, Col, Checkbox } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
@@ -136,7 +136,10 @@ const ListView = (props) => {
                     </Breadcrumb><br /><br />
 
                     <Row gutter={24}>
-                        <Col span={8}>
+                        <Col span={5}>
+                            <Checkbox onChange={(e) => props.setSearchPhone(e)}>Com telefone</Checkbox>
+                        </Col>
+                        <Col span={5}>
                             <Select
                                 onChange={field => props.setSearchField(field)}
                                 style={{ width: '100%' }} placeholder='Filtrar por'
@@ -147,7 +150,7 @@ const ListView = (props) => {
                                 <Select.Option value='id'>Identificador</Select.Option>
                             </Select>
                         </Col>
-                        <Col span={16}>
+                        <Col span={14}>
                             <Input.Search
                                 placeholder='Valor da buscar'
                                 onChange={e => props.setSearchTerm(e.target.value)}
