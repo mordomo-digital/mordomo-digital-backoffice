@@ -104,6 +104,20 @@ const ListContainer = (props) => {
         props.parent_props.history.push(`/home/users?page=${page}${params}`)
     }
 
+    /**
+     * Method to convert a string to a phone number
+     * @param {String} phoneNumberString
+     */
+    const stringToPhone = (phoneNumberString) => {
+        var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+        var match = cleaned.match(/^(1|)?(\d{2})(\d{5})(\d{4})$/);
+        if (match) {
+            var intlCode = (match[1] ? '+1 ' : '');
+            return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+        }
+        return null;
+    }
+
     return (
 
         <ListView
@@ -115,6 +129,8 @@ const ListContainer = (props) => {
             setSearchField={field => setSearchField(field)}
             setSearchTerm={term => setSearchTerm(term)}
             search={() => search()}
+
+            stringToPhone={(phoneNumberString) => stringToPhone(phoneNumberString)}
 
             page={page}
             totalPages={totalPages}

@@ -40,6 +40,26 @@ const ListView = (props) => {
             align: 'center',
         },
         {
+            title: 'Telefone',
+            dataIndex: 'personalData',
+            key: 'personalDataPhone',
+            width: 200,
+            align: 'center',
+            filters: [
+                { text: 'Sim', value: true },
+            ],
+            onFilter: (value, record) => {
+                if (
+                    value === true &&
+                    (record && record.personalData && record.personalData.phone)
+                ) return true;
+                return false;
+            },
+            render: (e) => {
+                if (e && e.phone) return props.stringToPhone(e.phone);
+            }
+        },
+        {
             title: 'Ações',
             key: 'actions',
             width: 100,
