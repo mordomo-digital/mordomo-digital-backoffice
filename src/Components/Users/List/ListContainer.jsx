@@ -28,6 +28,7 @@ const ListContainer = (props) => {
         params += queryParams.get('userType') ? `&userType=${queryParams.get('userType')}` : ''
         params += queryParams.get('id') ? `&id=${queryParams.get('id')}` : ''
         params += queryParams.get('phone') ? `&phone=true` : ''
+        params += queryParams.get('premiumFreebie') ? `&premiumFreebie=true` : ''
 
         // Call API
         if (page) {
@@ -94,9 +95,11 @@ const ListContainer = (props) => {
     const [searchField, setSearchField] = useState('email')
     const [searchTerm, setSearchTerm] = useState()
     const [searchPhone, setSearchPhone] = useState()
+    const [searchFreebie, setSearchFreebie] = useState()
     const search = async () => {
         let params = `&${searchField}=${searchTerm}`
         if (searchPhone) params += `&phone=true`
+        if (searchFreebie) params += `&premiumFreebie=true`
         setPage(1)
         props.parent_props.history.push(`/home/users?page=1${params}`)
     }
@@ -105,6 +108,7 @@ const ListContainer = (props) => {
         setPage(page)
         let params = (searchField && searchTerm) ? `&${searchField}=${searchTerm}` : ''
         if (searchPhone) params += `&phone=true`
+        if (searchFreebie) params += `&premiumFreebie=true`
         props.parent_props.history.push(`/home/users?page=${page}${params}`)
     }
 
@@ -133,6 +137,7 @@ const ListContainer = (props) => {
             setSearchField={field => setSearchField(field)}
             setSearchTerm={term => setSearchTerm(term)}
             setSearchPhone={choose => setSearchPhone(choose)}
+            setSearchFreebie={choose => setSearchFreebie(choose)}
             search={() => search()}
 
             stringToPhone={(phoneNumberString) => stringToPhone(phoneNumberString)}

@@ -14,7 +14,7 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ email: '', usename: '', userType: '', verified: false });
+    const [form, setForm] = useState({ email: '', usename: '', userType: '', premiumFreebie: false/*, verified: false*/ });
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -40,7 +40,8 @@ const FormContainer = (props) => {
                     email: apiResponse.data['email'],
                     username: apiResponse.data['username'],
                     userType: apiResponse.data['userType'],
-                    verified: apiResponse.data['verified'],
+                    // verified: apiResponse.data['verified'],
+                    premiumFreebie: apiResponse.data['premiumFreebie'],
                 })
 
             } else {

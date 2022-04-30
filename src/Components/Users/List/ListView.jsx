@@ -137,9 +137,6 @@ const ListView = (props) => {
 
                     <Row gutter={24}>
                         <Col span={5}>
-                            <Checkbox onChange={(e) => props.setSearchPhone(e)}>Com telefone</Checkbox>
-                        </Col>
-                        <Col span={5}>
                             <Select
                                 onChange={field => props.setSearchField(field)}
                                 style={{ width: '100%' }} placeholder='Filtrar por'
@@ -150,13 +147,19 @@ const ListView = (props) => {
                                 <Select.Option value='id'>Identificador</Select.Option>
                             </Select>
                         </Col>
-                        <Col span={14}>
+                        <Col span={10}>
                             <Input.Search
                                 placeholder='Valor da buscar'
                                 onChange={e => props.setSearchTerm(e.target.value)}
                                 onSearch={() => props.search()}
                                 style={{ float: 'left', clear: 'both', marginBottom: '20px' }}
                             />
+                        </Col>
+                        <Col span={5}>
+                            <Checkbox onChange={(e) => props.setSearchPhone(e)}>Com telefone</Checkbox>
+                        </Col>
+                        <Col span={4}>
+                            <Checkbox onChange={(e) => props.setSearchFreebie(e.target.checked)}>Cortesia</Checkbox>
                         </Col>
                     </Row>
 

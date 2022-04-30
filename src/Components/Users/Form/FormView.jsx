@@ -85,13 +85,22 @@ const FormView = (props) => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item
+                        {/* <Form.Item
                             label="Verificado?"
                             style={{ width: 250 }}
                         >
                             <Switch
                                 checked={props.form.verified}
                                 onChange={e => props.setForm({ ...props.form, verified: e })}
+                            />
+                        </Form.Item> */}
+                        <Form.Item
+                            label="Cortesia?"
+                            style={{ width: 250 }}
+                        >
+                            <Switch
+                                checked={props.form.premiumFreebie}
+                                onChange={e => props.setForm({ ...props.form, premiumFreebie: e })}
                             />
                         </Form.Item>
                     </Form>
