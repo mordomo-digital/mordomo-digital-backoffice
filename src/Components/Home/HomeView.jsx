@@ -43,6 +43,9 @@ import UsersForm from '../Users/Form/FormContainer';
 import BonusList from '../Bonus/List/ListContainer';
 import BonusForm from '../Bonus/Form/FormContainer';
 
+// Images
+import icon from '../../assets/img/icon.png';
+
 const { Header, Content, Sider } = Layout;
 
 const HomeView = (props) => {
@@ -89,30 +92,15 @@ const HomeView = (props) => {
 
     return (
 
-        <Layout
-            style={{
-                height: '100vh',
-                backgroundColor: 'unset'
-            }}
-        >
+        <Layout className='home-bg'>
 
-            <Header
-                className="header"
-                style={{
-                    background: 'white',
-                    boxShadow: '0px 2px 4px 0px rgba(150,150,150,0.5)',
-                    zIndex: 10
-                }}
-            >
+            <Header className="header home-header">
                 <div>
-                    Mordomo Digital&nbsp; &nbsp;
-                    <span
-                        style={{
-                            fontSize: 10,
-                            fontWeight: 'lighter',
-                            fontStyle: 'italic'
-                        }}
-                    >Backoffice</span>
+                    <img src={icon} alt='icon' className='home-icon' />
+                    <div className='home-title-subtitle'>
+                        <div className='home-title'>Mordomo Digital</div>
+                        <div className='home-subtitle'>Backoffice</div>
+                    </div>
                 </div>
             </Header>
 
