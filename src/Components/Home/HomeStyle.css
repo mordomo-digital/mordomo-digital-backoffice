@@ -28,6 +28,7 @@
 }
 
 .home-subtitle {
+    line-height: 10px;
     font-size: 10px;
     font-weight: lighter;
     font-style: italic;
