@@ -12,19 +12,9 @@ const FormView = (props) => {
 
     return (
 
-        <div
-            style={{
-                height: '80vh',
-                position: 'relative'
-            }}
-        >
+        <div className='home-out-card'>
 
-            <div
-                style={{
-                    maxHeight: '100%',
-                    overflow: 'auto'
-                }}
-            >
+            <div className='home-in-card'>
 
                 <Card
                     title='Tarefas'

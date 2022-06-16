@@ -34,3 +34,18 @@
     font-style: italic;
     margin-top: -10px;
 }
+
+.home-out-card {
+    height: 85vh;
+    position: relative;
+}
+
+.home-in-card {
+    max-height: 100%;
+    overflow: auto;
+}
+
+.home-list-add-button {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

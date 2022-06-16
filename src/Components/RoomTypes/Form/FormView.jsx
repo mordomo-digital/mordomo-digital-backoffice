@@ -12,12 +12,7 @@ const FormView = (props) => {
 
     return (
 
-        <div
-            style={{
-                height: '80vh',
-                position: 'relative'
-            }}
-        >
+        <div className='home-out-card'>
             <Spin spinning={props.loadingScreen}>
 
                 <div

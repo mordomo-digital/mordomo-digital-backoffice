@@ -12,19 +12,9 @@ const FormView = (props) => {
 
     return (
 
-        <div
-            style={{
-                height: '80vh',
-                position: 'relative'
-            }}
-        >
+        <div className='home-out-card'>
 
-            <div
-                style={{
-                    maxHeight: '100%',
-                    overflow: 'auto'
-                }}
-            >
+            <div className='home-in-card'>
 
                 <Card
                     title='Cardápio - Opções'
@@ -35,11 +25,11 @@ const FormView = (props) => {
                         <Breadcrumb.Item>
                             <Link to='/home'>Início</Link>
                         </Breadcrumb.Item>
-                        
+
                         <Breadcrumb.Item>
                             <Link to='/home/menu-options'>Cardápio - Opções</Link>
                         </Breadcrumb.Item>
-                        
+
                         <Breadcrumb.Item>
                             {props.idToUpdate ? 'Editar' : 'Novo'}
                         </Breadcrumb.Item>
@@ -50,7 +40,7 @@ const FormView = (props) => {
                         style={{ marginTop: 40 }}
                         layout='vertical'
                     >
-                    
+
                         <Form.Item
                             label="Nome"
                             style={{ width: 500 }}
@@ -60,9 +50,9 @@ const FormView = (props) => {
                                 onChange={e => props.setForm({ ...props.form, name: e.target.value })}
                             />
                         </Form.Item>
-                        
+
                     </Form>
-                    
+
                     <Divider />
 
                     <Button

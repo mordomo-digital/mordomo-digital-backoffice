@@ -72,19 +72,9 @@ const ListView = (props) => {
 
     return (
 
-        <div
-            style={{
-                height: '80vh',
-                position: 'relative'
-            }}
-        >
+        <div className='home-out-card'>
 
-            <div
-                style={{
-                    maxHeight: '100%',
-                    overflow: 'auto'
-                }}
-            >
+            <div className='home-in-card'>
 
                 <Card
                     title='Babá - Serviços'
@@ -105,13 +95,7 @@ const ListView = (props) => {
                     <Link
                         to='/home/babysitter-tasks/new'
                     >
-                        <Button
-                            type='primary'
-                            style={{
-                                marginBottom: 20,
-                                marginTop: 20
-                            }}
-                        >
+                        <Button type='primary' className='home-list-add-button'>
                             Adicionar
                         </Button>
                     </Link>

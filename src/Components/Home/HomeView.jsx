@@ -77,7 +77,7 @@ const HomeView = (props) => {
             { name: 'Opções', route: 'menu-options' },
             { name: 'Grupos', route: 'menu-groups' },
         ],
-        { name: 'Usuários', route: 'users?page=1' },
+        { name: 'Usuários', route: 'users' },
         { name: 'Bônus', route: 'bonus' },
         // { name: 'Babá', route: 'babysitter-tasks' },
     ];
@@ -221,7 +221,7 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/babysitter-tasks/new' ? <BabysitterTasksForm parent_props={props} /> : null}
                         {props.location.pathname === '/home/babysitter-tasks/update' ? <BabysitterTasksForm parent_props={props} /> : null}
 
-                        {props.location.pathname === '/home/users' && props.location.search ? <UsersList parent_props={props} /> : null}
+                        {props.location.pathname === '/home/users' && !props.location.search ? <UsersList parent_props={props} /> : null}
                         {props.location.pathname === '/home/users/update' ? <UsersForm parent_props={props} /> : null}
 
                         {props.location.pathname === '/home/bonus' && !props.location.search ? <BonusList parent_props={props} /> : null}

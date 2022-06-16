@@ -12,46 +12,30 @@ const ListContainer = (props) => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [allData, setAllData] = useState([]);
-
-    const [page, setPage] = useState(0)
-    const [totalPages, setTotalPages] = useState(0)
+    const [searchTerm, setSearchTerm] = useState(null);
 
     const getData = async () => {
         setLoading(true);
 
-        const queryParams = new URLSearchParams(props.parent_props.location.search)
-        setPage(queryParams.get('page'))
-
-        let params = ''
-        params += queryParams.get('email') ? `&email=${queryParams.get('email')}` : ''
-        params += queryParams.get('username') ? `&username=${queryParams.get('username')}` : ''
-        params += queryParams.get('userType') ? `&userType=${queryParams.get('userType')}` : ''
-        params += queryParams.get('id') ? `&id=${queryParams.get('id')}` : ''
-        params += queryParams.get('phone') ? `&phone=true` : ''
-        params += queryParams.get('premiumFreebie') ? `&premiumFreebie=true` : ''
-
         // Call API
-        if (page) {
-            let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/users?limit=10&page=${page - 1}${params}`,
-                {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
-                    },
-                    method: 'GET',
-                });
-            apiResponse = await apiResponse.json();
+        let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/users`,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
+                },
+                method: 'GET',
+            });
+        apiResponse = await apiResponse.json();
 
-            if (apiResponse.code === 200) {
-                setData([...apiResponse.data.users]);
-                setAllData([...apiResponse.data.users]);
-                setTotalPages(apiResponse.data.total)
-                setLoading(false);
-            } else {
-                message.error(apiResponse.message);
-                setLoading(false);
-            }
+        if (apiResponse.code === 200) {
+            setData([...apiResponse.data.users]);
+            setLoading(false);
+            setAllData([...apiResponse.data.users]);
+        } else {
+            message.error(apiResponse.message);
+            setLoading(false);
         }
     }
 
@@ -59,7 +43,7 @@ const ListContainer = (props) => {
 
         getData();
 
-    }, [page])
+    }, [])
 
     /**
      * Method to remove.
@@ -92,24 +76,19 @@ const ListContainer = (props) => {
 
     }
 
-    const [searchField, setSearchField] = useState('email')
-    const [searchTerm, setSearchTerm] = useState()
-    const [searchPhone, setSearchPhone] = useState()
-    const [searchFreebie, setSearchFreebie] = useState()
     const search = async () => {
-        let params = `&${searchField}=${searchTerm}`
-        if (searchPhone) params += `&phone=true`
-        if (searchFreebie) params += `&premiumFreebie=true`
-        setPage(1)
-        props.parent_props.history.push(`/home/users?page=1${params}`)
-    }
+        setLoading(true);
 
-    const goToPage = (page) => {
-        setPage(page)
-        let params = (searchField && searchTerm) ? `&${searchField}=${searchTerm}` : ''
-        if (searchPhone) params += `&phone=true`
-        if (searchFreebie) params += `&premiumFreebie=true`
-        props.parent_props.history.push(`/home/users?page=${page}${params}`)
+        const dataFiltered = allData.filter(el => {
+            return (
+                (el.email || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
+                (el.username || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
+                (el.userType || '').toLowerCase().includes((searchTerm || '').toLowerCase())
+            )
+        })
+        setData([...dataFiltered]);
+
+        setLoading(false);
     }
 
     /**
@@ -133,18 +112,9 @@ const ListContainer = (props) => {
             loading={loading}
             data={data}
             removeData={id => removeData(id)}
-
-            setSearchField={field => setSearchField(field)}
-            setSearchTerm={term => setSearchTerm(term)}
-            setSearchPhone={choose => setSearchPhone(choose)}
-            setSearchFreebie={choose => setSearchFreebie(choose)}
+            setSearchTerm={(e) => setSearchTerm(e)}
             search={() => search()}
-
             stringToPhone={(phoneNumberString) => stringToPhone(phoneNumberString)}
-
-            page={page}
-            totalPages={totalPages}
-            goToPage={(page) => goToPage(page)}
         />
 
     )

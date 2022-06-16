@@ -4,6 +4,7 @@ import React from 'react';
 import { Card, Table, Space, Breadcrumb, Modal, Input, Pagination, Select, Row, Col, Checkbox } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import UserDetailsModalContainer from '../UserDetailsModal/UserDetailsModalContainer'
 
 // Styles
 import './ListStyle.css';
@@ -30,35 +31,36 @@ const ListView = (props) => {
                 if (e === 'free') return 'Gratuito';
                 if (e === 'premium') return 'Premium';
                 return '-';
-            }
-        },
-        {
-            title: 'Identificador',
-            dataIndex: '_id',
-            key: '_id',
-            width: 200,
-            align: 'center',
-        },
-        {
-            title: 'Telefone',
-            dataIndex: 'personalData',
-            key: 'personalDataPhone',
-            width: 200,
-            align: 'center',
+            },
             filters: [
-                { text: 'Sim', value: true },
+                { text: 'Gratuito', value: 'free' },
+                { text: 'Premium', value: 'premium' },
             ],
             onFilter: (value, record) => {
-                if (
-                    value === true &&
-                    (record && record.personalData && record.personalData.phone)
-                ) return true;
+                if ((record && record.userType) === value) return true;
                 return false;
-            },
-            render: (e) => {
-                if (e && e.phone) return props.stringToPhone(e.phone);
             }
         },
+        // {
+        //     title: 'Telefone',
+        //     dataIndex: 'personalData',
+        //     key: 'personalDataPhone',
+        //     width: 200,
+        //     align: 'center',
+        //     filters: [
+        //         { text: 'Sim', value: true },
+        //     ],
+        //     onFilter: (value, record) => {
+        //         if (
+        //             value === true &&
+        //             (record && record.personalData && record.personalData.phone)
+        //         ) return true;
+        //         return false;
+        //     },
+        //     render: (e) => {
+        //         if (e && e.phone) return props.stringToPhone(e.phone);
+        //     }
+        // },
         {
             title: 'Ações',
             key: 'actions',
@@ -67,14 +69,7 @@ const ListView = (props) => {
 
                 <Space size="middle">
 
-                    <Link
-                        to={{
-                            pathname: `/home/users/update`,
-                            state: {
-                                id: record._id
-                            }
-                        }}
-                    >Editar</Link>
+                    <UserDetailsModalContainer userData={record} stringToPhone={(e) => props.stringToPhone(e)} />
 
                     <span
                         style={{
@@ -105,19 +100,9 @@ const ListView = (props) => {
 
     return (
 
-        <div
-            style={{
-                height: '80vh',
-                position: 'relative'
-            }}
-        >
+        <div className='home-out-card'>
 
-            <div
-                style={{
-                    maxHeight: '100%',
-                    overflow: 'auto'
-                }}
-            >
+            <div className='home-in-card'>
 
                 <Card
                     title='Usuários'
@@ -136,30 +121,13 @@ const ListView = (props) => {
                     </Breadcrumb><br /><br />
 
                     <Row gutter={24}>
-                        <Col span={5}>
-                            <Select
-                                onChange={field => props.setSearchField(field)}
-                                style={{ width: '100%' }} placeholder='Filtrar por'
-                            >
-                                <Select.Option value='email'>E-mail</Select.Option>
-                                <Select.Option value='username'>Nome de usuário</Select.Option>
-                                <Select.Option value='userType'>Tipo de usuário</Select.Option>
-                                <Select.Option value='id'>Identificador</Select.Option>
-                            </Select>
-                        </Col>
-                        <Col span={10}>
+                        <Col span={24}>
                             <Input.Search
                                 placeholder='Valor da buscar'
                                 onChange={e => props.setSearchTerm(e.target.value)}
                                 onSearch={() => props.search()}
                                 style={{ float: 'left', clear: 'both', marginBottom: '20px' }}
                             />
-                        </Col>
-                        <Col span={5}>
-                            <Checkbox onChange={(e) => props.setSearchPhone(e)}>Com telefone</Checkbox>
-                        </Col>
-                        <Col span={4}>
-                            <Checkbox onChange={(e) => props.setSearchFreebie(e.target.checked)}>Cortesia</Checkbox>
                         </Col>
                     </Row>
 
@@ -170,14 +138,6 @@ const ListView = (props) => {
                         locale={{
                             emptyText: 'Sem registros'
                         }}
-                        pagination={false}
-                    />
-
-                    <Pagination
-                        style={{ float: 'right', clear: 'both', marginTop: '20px' }}
-                        current={parseInt(props.page)}
-                        total={props.totalPages}
-                        onChange={(page) => props.goToPage(page)}
                     />
                 </Card>
 

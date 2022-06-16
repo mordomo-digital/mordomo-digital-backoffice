@@ -1,0 +1,14 @@
+.user-details-modal-view-tag {
+    cursor: pointer;
+    color: rgb(85, 85, 85);
+}
+
+.user-details-modal-usertype-tag {
+    font-size: smaller;
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.user-details-modal-ok-button {
+    margin-left: 20px;
+}
