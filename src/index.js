@@ -13,6 +13,7 @@ import VerifyUser from './Components/VerifyUser/VerifyUserContainer';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicyContainer';
 import RecoverPass from './Components/RecoverPass/RecoverPassContainer';
 import Premium from './Components/Premium/PremiumContainer';
+import ListToPrint from './Components/Users/ListToPrint/ListToPrint';
 
 window.auth = (Component, props) => {
   let token = sessionStorage.getItem('access_token') || localStorage.getItem('access_token') || '';
@@ -49,6 +50,8 @@ ReactDOM.render(
         <Route path='/privacy-policy' component={PrivacyPolicy} />
         <Route path='/recover-pass' component={RecoverPass} />
         <Route path='/premium' component={Premium} />
+
+        <Route path='/print-user-list' component={ListToPrint} />
 
       </Switch>
 

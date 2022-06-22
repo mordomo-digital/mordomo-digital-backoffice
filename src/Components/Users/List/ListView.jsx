@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Modules
-import { Card, Table, Space, Breadcrumb, Modal, Input, Pagination, Select, Row, Col, Checkbox } from 'antd';
+import { Card, Table, Space, Breadcrumb, Modal, Input, Pagination, Select, Row, Col, Checkbox, Button } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import UserDetailsModalContainer from '../UserDetailsModal/UserDetailsModalContainer'
@@ -10,6 +10,8 @@ import UserDetailsModalContainer from '../UserDetailsModal/UserDetailsModalConta
 import './ListStyle.css';
 
 const ListView = (props) => {
+
+    const [filters, setFilters] = useState({ userType: [], personalDataPhone: [] })
 
     // Columns of the table list
     const columns = [
@@ -41,26 +43,26 @@ const ListView = (props) => {
                 return false;
             }
         },
-        // {
-        //     title: 'Telefone',
-        //     dataIndex: 'personalData',
-        //     key: 'personalDataPhone',
-        //     width: 200,
-        //     align: 'center',
-        //     filters: [
-        //         { text: 'Sim', value: true },
-        //     ],
-        //     onFilter: (value, record) => {
-        //         if (
-        //             value === true &&
-        //             (record && record.personalData && record.personalData.phone)
-        //         ) return true;
-        //         return false;
-        //     },
-        //     render: (e) => {
-        //         if (e && e.phone) return props.stringToPhone(e.phone);
-        //     }
-        // },
+        {
+            title: 'Telefone',
+            dataIndex: 'personalData',
+            key: 'personalDataPhone',
+            width: 200,
+            align: 'center',
+            filters: [
+                { text: 'Sim', value: true },
+            ],
+            onFilter: (value, record) => {
+                if (
+                    value === true &&
+                    (record && record.personalData && record.personalData.phone)
+                ) return true;
+                return false;
+            },
+            render: (e) => {
+                if (e && e.phone) return props.stringToPhone(e.phone);
+            }
+        },
         {
             title: 'Ações',
             key: 'actions',
@@ -121,13 +123,23 @@ const ListView = (props) => {
                     </Breadcrumb><br /><br />
 
                     <Row gutter={24}>
-                        <Col span={24}>
+                        <Col span={20}>
                             <Input.Search
                                 placeholder='Valor da buscar'
                                 onChange={e => props.setSearchTerm(e.target.value)}
                                 onSearch={() => props.search()}
                                 style={{ float: 'left', clear: 'both', marginBottom: '20px' }}
                             />
+                        </Col>
+                        <Col span={4}>
+                            <Button className='user-list-print-button' type='primary'>
+                                <Link
+                                    to={{
+                                        pathname: "/print-user-list",
+                                        state: { data: props.data, filters: filters }
+                                    }}
+                                >Imprimir lista</Link>
+                            </Button>
                         </Col>
                     </Row>
 
@@ -137,6 +149,9 @@ const ListView = (props) => {
                         loading={props.loading}
                         locale={{
                             emptyText: 'Sem registros'
+                        }}
+                        onChange={(pagination, filters) => {
+                            setFilters(filters)
                         }}
                     />
                 </Card>
