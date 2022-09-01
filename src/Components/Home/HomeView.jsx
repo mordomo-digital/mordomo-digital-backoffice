@@ -43,6 +43,8 @@ import UsersForm from '../Users/Form/FormContainer';
 import BonusList from '../Bonus/List/ListContainer';
 import BonusForm from '../Bonus/Form/FormContainer';
 
+import Reports from '../Reports/reports';
+
 // Images
 import icon from '../../assets/img/icon.png';
 
@@ -79,6 +81,7 @@ const HomeView = (props) => {
         ],
         { name: 'Usuários', route: 'users' },
         { name: 'Bônus', route: 'bonus' },
+        { name: 'Relatórios', route: 'reports' },
         // { name: 'Babá', route: 'babysitter-tasks' },
     ];
 
@@ -228,6 +231,7 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/bonus/new' ? <BonusForm parent_props={props} /> : null}
                         {props.location.pathname === '/home/bonus/update' ? <BonusForm parent_props={props} /> : null}
 
+                        {props.location.pathname === '/home/reports' ? <Reports /> : null}
                     </Content>
 
                 </Layout>
