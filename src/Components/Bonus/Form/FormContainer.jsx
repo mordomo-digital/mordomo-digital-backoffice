@@ -47,9 +47,9 @@ const FormContainer = (props) => {
                 setBody(apiResponse.data['body']);
 
                 // Put img in thumb
-                const storage = getStorage();
-                const imgUrl = await getDownloadURL(ref(storage, `bonus/${apiResponse.data['title']}`));
-                document.getElementById('bonus-img-file-thumb').src = imgUrl;
+                // const storage = getStorage();
+                // const imgUrl = await getDownloadURL(ref(storage, `bonus/${apiResponse.data['title']}`));
+                document.getElementById('bonus-img-file-thumb').src = apiResponse.data['img'];
 
 
             } else {

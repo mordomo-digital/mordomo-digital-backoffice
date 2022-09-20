@@ -17,7 +17,6 @@ const ListContainer = (props) => {
     const [allData, setAllData] = useState([]);
     const getData = async () => {
         setLoading(true);
-        console.log(process.env);
         // Call API
         let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/bonus`,
             {

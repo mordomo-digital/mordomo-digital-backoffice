@@ -41,7 +41,6 @@ export default class Reports extends Component {
         apiResponse = await apiResponse.json();
 
         if (apiResponse.code === 200) {
-            console.log(apiResponse.data.screenReport)
             this.setState({
                 dataSource: apiResponse.data.screenReport
             })

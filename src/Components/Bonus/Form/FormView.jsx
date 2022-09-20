@@ -118,7 +118,7 @@ const FormView = (props) => {
                         >
                             <Input
                                 value={props.form.title}
-                                disabled={props.idToUpdate ? true : false}
+                                // disabled={props.idToUpdate ? true : false}
                                 onChange={e => props.setForm({ ...props.form, title: e.target.value })}
                             />
                         </Form.Item>
