@@ -45,6 +45,8 @@ import BonusForm from '../Bonus/Form/FormContainer';
 
 import Reports from '../Reports/reports';
 
+import ConfigSchedule from '../ConfigSchedule/configSchedule';
+
 // Images
 import icon from '../../assets/img/icon.png';
 
@@ -82,6 +84,7 @@ const HomeView = (props) => {
         { name: 'Usuários', route: 'users' },
         { name: 'Bônus', route: 'bonus' },
         { name: 'Relatórios', route: 'reports' },
+        { name: 'Cronograma v1.0', route: 'config-schedule' },
         // { name: 'Babá', route: 'babysitter-tasks' },
     ];
 
@@ -232,6 +235,8 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/bonus/update' ? <BonusForm parent_props={props} /> : null}
 
                         {props.location.pathname === '/home/reports' ? <Reports /> : null}
+
+                        {props.location.pathname === '/home/config-schedule' ? <ConfigSchedule /> : null}
                     </Content>
 
                 </Layout>

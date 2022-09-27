@@ -1,0 +1,17 @@
+.configSchedule-bg-card {
+    background-color: white;
+    height: 85vh;
+    padding: 50px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px black;
+    overflow-y: scroll;
+}
+
+.configSchedule-title {
+    font-size: larger;
+    font-weight: bold;
+}
+
+.configSchedule-button {
+    margin-top: 30px;
+}
