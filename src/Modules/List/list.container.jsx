@@ -7,7 +7,7 @@ import { apiRequestDelete, apiRequestGet } from '../../utils/api-request';
  * @param {string} name ex.: "Clientes"
  * @param {string} route ex.: "/home/clients"
  * @param {string} apiRoute ex.: "/clients"
- * @param {string} apiRouteQueries ex.: "?name=teste"
+ * @param {*} apiRouteQueries ex.: "?name=teste"
  * @param {array} schema ex.: [{ title: 'Nome', key: 'name', render: (e){} }]
  * @returns 
  */
@@ -28,7 +28,7 @@ const ListModule = ({ name, route, apiRoute, apiRouteQueries, schema }) => {
     };
 
     useEffect(() => {
-
+        console.log(31)
         getData();
 
     }, []);

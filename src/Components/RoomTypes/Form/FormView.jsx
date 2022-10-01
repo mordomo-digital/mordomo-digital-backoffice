@@ -87,6 +87,15 @@ const FormView = (props) => {
                                 />
                             </Form.Item>
 
+                            <Form.Item
+                                label='Cômodo habilitado no app'
+                            >
+                                <Switch
+                                    checked={props.form.disabled}
+                                    onChange={e => props.setForm({ ...props.form, disabled: e })}
+                                />
+                            </Form.Item>
+
                         </Form>
 
                         <Divider />

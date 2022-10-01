@@ -25,6 +25,7 @@ const FormContainer = (props) => {
                     name: room['name'],
                     tasks: room['tasks'].map(el => el._id),
                     isAPremiumRoomType: room['isAPremiumRoomType'],
+                    disabled: !room['disabled'],
                 })
 
             }
@@ -63,6 +64,7 @@ const FormContainer = (props) => {
             name: form.name,
             tasks: JSON.stringify(form.tasks),
             isAPremiumRoomType: form.isAPremiumRoomType,
+            disabled: !form.disabled,
         }
 
         if (idToUpdate) {

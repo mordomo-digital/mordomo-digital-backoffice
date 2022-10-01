@@ -7,6 +7,7 @@ const roomTypesList = () => {
         name: 'Tipos de cômodos',
         route: '/home/room-types',
         apiRoute: '/room-types',
+        apiRouteQueries: '?withDisabled=true',
         schema: [
             { title: 'Nome', key: 'name' },
             {
