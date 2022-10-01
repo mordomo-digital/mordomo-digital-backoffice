@@ -1,57 +1,27 @@
 import React from 'react';
-
-// Modules
 import { Card, Table, Tag, Space, Button, Breadcrumb, Modal } from 'antd';
-import { ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 // Styles
-import './ListStyle.css';
+import './list.style.css';
 
 const ListView = (props) => {
 
-    // Columns of the table list
     const columns = [
-        {
-            title: 'Nome',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Tarefas',
-            dataIndex: 'tasks',
-            key: 'tasks',
-            render: (tasks) => {
-                return (
-                    <span>
-
-                        {tasks.map(el => {
-                            return (
-                                <Tag
-                                    color='blue'
-                                    key={el._id}
-                                >
-                                    {el.name}
-                                </Tag>
-                            )
-                        })}
-
-                    </span>
-                )
+        ...(props.schema || []).map(schemaElement => {
+            let schemaElementToReturn = {
+                title: schemaElement.title,
+                dataIndex: schemaElement.key,
+                key: schemaElement.key,
+                align: schemaElement.align || 'left',
+                width: schemaElement.width || null,
             }
-        },
-        {
-            title: 'Exclusivo Premium',
-            dataIndex: 'isAPremiumRoomType',
-            key: 'isAPremiumRoomType',
-            align: 'center',
-            width: 100,
-            render: (e) => {
-                if (e)
-                    return <CheckCircleOutlined style={{ color: 'green' }} />
-                return ''
-            }
-        },
+
+            if (schemaElement.render) schemaElementToReturn.render = schemaElement.render
+
+            return schemaElementToReturn;
+        }),
         {
             title: 'Ações',
             key: 'actions',
@@ -62,9 +32,9 @@ const ListView = (props) => {
 
                     <Link
                         to={{
-                            pathname: `/home/room-types/update`,
+                            pathname: `${props.route}/update`,
                             state: {
-                                id: record.key
+                                id: record._id
                             }
                         }}
                     >Editar</Link>
@@ -84,7 +54,7 @@ const ListView = (props) => {
                                 okType: 'danger',
                                 cancelText: 'Não',
                                 onOk() {
-                                    props.removeData(record.key)
+                                    props.removeData(record._id)
                                 },
                             });
 
@@ -96,16 +66,6 @@ const ListView = (props) => {
         },
     ];
 
-    const dataSource = props.data.map(el => {
-        return {
-            ...el,
-            name: el.name,
-            isAPremiumRoomType: el.isAPremiumRoomType,
-            _createdAt: new Date(el._createdAt).toLocaleString('pt-BR'),
-            key: el._id,
-        }
-    });
-
     return (
 
         <div className='home-out-card'>
@@ -113,7 +73,7 @@ const ListView = (props) => {
             <div className='home-in-card'>
 
                 <Card
-                    title='Tipos de cômodos'
+                    title={`${props.name}`}
                 >
 
                     <Breadcrumb>
@@ -123,13 +83,13 @@ const ListView = (props) => {
                         </Breadcrumb.Item>
 
                         <Breadcrumb.Item>
-                            Tipos de cômodos
+                            {props.name}
                         </Breadcrumb.Item>
 
                     </Breadcrumb>
 
                     <Link
-                        to='/home/room-types/new'
+                        to={`${props.route}/new`}
                     >
                         <Button type='primary' className='home-list-add-button'>
                             Adicionar
@@ -137,7 +97,7 @@ const ListView = (props) => {
                     </Link>
 
                     <Table
-                        dataSource={dataSource}
+                        dataSource={props.data}
                         columns={columns}
                         loading={props.loading}
                         locale={{

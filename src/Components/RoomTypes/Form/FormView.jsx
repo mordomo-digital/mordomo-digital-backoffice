@@ -86,6 +86,7 @@ const FormView = (props) => {
                                     onChange={e => props.setForm({ ...props.form, isAPremiumRoomType: e })}
                                 />
                             </Form.Item>
+
                         </Form>
 
                         <Divider />

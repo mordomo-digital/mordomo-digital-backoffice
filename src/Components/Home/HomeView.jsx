@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import './HomeStyle.css';
 
 // Components
-import RoomTypesList from '../RoomTypes/List/ListContainer';
+import * as roomTypes from '../RoomTypes/room-types';
 import RoomTypesForm from '../RoomTypes/Form/FormContainer';
 
 import RoomTasksList from '../RoomTasks/List/ListContainer';
@@ -189,7 +189,7 @@ const HomeView = (props) => {
                         }}
                     >
 
-                        {props.location.pathname === '/home/room-types' && !props.location.search ? <RoomTypesList parent_props={props} /> : null}
+                        {props.location.pathname === '/home/room-types' && !props.location.search ? roomTypes.roomTypesList() : null}
                         {props.location.pathname === '/home/room-types/new' ? <RoomTypesForm parent_props={props} /> : null}
                         {props.location.pathname === '/home/room-types/update' ? <RoomTypesForm parent_props={props} /> : null}
 
