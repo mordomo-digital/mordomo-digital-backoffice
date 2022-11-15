@@ -1,4 +1,5 @@
 import { message } from "antd";
+import { saveAs } from 'file-saver';
 
 const apiRequestGet = async (route) => {
     let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}${route}`,
@@ -75,9 +76,27 @@ const apiRequestDelete = async (route) => {
     return null;
 }
 
+const apiRequestGetSchedulePDF = async (userId) => {
+    let apiResponse = await fetch(`http://54.167.111.65:3000/schedules/pdf/${userId}`,
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token')
+            },
+            method: 'GET',
+        });
+
+    const res = await apiResponse.arrayBuffer()
+
+    const blob = new Blob([res], { type: 'application/pdf' });
+    saveAs(blob, 'Cronograma Mordomo Digital.pdf');
+}
+
 export {
     apiRequestGet,
     apiRequestPost,
     apiRequestPut,
     apiRequestDelete,
+    apiRequestGetSchedulePDF,
 }
