@@ -77,7 +77,7 @@ const apiRequestDelete = async (route) => {
 }
 
 const apiRequestGetSchedulePDF = async (userId) => {
-    let apiResponse = await fetch(`http://54.167.111.65:3000/schedules/pdf/${userId}`,
+    let apiResponse = await fetch(`http://54.167.111.65:443/schedules/pdf/${userId}`,
         {
             headers: {
                 'Accept': 'application/json',
