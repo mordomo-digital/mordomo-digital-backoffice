@@ -1,9 +1,8 @@
-import { Modal, Button, message } from "antd";
+import { Modal, Button } from "antd";
 import { Link } from 'react-router-dom';
 import React from "react";
 
 import './UserDetailsModalStyle.css'
-import { apiRequestGetSchedulePDF } from "../../../utils/api-request";
 
 const UserDetailsModalView = (props) => {
 
@@ -49,15 +48,9 @@ const UserDetailsModalView = (props) => {
                             }
                         }}
                     >Editar</Link>,
-                    <Button
-                        className="user-details-modal-ok-button"
-                        loading={props.generatePDFButtonLoading}
-                        onClick={async () => {
-                            props.setGeneratePDFButtonLoading(true)
-                            await apiRequestGetSchedulePDF(props.userData._id)
-                            props.setGeneratePDFButtonLoading(false)
-                        }}
-                    >Cronograma (PDF)</Button>,
+                    <Link to={{ pathname: `http://54.167.111.65:3000/pdf-schedule/${props.userData._id}` }} target='_blank'>
+                        <Button className="user-details-modal-ok-button">Cronograma (PDF)</Button>
+                    </Link>,
                     <Button className="user-details-modal-ok-button" type="primary" onClick={() => props.openCloseModal(false)}>Ok</Button>
                 ]}
                 title={
