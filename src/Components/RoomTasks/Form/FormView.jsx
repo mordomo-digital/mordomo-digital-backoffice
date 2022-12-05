@@ -10,6 +10,11 @@ import './FormStyle.css';
 
 const FormView = (props) => {
 
+    getRoomTypeFrequency = (roomType) => {
+        const roomTypeFound = props.form.defaultFrequency.find(el => el.roomType === roomType.roomId)
+        return roomTypeFound && roomTypeFound.frequency
+    }
+
 
     return (
 
@@ -65,10 +70,7 @@ const FormView = (props) => {
                                                         style={{ width: 500 }}
                                                     >
                                                         <Select
-                                                            value={
-                                                                props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
-                                                                props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).frequency
-                                                            }
+                                                            value={getRoomTypeFrequency(roomType)}
                                                             style={{ width: 500 }}
                                                             onChange={e => {
                                                                 let defaultFrequency = props.form.defaultFrequency;
@@ -90,8 +92,7 @@ const FormView = (props) => {
                                                     </Form.Item>
 
                                                     {
-                                                        (props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
-                                                            props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).frequency) === 'Weekly' ?
+                                                        getRoomTypeFrequency(roomType) === 'Weekly' ?
                                                             <Form.Item
                                                                 label="Dias da semana"
                                                                 style={{ width: 500 }}
@@ -126,8 +127,7 @@ const FormView = (props) => {
                                                     }
 
                                                     {
-                                                        (props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
-                                                            props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).frequency) === 'Monthly' ?
+                                                        getRoomTypeFrequency(roomType) === 'Monthly' ?
                                                             <Form.Item
                                                                 label="Dia do mês"
                                                                 style={{ width: 100 }}
@@ -159,8 +159,10 @@ const FormView = (props) => {
                                                     }
 
                                                     {
-                                                        (props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
-                                                            props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).frequency) === 'WeekInMonth' ?
+                                                        getRoomTypeFrequency(roomType) === 'WeekInMonth' ||
+                                                            getRoomTypeFrequency(roomType) === 'Quarterly' ||
+                                                            getRoomTypeFrequency(roomType) === 'Yearly'
+                                                            ?
                                                             <div>
                                                                 <Form.Item
                                                                     label="Dias da semana"
@@ -221,13 +223,45 @@ const FormView = (props) => {
                                                                         <Select.Option value="4">Quarta semana</Select.Option>
                                                                     </Select>
                                                                 </Form.Item>
+
+                                                                {
+                                                                    getRoomTypeFrequency(roomType) === 'Quarterly' ||
+                                                                        getRoomTypeFrequency(roomType) === 'Yearly' ?
+                                                                        <Form.Item
+                                                                            label="Mês inicial"
+                                                                            style={{ width: 100 }}
+                                                                        >
+                                                                            <Select
+                                                                                style={{ width: 100 }}
+                                                                                onChange={e => {
+                                                                                    let defaultFrequency = props.form.defaultFrequency;
+                                                                                    defaultFrequency = defaultFrequency.map((el) => {
+                                                                                        if (el.roomType === roomType.roomId) {
+                                                                                            return { ...el, startMonth: e };
+                                                                                        }
+                                                                                        return el;
+                                                                                    })
+                                                                                    props.setForm({ ...props.form, defaultFrequency: defaultFrequency });
+                                                                                }}
+                                                                                value={
+                                                                                    props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
+                                                                                    props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).startMonth
+                                                                                }
+                                                                            >
+                                                                                {new Array(12).fill('month').map((el, i) => {
+                                                                                    return (
+                                                                                        <Select.Option value={(i + 1).toString()}>{(i + 1).toString()}</Select.Option>
+                                                                                    )
+                                                                                })}
+                                                                            </Select>
+                                                                        </Form.Item> : null
+                                                                }
                                                             </div>
                                                             : null
                                                     }
 
-                                                    {
-                                                        (props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
-                                                            props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).frequency) === 'Quarterly' ?
+                                                    {/*
+                                                        getRoomTypeFrequency(roomType) === 'Quarterly' ?
                                                             <Form.Item
                                                                 label="Dia do mês"
                                                                 style={{ width: 500 }}
@@ -253,11 +287,10 @@ const FormView = (props) => {
                                                                     }}
                                                                 />
                                                             </Form.Item> : null
-                                                    }
+                                                    */}
 
-                                                    {
-                                                        (props.form.defaultFrequency.find(el => el.roomType === roomType.roomId) &&
-                                                            props.form.defaultFrequency.find(el => el.roomType === roomType.roomId).frequency) === 'Yearly' ?
+                                                    {/*
+                                                        getRoomTypeFrequency(roomType) === 'Yearly' ?
                                                             <Form.Item
                                                                 label="Dia do mês"
                                                                 style={{ width: 500 }}
@@ -283,7 +316,7 @@ const FormView = (props) => {
                                                                     }}
                                                                 />
                                                             </Form.Item> : null
-                                                    }
+                                                        */}
                                                 </Tabs.TabPane>
                                             )
                                         })}
