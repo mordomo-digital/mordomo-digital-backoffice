@@ -10,7 +10,7 @@ import './FormStyle.css';
 
 const FormView = (props) => {
 
-    getRoomTypeFrequency = (roomType) => {
+    const getRoomTypeFrequency = (roomType) => {
         const roomTypeFound = props.form.defaultFrequency.find(el => el.roomType === roomType.roomId)
         return roomTypeFound && roomTypeFound.frequency
     }
