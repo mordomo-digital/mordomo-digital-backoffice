@@ -48,7 +48,7 @@ const UserDetailsModalView = (props) => {
                             }
                         }}
                     >Editar</Link>,
-                    <Link to={{ pathname: `http://54.167.111.65:3000/pdf-schedule/${props.userData._id}` }} target='_blank'>
+                    <Link to={{ pathname: `https://mordomo-digital-api-sks6r2zpma-uc.a.run.app/pdf-schedule/${props.userData._id}` }} target='_blank'>
                         <Button className="user-details-modal-ok-button">Cronograma (PDF)</Button>
                     </Link>,
                     <Button className="user-details-modal-ok-button" type="primary" onClick={() => props.openCloseModal(false)}>Ok</Button>
