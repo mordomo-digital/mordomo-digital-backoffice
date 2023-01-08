@@ -30,6 +30,13 @@ const ListContainer = (props) => {
         apiResponse = await apiResponse.json();
 
         if (apiResponse.code === 200) {
+            apiResponse.data.users = apiResponse.data.users.map(el => {
+                if(typeof el.premiumFreebie === 'string')
+                    el.premiumFreebie = el.premiumFreebie === 'true' ? true : false
+                
+                return el;
+            })
+
             setData([...apiResponse.data.users]);
             setLoading(false);
             setAllData([...apiResponse.data.users]);

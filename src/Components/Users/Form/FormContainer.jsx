@@ -36,6 +36,9 @@ const FormContainer = (props) => {
             // Check if response was successfuly
             if (apiResponse.code === 200) {
 
+                if(typeof apiResponse.data['premiumFreebie'] === 'string')
+                    apiResponse.data['premiumFreebie'] = apiResponse.data['premiumFreebie'] === 'true' ? true : false;
+
                 setForm({
                     email: apiResponse.data['email'],
                     username: apiResponse.data['username'],

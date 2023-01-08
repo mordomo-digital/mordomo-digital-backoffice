@@ -44,6 +44,25 @@ const ListView = (props) => {
             }
         },
         {
+            title: 'Cortesia',
+            dataIndex: 'premiumFreebie',
+            key: 'premiumFreebie',
+            render: (e) => {
+                if (e) return 'Sim'
+                return '';
+            },
+            filters: [
+                { text: 'Cortesia', value: true },
+            ],
+            onFilter: (value, record) => {
+                if (
+                    value === true &&
+                    (record && record.premiumFreebie)
+                ) return true;
+                return false;
+            },
+        },
+        {
             title: 'Telefone',
             dataIndex: 'personalData',
             key: 'personalDataPhone',
