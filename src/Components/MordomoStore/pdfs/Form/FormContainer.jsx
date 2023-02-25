@@ -17,7 +17,7 @@ const FormContainer = (props) => {
     useEffect(() => {
 
         async function getDataToUpdate(id) {
-            const product = await apiRequestGet(`mordomo-digital/${id}`)
+            const product = await apiRequestGet(`/mordomo-digital/${id}`)
             if (product) {
                 setForm(product);
                 // Put img in thumb
@@ -57,9 +57,9 @@ const FormContainer = (props) => {
 
         let dataWasSave = null
         if(idToUpdate){
-            dataWasSave = await apiRequestPut(`mordomo-store/${idToUpdate}`, formToAdd)
+            dataWasSave = await apiRequestPut(`/mordomo-store/${idToUpdate}`, formToAdd)
         } else {
-            dataWasSave = await apiRequestPost('mordomo-store', formToAdd)
+            dataWasSave = await apiRequestPost('/mordomo-store', formToAdd)
         }
 
         if(dataWasSave){
