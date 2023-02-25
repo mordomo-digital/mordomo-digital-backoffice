@@ -72,9 +72,7 @@ const ListView = (props) => {
 
             <div className='home-in-card'>
 
-                <Card
-                    title='Bônus'
-                >
+                <Card title='Mordomo Store - PDFs'>
 
                     <Breadcrumb>
 
