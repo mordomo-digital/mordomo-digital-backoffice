@@ -47,6 +47,9 @@ import Reports from '../Reports/reports';
 
 import ConfigSchedule from '../ConfigSchedule/configSchedule';
 
+import MordomoStorePdfList from '../MordomoStore/pdfs/List/ListContainer'
+import MordomoStorePdfForm from '../MordomoStore/pdfs/Form/FormContainer'
+
 // Images
 import icon from '../../assets/img/icon.png';
 
@@ -83,8 +86,12 @@ const HomeView = (props) => {
         ],
         { name: 'Usuários', route: 'users' },
         { name: 'Bônus', route: 'bonus' },
+        [
+            { title: 'Mordomo Store' },
+            { name: 'PDFs', route: 'mordomo-store/pdf' },
+        ],
         { name: 'Relatórios', route: 'reports' },
-        { name: 'Cronograma v1.0', route: 'config-schedule' },
+        // { name: 'Cronograma v1.0', route: 'config-schedule' },
         // { name: 'Babá', route: 'babysitter-tasks' },
     ];
 
@@ -233,6 +240,10 @@ const HomeView = (props) => {
                         {props.location.pathname === '/home/bonus' && !props.location.search ? <BonusList parent_props={props} /> : null}
                         {props.location.pathname === '/home/bonus/new' ? <BonusForm parent_props={props} /> : null}
                         {props.location.pathname === '/home/bonus/update' ? <BonusForm parent_props={props} /> : null}
+
+                        {props.location.pathname === '/home/mordomo-store/pdf' && !props.location.search ? <MordomoStorePdfList parent_props={props} /> : null}
+                        {props.location.pathname === '/home/mordomo-store/pdf/new' ? <MordomoStorePdfForm parent_props={props} /> : null}
+                        {props.location.pathname === '/home/mordomo-store/pdf/update' ? <MordomoStorePdfForm parent_props={props} /> : null}
 
                         {props.location.pathname === '/home/reports' ? <Reports /> : null}
 
