@@ -19,7 +19,6 @@ const apiRequestGet = async (route) => {
 }
 
 const apiRequestPost = async (route, body) => {
-    console.log(`${process.env.REACT_APP_API_URL}${route}`)
     let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}${route}`,
         {
             headers: {
@@ -32,7 +31,7 @@ const apiRequestPost = async (route, body) => {
         });
     apiResponse = await apiResponse.json();
 
-    if (apiResponse.code === 200) return apiResponse.data
+    if (apiResponse.code === 200) return (apiResponse.data || {'data': 'created'})
 
     message.error(apiResponse.message);
     return null;
@@ -51,7 +50,7 @@ const apiRequestPut = async (route, body) => {
         });
     apiResponse = await apiResponse.json();
 
-    if (apiResponse.code === 200) return apiResponse.data
+    if (apiResponse.code === 200) return (apiResponse.data || {'data': 'updated'})
 
     message.error(apiResponse.message);
     return null;

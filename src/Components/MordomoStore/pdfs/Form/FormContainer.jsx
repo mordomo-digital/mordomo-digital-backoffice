@@ -17,7 +17,7 @@ const FormContainer = (props) => {
     useEffect(() => {
 
         async function getDataToUpdate(id) {
-            const product = await apiRequestGet(`/mordomo-digital/${id}`)
+            const product = await apiRequestGet(`/mordomo-store/${id}`)
             if (product) {
                 setForm(product);
                 // Put img in thumb
