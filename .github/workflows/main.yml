@@ -8,6 +8,7 @@ jobs:
   build:
     
     runs-on: ubuntu-latest
+    container: node:14-alpine
 
     steps:
       - uses: actions/checkout@v2
