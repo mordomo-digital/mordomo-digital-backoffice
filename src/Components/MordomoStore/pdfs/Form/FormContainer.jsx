@@ -11,7 +11,7 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ title: '', description: '', img: '', imgThumb: '', linkToBuy: '', status: '' });
+    const [form, setForm] = useState({ title: '', description: '', img: '', imgThumb: '', linkToBuy: '', linkToGet: '', status: '' });
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -51,6 +51,7 @@ const FormContainer = (props) => {
             description: form.description,
             img: imgUrl,
             linkToBuy: form.linkToBuy,
+            linkToGet: form.linkToGet,
             section: 'pdf',
             status: form.status,
         }

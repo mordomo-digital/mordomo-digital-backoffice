@@ -123,10 +123,17 @@ const FormView = (props) => {
                             />
                         </Form.Item>
                         
-                        <Form.Item label="Link para compra">
+                        <Form.Item label="Link para compra (usuário free)">
                             <Input
                                 value={props.form.linkToBuy}
                                 onChange={e => props.setForm({ ...props.form, linkToBuy: e.target.value })}
+                            />
+                        </Form.Item>
+                        
+                        <Form.Item label="Link para baixar de graça (usuário premium)">
+                            <Input
+                                value={props.form.linkToGet}
+                                onChange={e => props.setForm({ ...props.form, linkToGet: e.target.value })}
                             />
                         </Form.Item>
                         
