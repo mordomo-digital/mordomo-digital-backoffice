@@ -71,7 +71,7 @@ const FormContainer = (props) => {
                     'Registro criado com sucesso'
             );
             setLoadingSaveButton(false);
-            props.history.push('/mordomo-store/pdf');
+            props.history.push('/home/mordomo-store/pdf');
         } else {
             setLoadingSaveButton(false);
         }
