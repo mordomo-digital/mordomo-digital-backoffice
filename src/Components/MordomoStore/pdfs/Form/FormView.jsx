@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Modules
-import { Card, Breadcrumb, Form, Input, Button, Divider, Select } from 'antd';
+import { Card, Breadcrumb, Form, Input, Button, Divider, Select, InputNumber } from 'antd';
 import { Link } from 'react-router-dom';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -134,6 +134,14 @@ const FormView = (props) => {
                             <Input
                                 value={props.form.linkToGet}
                                 onChange={e => props.setForm({ ...props.form, linkToGet: e.target.value })}
+                            />
+                        </Form.Item>
+                        
+                        <Form.Item label="Preço">
+                            <InputNumber
+                                style={{ width: 250 }}
+                                value={props.form.price}
+                                onChange={e => props.setForm({ ...props.form, price: e })}
                             />
                         </Form.Item>
                         
