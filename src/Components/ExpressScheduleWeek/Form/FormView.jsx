@@ -80,12 +80,23 @@ const FormView = (props) => {
                                                         style={{ float: 'left', marginTop: '30px', marginLeft: '10px' }}
                                                         onClick={() => {
                                                             let tasksUpdated = props.form.tasks;
-                                                            tasksUpdated = tasksUpdated.map(task => {
-                                                                if (task.room === roomType._id) {
-                                                                    task.tasks.push(props.taskToAdd);
-                                                                }
-                                                                return task;
-                                                            })
+                                                            
+                                                            const hasRoomInlist = tasksUpdated.find(room => room.room === roomType._id);
+                                                            if(hasRoomInlist){
+                                                                tasksUpdated = tasksUpdated.map(task => {
+                                                                    if (task.room === roomType._id) {
+                                                                        task.tasks.push(props.taskToAdd);
+                                                                    }
+                                                                    return task;
+                                                                })
+                                                            } else {
+                                                                tasksUpdated.push({
+                                                                    room: roomType._id,
+                                                                    tasks: [props.taskToAdd],
+                                                                    tasksChecked: [],
+                                                                })
+                                                            }
+
                                                             props.setForm({ ...props.form, tasks: [...tasksUpdated] });
                                                             props.setTaskToAdd(null);
                                                         }}
