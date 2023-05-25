@@ -1,9 +1,8 @@
 import React from 'react';
 
 // Modules
-import { Card, Breadcrumb, Form, Input, Button, Divider, Select, DatePicker, Tabs } from 'antd';
+import { Card, Breadcrumb, Form, Input, Button, Divider, Select, Switch, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 
 // Style
 import './FormStyle.css';
