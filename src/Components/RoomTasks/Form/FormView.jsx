@@ -58,6 +58,15 @@ const FormView = (props) => {
                             />
                         </Form.Item>
 
+                        <Form.Item
+                            label='Necessita de contratação?'
+                        >
+                            <Switch
+                                checked={props.form.needToHireLabor}
+                                onChange={e => props.setForm({ ...props.form, needToHireLabor: e })}
+                            />
+                        </Form.Item>
+
                         {
                             props.roomTypes ?
                                 <div>

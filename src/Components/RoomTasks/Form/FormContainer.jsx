@@ -14,7 +14,7 @@ const FormContainer = (props) => {
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ name: '', defaultFrequency: [] });
+    const [form, setForm] = useState({ name: '', defaultFrequency: [], needToHireLabor: false });
 
     const [roomTypes, setRoomTypes] = useState([]);
 
@@ -107,6 +107,7 @@ const FormContainer = (props) => {
         let Form = {
             'name': form.name,
             'defaultFrequency': JSON.stringify(form.defaultFrequency),
+            'needToHireLabor': form.needToHireLabor,
         }
 
         // Call API.
