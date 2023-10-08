@@ -89,6 +89,24 @@ const ListView = (props) => {
             },
         },
         {
+            title: 'Tem empregada',
+            dataIndex: 'personalData',
+            key: 'hasHousekeeper',
+            render: (e) => {
+                if (e && e.hasHousekeeper) return 'Sim';
+            },
+            filters: [
+                { text: 'Sim', value: true },
+            ],
+            onFilter: (value, record) => {
+                if (
+                    value === true &&
+                    (record && record.personalData && record.personalData.hasHousekeeper)
+                ) return true;
+                return false;
+            },
+        },
+        {
             title: 'Telefone',
             dataIndex: 'personalData',
             key: 'personalDataPhone',
