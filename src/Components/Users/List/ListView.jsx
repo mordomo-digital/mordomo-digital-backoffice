@@ -63,6 +63,32 @@ const ListView = (props) => {
             },
         },
         {
+            title: 'Ativo',
+            dataIndex: 'premiumValidatedDate',
+            key: 'premiumValidatedDate',
+            render: (e) => {
+                if (
+                    e &&
+                    new Date(e).getTime() > new Date().getTime()
+                ) return 'Sim';
+
+                return '';
+            },
+            filters: [
+                { text: 'Ativo', value: true },
+            ],
+            onFilter: (value, record) => {
+                if (
+                    value === true &&
+                    (
+                        record && 
+                        new Date(record.premiumValidatedDate).getTime() > new Date().getTime()
+                    )
+                ) return true;
+                return false;
+            },
+        },
+        {
             title: 'Telefone',
             dataIndex: 'personalData',
             key: 'personalDataPhone',
