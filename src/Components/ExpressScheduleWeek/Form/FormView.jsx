@@ -171,8 +171,9 @@ const FormView = (props) => {
                             })}
                           </ul>
                           {(
-                            props.form?.tasks[roomIndex]
-                              ?.multipleWeekCleaningTasks || [
+                            (props.form?.tasks[roomIndex]
+                              ?.multipleWeekCleaningTasks.length && props.form?.tasks[roomIndex]
+                                ?.multipleWeekCleaningTasks) || [
                               [[], []],
                               [[], [], []],
                             ]
