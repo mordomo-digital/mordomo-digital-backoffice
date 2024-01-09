@@ -178,7 +178,7 @@ const ListView = (props) => {
 
       <Modal
         title="Gráfico"
-        open={props.chartModal}
+        visible={props.chartModal}
         closable={true}
         cancelText="Fechar"
         onCancel={() => props.openCloseChartModal()}
@@ -203,7 +203,7 @@ const ListView = (props) => {
 
       <Modal
         title="Funcionalidades"
-        open={props.functionalitiesModal}
+        visible={props.functionalitiesModal}
         closable={true}
         cancelText="Fechar"
         onCancel={() => props.openCloseFunctionalitiesModal()}
