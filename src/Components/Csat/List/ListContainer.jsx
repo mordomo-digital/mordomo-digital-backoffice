@@ -11,6 +11,8 @@ const ListContainer = (props) => {
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState([]);
   const [total, setTotal] = useState(0);
+  const [chartModal, setChartModal] = useState(false);
+  const [functionalitiesModal, setFunctionalitiesModal] = useState(false);
 
   const getData = async () => {
     setLoading(true);
@@ -42,6 +44,12 @@ const ListContainer = (props) => {
       data={data}
       total={total}
       setTotal={(e) => setTotal(e)}
+      chartModal={chartModal}
+      openCloseChartModal={() => setChartModal(!chartModal)}
+      functionalitiesModal={functionalitiesModal}
+      openCloseFunctionalitiesModal={() =>
+        setFunctionalitiesModal(!functionalitiesModal)
+      }
     />
   );
 };

@@ -1,8 +1,19 @@
 import React from "react";
 
 // Modules
-import { Card, Table, Breadcrumb, Space, Modal } from "antd";
+import {
+  Card,
+  Table,
+  Breadcrumb,
+  Space,
+  Modal,
+  Row,
+  Col,
+  Button,
+  Tabs,
+} from "antd";
 import { Link } from "react-router-dom";
+import { Chart } from "react-google-charts";
 
 // Styles
 import "./ListStyle.css";
@@ -73,6 +84,43 @@ const ListView = (props) => {
     },
   ];
 
+  const renderChart = (question) => {
+    return (
+      <Chart
+        chartType="PieChart"
+        width={750}
+        height={500}
+        data={[
+          ["Avaliação", "Qtd"],
+          [
+            "Neutro",
+            props.data.reduce(
+              (prev, current) => (prev += current[question] === 2 ? 1 : 0),
+              0
+            ),
+          ],
+          [
+            "Satisfeito",
+            props.data.reduce(
+              (prev, current) => (prev += current[question] === 3 ? 1 : 0),
+              0
+            ),
+          ],
+          [
+            "Insatisfeito",
+            props.data.reduce(
+              (prev, current) => (prev += current[question] === 1 ? 1 : 0),
+              0
+            ),
+          ],
+        ]}
+        options={{
+          is3D: true,
+        }}
+      />
+    );
+  };
+
   return (
     <div className="home-out-card">
       <div className="home-in-card">
@@ -85,7 +133,29 @@ const ListView = (props) => {
             <Breadcrumb.Item>Pesquisa de satisfação</Breadcrumb.Item>
           </Breadcrumb>
           <br />
+
+          <Row gutter={24}>
+            <Col span={16}></Col>
+            <Col span={4}>
+              <Button
+                type="primary"
+                className="csat-button"
+                onClick={() => props.openCloseChartModal()}
+              >
+                Gráfico
+              </Button>
+            </Col>
+            <Col span={4}>
+              <Button
+                className="csat-button"
+                onClick={() => props.openCloseFunctionalitiesModal()}
+              >
+                Funcionalidades
+              </Button>
+            </Col>
+          </Row>
           <br />
+
           <Table
             dataSource={props.data}
             columns={columns}
@@ -105,6 +175,50 @@ const ListView = (props) => {
           />
         </Card>
       </div>
+
+      <Modal
+        title="Gráfico"
+        open={props.chartModal}
+        closable={true}
+        cancelText="Fechar"
+        onCancel={() => props.openCloseChartModal()}
+        onOk={() => props.openCloseChartModal()}
+        width={800}
+      >
+        <Tabs>
+          <Tabs.TabPane tab="Custo-Benefício" key="costBenefit">
+            {renderChart("costBenefit")}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Atendeu as necessidades" key="meetsYourNeeds">
+            {renderChart("meetsYourNeeds")}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Desempenho" key="performance">
+            {renderChart("performance")}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Usabilidade" key="usability">
+            {renderChart("usability")}
+          </Tabs.TabPane>
+        </Tabs>
+      </Modal>
+
+      <Modal
+        title="Funcionalidades"
+        open={props.functionalitiesModal}
+        closable={true}
+        cancelText="Fechar"
+        onCancel={() => props.openCloseFunctionalitiesModal()}
+        onOk={() => props.openCloseFunctionalitiesModal()}
+      >
+        <div>
+          <ul>
+            {props.data
+              .filter((question) => question.functionalities)
+              .map((question) => {
+                return <li>{question.functionalities}</li>;
+              })}
+          </ul>
+        </div>
+      </Modal>
     </div>
   );
 };
