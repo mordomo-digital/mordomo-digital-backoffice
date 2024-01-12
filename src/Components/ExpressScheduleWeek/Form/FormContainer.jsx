@@ -146,7 +146,7 @@ const FormContainer = (props) => {
 
     if(task) {
       let tasks = form.tasks;
-      if (!tasks[roomIndex].multipleWeekCleaningTasks)
+      if (!tasks[roomIndex].multipleWeekCleaningTasks || !tasks[roomIndex].multipleWeekCleaningTasks.length)
         tasks[roomIndex].multipleWeekCleaningTasks = [
           [[], []],
           [[], [], []],
