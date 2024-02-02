@@ -14,6 +14,9 @@ import RoomTypesForm from "../RoomTypes/Form/FormContainer";
 import RoomTasksList from "../RoomTasks/List/ListContainer";
 import RoomTasksForm from "../RoomTasks/Form/FormContainer";
 
+import * as roomItems from "../RoomItems/room-items";
+import RoomItemsForm from "../RoomItems/Form/FormContainer";
+
 import ExpressScheduleDayList from "../ExpressScheduleDay/List/ListContainer";
 import ExpressScheduleDayForm from "../ExpressScheduleDay/Form/FormContainer";
 
@@ -68,6 +71,7 @@ const HomeView = (props) => {
       { title: "Cômodos" },
       { name: "Tipos", route: "room-types" },
       { name: "Tarefas", route: "room-tasks" },
+      { name: "Itens", route: "room-items" },
     ],
     [
       { title: "Cronograma Express" },
@@ -205,6 +209,17 @@ const HomeView = (props) => {
             ) : null}
             {props.location.pathname === "/home/room-tasks/update" ? (
               <RoomTasksForm parent_props={props} />
+            ) : null}
+
+            {props.location.pathname === "/home/room-items" &&
+            !props.location.search
+              ? roomItems.roomItemsList()
+              : null}
+            {props.location.pathname === "/home/room-items/new" ? (
+              <RoomItemsForm parent_props={props} />
+            ) : null}
+            {props.location.pathname === "/home/room-items/update" ? (
+              <RoomItemsForm parent_props={props} />
             ) : null}
 
             {props.location.pathname === "/home/express-schedule-day" &&
