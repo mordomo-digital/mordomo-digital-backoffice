@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 // Modules
 import { Card, Breadcrumb, Form, Input, Button, Divider, Select, Spin, Switch } from 'antd';
@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 import './FormStyle.css';
 
 const FormView = (props) => {
-
+    const [filteredTasksOptions, setFilteredTasksOptions] = useState(null);
+    const [filteredItemsOptions, setFilteredItemsOptions] = useState(null);
 
     return (
 
@@ -58,16 +59,57 @@ const FormView = (props) => {
                             </Form.Item>
 
                             <Form.Item
+                                label="Itens"
+                            >
+                                <Select
+                                    mode="multiple"
+                                    placeholder="Escolha..."
+                                    value={props.form.items}
+                                    onChange={e => {
+                                        props.setForm({ ...props.form, items: e })
+                                        setFilteredItemsOptions(props.items);
+                                    }}
+                                    showSearch
+                                    onSearch={value => {
+                                        setFilteredItemsOptions(props.items.filter(
+                                            option => option.name.toLowerCase().includes(value.toLowerCase())
+                                        ));
+                                    }}
+                                    filterOption={false}
+                                >
+                                    {
+                                        (filteredItemsOptions ?? props.items).map((el, i) => {
+                                            return (
+                                                <Select.Option key={i} value={el._id}>
+                                                    {el.name}
+                                                </Select.Option>
+                                            )
+                                        })
+                                    }
+                                </Select>
+                            </Form.Item>
+
+                            <Form.Item
                                 label="Tarefas"
                             >
                                 <Select
                                     mode="multiple"
                                     placeholder="Escolha..."
                                     value={props.form.tasks}
-                                    onChange={e => props.setForm({ ...props.form, tasks: e })}
+                                    onChange={e => {
+                                        props.setForm({ ...props.form, tasks: e })
+                                        setFilteredTasksOptions(props.tasks);
+                                    }}
+                                    showSearch
+                                    onSearch={value => {
+                                        setFilteredTasksOptions(props.tasks.filter(
+                                            option => option.name.toLowerCase().includes(value.toLowerCase())
+                                        ));
+                                    }}
+                                    filterOption={false}
                                 >
                                     {
-                                        props.tasks.map((el, i) => {
+                                        (filteredTasksOptions ?? props.tasks).map((el, i) => {
                                             return (
                                                 <Select.Option key={i} value={el._id}>
                                                     {el.name}

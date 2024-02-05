@@ -10,7 +10,7 @@ const FormContainer = (props) => {
 
     const [loadingScreen, setLoadingScreen] = useState(false);
 
-    const [form, setForm] = useState({ name: '', tasks: [], isAPremiumRoomType: false, });
+    const [form, setForm] = useState({ name: '', tasks: [], items: [], isAPremiumRoomType: false, });
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -20,10 +20,15 @@ const FormContainer = (props) => {
 
             if (room) {
 
-                await getTasks();
+                await Promise.all([
+                    getTasks(),
+                    getItems(),
+                ]);
+
                 setForm({
                     name: room['name'],
                     tasks: room['tasks'].map(el => el._id),
+                    items: room['items'].map(el => el._id),
                     isAPremiumRoomType: room['isAPremiumRoomType'],
                     disabled: !room['disabled'],
                 })
@@ -39,6 +44,7 @@ const FormContainer = (props) => {
             getDataToUpdate(props.location.state.id);
         } else {
             getTasks();
+            getItems();
         }
     }, [props.location.state])
 
@@ -49,6 +55,16 @@ const FormContainer = (props) => {
 
         if (tasks)
             setTasks([...tasks]);
+
+    };
+    
+    const [items, setItems] = useState([]);
+    const getItems = async () => {
+
+        const items = await apiRequestGet('/room-items')
+
+        if (items)
+            setItems([...items]);
 
     };
 
@@ -63,6 +79,7 @@ const FormContainer = (props) => {
         const body = {
             name: form.name,
             tasks: JSON.stringify(form.tasks),
+            items: JSON.stringify(form.items),
             isAPremiumRoomType: form.isAPremiumRoomType,
             disabled: !form.disabled,
         }
@@ -95,6 +112,7 @@ const FormContainer = (props) => {
             idToUpdate={idToUpdate}
 
             tasks={tasks}
+            items={items}
 
             form={form}
             setForm={form => setForm({ ...form })}
