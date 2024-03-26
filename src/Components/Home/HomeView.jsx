@@ -17,13 +17,19 @@ import RoomTasksForm from "../RoomTasks/Form/FormContainer";
 import * as roomItems from "../RoomItems/room-items";
 import RoomItemsForm from "../RoomItems/Form/FormContainer";
 
-import ExpressScheduleDayList from "../ExpressScheduleDay/List/ListContainer";
-import ExpressScheduleDayForm from "../ExpressScheduleDay/Form/FormContainer";
+import ExpressScheduleDayList from "../ExpressSchedule/ExpressScheduleDay/List/ListContainer";
+import ExpressScheduleDayForm from "../ExpressSchedule/ExpressScheduleDay/Form/FormContainer";
 
-import ExpressScheduleWeekList from "../ExpressScheduleWeek/List/ListContainer";
-import ExpressScheduleWeekForm from "../ExpressScheduleWeek/Form/FormContainer";
+import ExpressScheduleWeekList from "../ExpressSchedule/ExpressScheduleWeek/List/ListContainer";
+import ExpressScheduleWeekForm from "../ExpressSchedule/ExpressScheduleWeek/Form/FormContainer";
 
-import ExpressScheduleDefaultTasksWeekForm from "../ExpressScheduleDefaultWeekTasks/Form/FormContainer";
+import ExpressScheduleDefaultTasksWeekForm from "../ExpressSchedule/ExpressScheduleDefaultWeekTasks/Form/FormContainer";
+
+import CleaningScheduleDayList from "../CleaningSchedule/CleaningScheduleDay/List/ListContainer";
+import CleaningScheduleDayForm from "../CleaningSchedule/CleaningScheduleDay/Form/FormContainer";
+
+import CleaningScheduleWeekList from "../CleaningSchedule/CleaningScheduleWeek/List/ListContainer";
+import CleaningScheduleWeekForm from "../CleaningSchedule/CleaningScheduleWeek/Form/FormContainer";
 
 import MarketItensList from "../MarketItens/List/ListContainer";
 import MarketItensForm from "../MarketItens/Form/FormContainer";
@@ -83,6 +89,11 @@ const HomeView = (props) => {
       },
     ],
     [
+      { title: "Cronograma Express v2" },
+      { name: "Tarefas diárias", route: "cleaning-schedule-day" },
+      { name: "Faxina semanal", route: "cleaning-schedule-week" },
+    ],
+    [
       { title: "Mercado" },
       { name: "Itens de mercado", route: "market-itens" },
       { name: "Grupo de itens", route: "market-item-groups" },
@@ -126,7 +137,7 @@ const HomeView = (props) => {
           backgroundColor: "unset",
         }}
       >
-        <Sider width={200} className="site-layout-background">
+        <Sider width={250} className="site-layout-background">
           <Menu
             mode="inline"
             defaultSelectedKeys={["0"]}
@@ -248,6 +259,29 @@ const HomeView = (props) => {
             {props.location.pathname ===
             "/home/express-schedule-default-tasks-week/update" ? (
               <ExpressScheduleDefaultTasksWeekForm parent_props={props} />
+            ) : null}
+
+            {props.location.pathname === "/home/cleaning-schedule-day" &&
+            !props.location.search ? (
+              <CleaningScheduleDayList parent_props={props} />
+            ) : null}
+            {props.location.pathname === "/home/cleaning-schedule-day/new" ? (
+              <CleaningScheduleDayForm parent_props={props} />
+            ) : null}
+            {props.location.pathname === "/home/cleaning-schedule-day/update" ? (
+              <CleaningScheduleDayForm parent_props={props} />
+            ) : null}
+
+            {props.location.pathname === "/home/cleaning-schedule-week" &&
+            !props.location.search ? (
+              <CleaningScheduleWeekList parent_props={props} />
+            ) : null}
+            {props.location.pathname === "/home/cleaning-schedule-week/new" ? (
+              <CleaningScheduleWeekForm parent_props={props} />
+            ) : null}
+            {props.location.pathname ===
+            "/home/cleaning-schedule-week/update" ? (
+              <CleaningScheduleWeekForm parent_props={props} />
             ) : null}
 
             {props.location.pathname === "/home/market-itens" &&
