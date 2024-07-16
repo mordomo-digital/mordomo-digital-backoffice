@@ -1,8 +1,9 @@
 import React from 'react';
 
 // Modules
-import { Card, Breadcrumb, Form, Input, Button, Divider, Select, Switch, Tabs } from 'antd';
+import { Card, Breadcrumb, Form, Input, Button, Divider, Select, Switch, Tabs, Modal } from 'antd';
 import { Link } from 'react-router-dom';
+import { MinusCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 // Style
 import './FormStyle.css';
@@ -56,6 +57,26 @@ const FormView = (props) => {
                                 onChange={e => props.setForm({ ...props.form, name: e.target.value })}
                             />
                         </Form.Item>
+                        
+                        <Form.Item
+                            label="Descrição"
+                            style={{ width: 500 }}
+                        >
+                            <Input
+                                value={props.form.description}
+                                onChange={e => props.setForm({ ...props.form, description: e.target.value })}
+                            />
+                        </Form.Item>
+                        
+                        <Form.Item
+                            label="URL do vídeo"
+                            style={{ width: 500 }}
+                        >
+                            <Input
+                                value={props.form.videoUrl}
+                                onChange={e => props.setForm({ ...props.form, videoUrl: e.target.value })}
+                            />
+                        </Form.Item>
 
                         <Form.Item
                             label='Necessita de contratação?'
@@ -65,6 +86,63 @@ const FormView = (props) => {
                                 onChange={e => props.setForm({ ...props.form, needToHireLabor: e })}
                             />
                         </Form.Item>
+
+                        <Form.Item
+                            label="Passos"
+                            style={{ width: 500, float: 'left' }}
+                        >
+                            <Input
+                                value={props.stepToAdd}
+                                onChange={e => props.setStepToAdd(e.target.value)}
+                            />
+                        </Form.Item>
+
+                        <Button
+                            type='primary'
+                            style={{ float: 'left', marginTop: '30px', marginLeft: '10px' }}
+                            onClick={() => {
+                                let steps = props.form.steps;
+                                steps.push(props.stepToAdd);
+                                props.setForm({ ...props.form, steps })
+                                props.setStepToAdd(null);
+                            }}
+                        >
+                            Adicionar Passo
+                        </Button>
+
+                        <div style={{ clear: 'both' }} />
+
+                        <ul>
+                            {
+                                (props.form.steps ?? []).map((step, i) => {
+                                    return (
+                                        <li>
+                                            {step}
+                                            <MinusCircleOutlined
+                                                style={{ color: 'red', cursor: 'pointer', marginLeft: '10px' }}
+                                                onClick={() => {
+
+                                                    Modal.confirm({
+                                                        title: 'Tem certeza que deseja excluir esse passo?',
+                                                        icon: <ExclamationCircleOutlined />,
+                                                        content: 'Essa ação não poderá ser desfeita',
+                                                        okText: 'Sim',
+                                                        okType: 'danger',
+                                                        cancelText: 'Não',
+                                                        onOk() {
+                                                            let steps = [...props.form.steps];
+                                                            steps.splice(i, 1);
+                                                            props.setForm({ ...props.form, steps })
+                                                        },
+                                                    });
+
+                                                }}
+                                            />
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
 
                         {
                             props.roomTypes ?

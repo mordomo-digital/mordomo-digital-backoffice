@@ -6,12 +6,11 @@ import { message } from 'antd';
 
 // Components
 import FormView from './FormView';
+import { apiRequestGet } from '../../../../utils/api-request';
 
 const FormContainer = (props) => {
 
     props = props.parent_props;
-
-    const [roomTypes, setRoomTypes] = useState([]);
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
@@ -21,7 +20,7 @@ const FormContainer = (props) => {
          */
         async function getDataToUpdate(id) {
             // Call API.
-            let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/express-schedule/one/${id}`,
+            let apiResponse = await fetch(`${process.env.REACT_APP_API_URL}/cleaning-schedule/one/${id}`,
                 {
                     headers: {
                         'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
@@ -32,10 +31,10 @@ const FormContainer = (props) => {
 
             // Check if response was successfuly
             if (apiResponse.code === 200) {
+
                 setForm({
-                    ...form,
                     dayWeekNumber: apiResponse.data['dayWeekNumber'],
-                    tasks: apiResponse.data['tasks'],
+                    tasks: apiResponse.data['schedule'][0]['tasks'].map(el => el.task?._id),
                 });
 
             } else {
@@ -45,34 +44,7 @@ const FormContainer = (props) => {
             }
         }
 
-        /**
-         * Get room types.
-         */
-        async function getRoomTypes() {
-            // Call API.
-            let roomTypesApiResponse = await fetch(`${process.env.REACT_APP_API_URL}/room-types`,
-                {
-                    headers: {
-                        'access_token': sessionStorage.getItem('access_token') || localStorage.getItem('access_token'),
-                    },
-                    method: 'GET',
-                });
-            roomTypesApiResponse = await roomTypesApiResponse.json();
-            if (roomTypesApiResponse.code === 200) {
-                setRoomTypes([...roomTypesApiResponse.data]);
-                if (!props.location.state) {
-                    let defaultTasks = roomTypesApiResponse.data.map(el => {
-                        return {
-                            room: el._id,
-                            tasks: [],
-                        }
-                    });
-                    setForm({ ...form, tasks: [...defaultTasks] });
-                }
-            }
-        }
-
-        getRoomTypes();
+        getTasks();
         /**
          * Check if update or create form
          */
@@ -80,14 +52,14 @@ const FormContainer = (props) => {
             setIdToUpdate(props.location.state.id)
             getDataToUpdate(props.location.state.id);
         }
+        
     }, [props.location.state])
 
     /**
      * Set form.
      */
-    const [form, setForm] = useState({ dayWeekNumber: '', tasks: [] });
-
-    const [taskToAdd, setTaskToAdd] = useState(null);
+    const [form, setForm] = useState({ dayWeekNumber: '' });
+    const [tasks, setTasks] = useState([]);
 
     /**
      * Save.
@@ -99,11 +71,20 @@ const FormContainer = (props) => {
 
         // Method
         let method = idToUpdate ? 'PUT' : 'POST';
-        let endpoint = idToUpdate ? `${process.env.REACT_APP_API_URL}/express-schedule/${idToUpdate}` : `${process.env.REACT_APP_API_URL}/express-schedule`;
+        let endpoint = idToUpdate ? `${process.env.REACT_APP_API_URL}/cleaning-schedule/${idToUpdate}` : `${process.env.REACT_APP_API_URL}/cleaning-schedule`;
         let formToSave = {
-            type: 'week',
+            type: 'day',
             dayWeekNumber: form.dayWeekNumber,
-            tasks: form.tasks,
+            schedule: [
+                {
+                    tasks: (form.tasks ?? []).map(task => {
+                        return {
+                            taskName: tasks.find(el => el._id === task)['name'],
+                            task: task
+                        }
+                    })
+                }
+            ]
         }
 
         // Call API.
@@ -128,7 +109,7 @@ const FormContainer = (props) => {
                     'Registro criado com sucesso'
             );
             setLoadingSaveButton(false);
-            props.history.push('/home/express-schedule-week');
+            props.history.push('/home/cleaning-schedule-day');
 
         } else {
 
@@ -138,18 +119,24 @@ const FormContainer = (props) => {
         }
     }
 
+    const getTasks = async () => {
+
+        const tasks = await apiRequestGet('/room-tasks')
+
+        if (tasks)
+            setTasks([...tasks]);
+
+    };
+
     return (
 
         <FormView
             idToUpdate={idToUpdate}
 
-            roomTypes={roomTypes}
-
             form={form}
             setForm={form => setForm({ ...form })}
 
-            taskToAdd={taskToAdd}
-            setTaskToAdd={task => setTaskToAdd(task)}
+            tasks={tasks}
 
             save={() => save()}
             loadingSaveButton={loadingSaveButton}

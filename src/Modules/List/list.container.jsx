@@ -28,7 +28,6 @@ const ListModule = ({ name, route, apiRoute, apiRouteQueries, schema }) => {
     };
 
     useEffect(() => {
-        console.log(31)
         getData();
 
     }, []);

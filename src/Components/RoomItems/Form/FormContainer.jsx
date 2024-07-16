@@ -10,27 +10,20 @@ const FormContainer = (props) => {
 
     const [loadingScreen, setLoadingScreen] = useState(false);
 
-    const [form, setForm] = useState({ name: '', tasks: [], items: [], isAPremiumRoomType: false, });
+    const [form, setForm] = useState({ name: '', tasks: [] });
 
     const [idToUpdate, setIdToUpdate] = useState(null);
     useEffect(() => {
 
         async function getDataToUpdate(id) {
-            const room = await apiRequestGet(`/room-types/${id}`)
+            const room = await apiRequestGet(`/room-items/${id}`)
 
             if (room) {
 
-                await Promise.all([
-                    getTasks(),
-                    getItems(),
-                ]);
-
+                await getTasks();
                 setForm({
                     name: room['name'],
                     tasks: room['tasks'].map(el => el._id),
-                    items: room['items'].map(el => el._id),
-                    isAPremiumRoomType: room['isAPremiumRoomType'],
-                    disabled: !room['disabled'],
                 })
 
             }
@@ -44,7 +37,6 @@ const FormContainer = (props) => {
             getDataToUpdate(props.location.state.id);
         } else {
             getTasks();
-            getItems();
         }
     }, [props.location.state])
 
@@ -55,16 +47,6 @@ const FormContainer = (props) => {
 
         if (tasks)
             setTasks([...tasks]);
-
-    };
-    
-    const [items, setItems] = useState([]);
-    const getItems = async () => {
-
-        const items = await apiRequestGet('/room-items')
-
-        if (items)
-            setItems([...items]);
 
     };
 
@@ -79,28 +61,25 @@ const FormContainer = (props) => {
         const body = {
             name: form.name,
             tasks: JSON.stringify(form.tasks),
-            items: JSON.stringify(form.items),
-            isAPremiumRoomType: form.isAPremiumRoomType,
-            disabled: !form.disabled,
         }
 
         if (idToUpdate) {
             const apiReturn = await apiRequestPut(
-                `/room-types/${idToUpdate}`,
+                `/room-items/${idToUpdate}`,
                 body
             )
             if (apiReturn) {
                 message.success('Registro atualizado com sucesso')
-                props.history.push('/home/room-types')
+                props.history.push('/home/room-items')
             }
         } else {
             const apiReturn = await apiRequestPost(
-                `/room-types`,
+                `/room-items`,
                 body
             )
             if (apiReturn) {
                 message.success('Registro criado com sucesso')
-                props.history.push('/home/room-types')
+                props.history.push('/home/room-items')
             }
         }
         setLoadingSaveButton(false);
@@ -112,7 +91,6 @@ const FormContainer = (props) => {
             idToUpdate={idToUpdate}
 
             tasks={tasks}
-            items={items}
 
             form={form}
             setForm={form => setForm({ ...form })}

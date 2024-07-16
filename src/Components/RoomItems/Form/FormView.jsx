@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 // Modules
 import { Card, Breadcrumb, Form, Input, Button, Divider, Select, Spin, Switch } from 'antd';
@@ -9,7 +9,6 @@ import './FormStyle.css';
 
 const FormView = (props) => {
     const [filteredTasksOptions, setFilteredTasksOptions] = useState(null);
-    const [filteredItemsOptions, setFilteredItemsOptions] = useState(null);
 
     return (
 
@@ -24,7 +23,7 @@ const FormView = (props) => {
                 >
 
                     <Card
-                        title='Tipo de cômodo'
+                        title='Ítem do cômodo'
                     >
 
                         <Breadcrumb>
@@ -34,7 +33,7 @@ const FormView = (props) => {
                             </Breadcrumb.Item>
 
                             <Breadcrumb.Item>
-                                <Link to='/home/room-types'>Tipos de cômodos</Link>
+                                <Link to='/home/room-items'>Itens do cômodos</Link>
                             </Breadcrumb.Item>
 
                             <Breadcrumb.Item>
@@ -59,37 +58,6 @@ const FormView = (props) => {
                             </Form.Item>
 
                             <Form.Item
-                                label="Itens"
-                            >
-                                <Select
-                                    mode="multiple"
-                                    placeholder="Escolha..."
-                                    value={props.form.items}
-                                    onChange={e => {
-                                        props.setForm({ ...props.form, items: e })
-                                        setFilteredItemsOptions(props.items);
-                                    }}
-                                    showSearch
-                                    onSearch={value => {
-                                        setFilteredItemsOptions(props.items.filter(
-                                            option => option.name.toLowerCase().includes(value.toLowerCase())
-                                        ));
-                                    }}
-                                    filterOption={false}
-                                >
-                                    {
-                                        (filteredItemsOptions ?? props.items).map((el, i) => {
-                                            return (
-                                                <Select.Option key={i} value={el._id}>
-                                                    {el.name}
-                                                </Select.Option>
-                                            )
-                                        })
-                                    }
-                                </Select>
-                            </Form.Item>
-
-                            <Form.Item
                                 label="Tarefas"
                             >
                                 <Select
@@ -97,7 +65,7 @@ const FormView = (props) => {
                                     placeholder="Escolha..."
                                     value={props.form.tasks}
                                     onChange={e => {
-                                        props.setForm({ ...props.form, tasks: e })
+                                        props.setForm({ ...props.form, tasks: e });
                                         setFilteredTasksOptions(props.tasks);
                                     }}
                                     showSearch
@@ -118,24 +86,6 @@ const FormView = (props) => {
                                         })
                                     }
                                 </Select>
-                            </Form.Item>
-
-                            <Form.Item
-                                label='Exclusivo para usuários premium?'
-                            >
-                                <Switch
-                                    checked={props.form.isAPremiumRoomType}
-                                    onChange={e => props.setForm({ ...props.form, isAPremiumRoomType: e })}
-                                />
-                            </Form.Item>
-
-                            <Form.Item
-                                label='Cômodo habilitado no app'
-                            >
-                                <Switch
-                                    checked={props.form.disabled}
-                                    onChange={e => props.setForm({ ...props.form, disabled: e })}
-                                />
                             </Form.Item>
 
                         </Form>
